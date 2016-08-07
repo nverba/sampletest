@@ -1,0 +1,4402 @@
+<html><head><meta charset="UTF-8"><link rel="import" href="../shared.6482c1012487ce0c53af70b32f2ac7be.html"><!--<link rel="import" href="../pages/form-test-page/form-test-page.html">-->
+</head><body><div hidden by-vulcanize=""><dom-module id="product-detail-style" assetpath="../components/product-detail/">
+  <template>
+    <style>
+      
+      :host {
+        height: auto;
+        width: 100%;
+        display: block;
+        position: relative;
+        color: var(--header-text-color, #fff);
+        /*transition: max-height 300ms cubic-bezier(.5, 0, .1, 1);
+        max-height: 0;*/
+        
+        max-width: 980px;
+        margin: 0 auto;
+      }
+      
+      #product-container {
+        height: 0;
+        width: 100%;
+        display: block;
+        position: relative;
+        overflow: hidden;
+      }
+      
+      #product-container.hidden {
+        opacity: 0;
+        max-height: 0;
+        -webkit-transition: opacity 0ms linear,
+                    max-height 400ms cubic-bezier(.5, 0, .1, 1);
+        transition: opacity 0ms linear,
+                    max-height 400ms cubic-bezier(.5, 0, .1, 1);
+      }
+      
+      #product-container.display {
+        height: auto;;
+        padding: 30px;
+        padding-bottom: 0;
+        box-sizing: border-box;
+        max-height: 300px;
+        opacity: 1 !important;
+        -webkit-transition: opacity 0ms linear,
+                    max-height 400ms cubic-bezier(.5, 0, .1, 1);
+        transition: opacity 0ms linear,
+                    max-height 400ms cubic-bezier(.5, 0, .1, 1);
+      }
+      
+      img {
+        width: 100%;
+        max-width: 260px;
+        height: 160px;
+        display: inline-block;
+        position: relative;
+        /*margin-left: 20px;*/
+      }
+      
+      .product-info {
+        height: auto;
+        display: inline-block;
+        position: absolute;
+        vertical-align: top;
+        line-height: 40px;
+        padding-left: 40px;
+      }
+      
+      .product-name {
+        font-size: 26px;
+        font-family: 'Oswald', sans-serif !important;
+        text-transform: uppercase;
+      }
+      
+      .product-datum {
+        font-family: sans-serif;
+        font-size: 14px;
+        text-transform: none;
+      }
+      
+      .product-datum span {
+        white-space: nowrap;
+      }
+      
+      .product-datum svg-icon {
+        --svg-icon-height: 15px;
+        --svg-icon-width: 15px;
+        --svg-icon-parent-height: 15px;
+        --svg-icon-parent-width: 15px;
+        vertical-align: text-top;
+      }
+      
+      .product-datum span:not(:last-child) {
+        margin-right: 9px;
+      }
+      
+      .product-description {
+        display: block;
+        font-size: 14px;
+        line-height: 24px;
+        text-transform: none;
+        margin-top: 4px;
+        max-width: 634px;
+        padding-right: 16px;
+      }
+      
+      @media (max-width: 1024px) {
+        .product-info {
+          padding-left: 24px;
+        }
+      }
+      
+      @media (max-width: 900px) {
+        #product-container.display {
+          padding-top: 20px;
+          max-height: 700px;
+          -webkit-transition: max-height 400ms cubic-bezier(.5, 0, .1, 1);
+          transition: max-height 400ms cubic-bezier(.5, 0, .1, 1);
+        }
+        
+        img {
+          height: 160px;
+          display: block;
+          position: relative;
+          margin: 0 auto;
+        }
+      
+        .product-info {
+          padding: 0;
+          margin: 0;
+          display: block;
+          position: relative;
+          text-align: center;
+        }
+        
+        .product-name {
+          margin-top: 6px;
+          display: block;
+          height: 40px;
+          line-height: 40px;
+          text-align: center;
+          padding: 0 11px;
+        }
+        
+        .product-datum {
+          margin-top: 6px;
+          line-height: 1.5;
+        }
+        
+        .product-description {
+          display: none;
+        }        
+      }
+      
+      @media (max-width: 700px) {
+        .product-name {
+          font-size: 24px;
+        }
+      }
+      
+      @media (max-width: 620px) {
+        .product-name {
+          height: auto;
+          padding-top: 4px;
+          font-size: 3.8vw;
+          line-height: 4.8vw;
+        }
+      }
+
+      @media (max-width: 480px) {
+        .product-name {
+          font-size: 6vw;
+          line-height: 6.5vw;
+        }
+        
+        .product-datum {
+          font-size: 11.5px;
+        }
+      }
+      
+      @media (max-width: 400px) {
+        .product-name {
+          padding-top: 6px;
+        }
+      }
+      
+    </style>
+  </template>
+</dom-module><!-- Components -->
+<dom-module id="product-detail" assetpath="../components/product-detail/">
+  <template>
+    <style is="custom-style" include="product-detail-style"></style>
+    
+
+    <div id="product-container" class$="[[ _useStyle(selectedProduct.loaded, &apos;display&apos;, &apos;hidden&apos;) ]]">
+          
+        <template is="dom-if" if="[[ selectedProduct.data ]]">
+          <img src="[[ selectedProduct.data.image ]]" alt="">
+        </template>
+        
+        <div class="product-info">
+          <span class="product-name">[[ selectedProduct.data.name  ]]</span>
+          <div class="product-datum">
+            <span>
+              <svg-icon icon="calendar"></svg-icon>
+              [[ selectedProduct.data.stringDate ]]
+            </span>
+            <span>
+              <svg-icon icon="pointer"></svg-icon>
+              [[ config_AppName ]]
+            </span>
+            <span>
+              <svg-icon icon="ticket"></svg-icon>
+              [[ i18n(&apos;ADULTS_FROM&apos;) ]] &#xA3;[[ selectedProduct.data.prices.base ]]
+            </span>
+          </div>
+          <span class="product-description">[[ selectedProduct.data.description ]]</span>
+        </div>
+
+    </div>
+
+  </template>
+</dom-module>
+<dom-module id="main-page-style" assetpath="../pages/main-page/">
+  <template>
+    <style>
+     
+      :host {
+        height: 100%;
+        width: 100%;
+        margin: 0;
+        padding: 0;
+        position: absolute;
+        top: 0;
+        left: 0;
+      }
+      
+      header {
+        width: 100%;
+        height: auto;
+        min-height: 60px;
+        display: block;
+        box-sizing: border-box;
+        position: relative;
+        background-color: var(--header-background-color, #F8F8F8);
+        margin: 0 auto;
+      }
+      
+      header > div {
+        width: 100%;
+        height: auto;
+        max-width: 980px;
+        margin: 0 auto
+      }
+      
+      .hero {
+        width: 100%;
+        overflow: hidden;
+        height: auto;
+        min-height: 60px;
+        display: block;
+        box-sizing: border-box;
+        position: relative;
+        background-color: var(--hero-background-color, #2d2d2d);
+        box-shadow: inset 0px 0px 10px var(--hero-shadow-color, #191818);
+        color: var(--hero-text-color, #fff);
+      }
+      
+      .hero > div {
+        height: auto;
+        min-height: 60px;
+        max-width: 980px;
+        /*width: calc(100% + 20px);
+        right: 10px;*/
+        position: relative;
+        margin: 0 auto;
+      }
+      
+      .hero::after {
+        content: '';
+        width: 0;
+        height: 0;
+        border-style: solid;
+        border-width: 10px 10px 0 10px;
+        border-color: var(--hero-shadow-color, #191818) transparent transparent transparent;
+        position: absolute;
+        bottom: -10px;
+        left: 50%;
+        -webkit-transform: translateX(-50%);
+                transform: translateX(-50%);
+        z-index: 100;
+      }
+      
+      nav {
+        width: 100%;
+        height: auto;
+        display: block;
+        position: relative;
+        overflow: visible;
+        background-color: var(--nav-background-color, #542e07);
+        color: var(--nav-text-color, #fff);
+        border-top: var(--nav-border-top, none);
+        border-bottom: var(--nav-border-bottom, none);
+      }
+      
+      .pages {
+        width: 100%;
+        height: 100%;
+        display: block;
+        max-width: 980px;
+        margin: 0 auto;
+        padding: 32px 54px;
+        box-sizing: border-box;
+        position: relative;
+      }
+      
+      paper-material {
+        z-index: -1;
+        max-width: 980px;
+        width: 100%;
+        margin: 0 auto;
+        top: 0;
+        height: 100%;
+        background-color: var(--page-background-color, #fff);
+        position: fixed;
+        left: 50%;
+        -webkit-transform: translateX(-50%);
+                transform: translateX(-50%);
+      }
+      
+      @media all and (max-width: 520px) {
+        .pages {
+          padding: 28px 8px;
+        }
+      }
+
+    </style>
+  </template>
+</dom-module><dom-module id="main-page" assetpath="../pages/main-page/">
+  <template>
+    <style is="custom-style" include="main-page-style"></style>
+
+    <header>
+      <div>
+        <oval-header class="header"></oval-header>
+      </div>
+    </header>
+    
+    <nav>
+      <content select=".nav"></content>
+    </nav>
+    
+    <section class="hero">
+      <div>
+        <content select=".hero"></content>
+      </div>
+    </section>
+    
+    <section class="pages">
+      <paper-material elevation="1"></paper-material>
+      <content select=".pages"></content>
+    </section>
+    
+
+  </template>
+</dom-module>
+<dom-module id="invite-page-style" assetpath="../pages/invite-page/">
+  <template>
+    <style>
+      :host {
+        height: 100%;
+        display: block;
+      }
+    </style>
+  </template>
+</dom-module><dom-module id="plain-header-style" assetpath="../components/plain-header/">
+  <template>
+    <style>
+      :host {
+        text-align: center;
+        margin-bottom: 0;
+        display: block;
+        color: #414141;
+        width: 100%;
+        max-width: 100%;
+      }
+      
+      header {
+        display: inline-block;
+        height: auto;
+        padding: 0 10px;
+      }
+      
+      .title {
+        font-size: 1rem;
+        font-weight: bold;
+        letter-spacing: 0.025rem;
+        text-align: center;
+        text-transform: var(--plain-header-text-transform, uppercase);
+        height: auto;
+      }
+      
+      :host[disabled] {
+        opacity: 0.3;
+      }
+      
+      :host[uppercase] .title {
+        text-transform: uppercase;
+      }
+      
+      :host[lowercase] .title {
+        text-transform: lowercase;
+      }
+      
+      :host[noTransform] .title {
+        text-transform: none;
+      }
+      
+      .subtitle {
+        font-size: 0.75rem;
+        line-height: 1.05rem;
+        height: auto;
+        margin-top: 0.5rem;
+      }
+      
+      .subtitle:empty {
+        display: none;
+      }
+      
+      :host.left * {
+        text-align: left !important;
+        padding-left: 0;
+      }
+      
+      :host.right * {
+        text-align: right !important;
+        padding-right: 0;
+      }
+      
+      /*.subtitle {
+        max-width: 470px;
+      }*/
+      
+      .subtitle ::content > * {
+        padding: 0;
+      }
+      
+      svg-icon {
+        display: block;
+        margin: 0 auto;
+        margin-bottom: 10px;
+        --svg-icon-height: 40px;
+        --svg-icon-width: 40px;
+        --svg-icon-parent-height: 40px;
+        --svg-icon-parent-width: 40px;
+        width: 45px;
+      }
+      
+      @media all and (max-width: 520px) {
+        header {
+          padding: 0 10px !important;
+        }
+      }
+      
+    </style>
+  </template>
+</dom-module><!-- Components -->
+<dom-module id="plain-header" assetpath="../components/plain-header/">
+  <template>
+    <style is="custom-style" include="plain-header-style"></style>
+    
+    <header class$="prepay [[ userHasJoined(state) ]]">
+      <template is="dom-if" if="[[ icon ]]">
+        <svg-icon icon="[[ icon ]]"></svg-icon>
+      </template>
+      <div class="title">
+        [[ title ]]
+      </div>
+      <div class="subtitle"><content></content></div>
+    </header>
+    
+  </template>
+</dom-module>
+<dom-module id="info-message-style" assetpath="../components/info-message/">
+  <template>
+    <style>
+      :host {
+        display: block;
+        color: var(--info-message-color, #000);
+      }
+      
+      .info {
+        font-size: 12px;
+        line-height: 1.5;
+        padding: var(--info-message-padding, 10px);
+      }
+      
+      svg-icon {
+        --svg-icon-height: 12px;
+        --svg-icon-width: 12px;
+        --svg-icon-parent-height: 12px;
+        --svg-icon-parent-width: 12px;
+        vertical-align: middle;
+        margin-top: -5.5px;
+        margin-right: 2px;
+      }
+      
+    </style>
+  </template>
+</dom-module><dom-module id="info-message" assetpath="../components/info-message/">
+  <template>
+    <style is="custom-style" include="info-message-style"></style>
+    
+    <div class="info">
+      <svg-icon icon="info"></svg-icon>
+      <content></content>
+    </div>
+    
+  </template>
+</dom-module>
+<dom-module id="group-promotion-style" assetpath="../components/group-promotion/">
+  <template>
+    <style>
+      :host {
+        display: block;
+        color: #e27a3e;
+      }
+      
+      [hidden] {
+        display: none !important;
+      }
+      
+      .promotion {
+        box-sizing: border-box;
+        min-height: 54px;
+        width: 100%;
+        padding: 0 12px;
+        padding-left: 52px;
+        color: currentColor;
+        border: 2px solid rgba(255, 118, 51, 0.6);
+        position: relative;
+      }
+      
+      svg-icon {
+        position: absolute;
+        top: 45%;
+        -webkit-transform: translateY(-50%);
+                transform: translateY(-50%);
+        left: 16px;
+        --svg-icon-height: 54px;
+        --svg-icon-width: 20px;
+        --svg-icon-parent-height: 54px;
+        --svg-icon-parent-width: 20px;
+      }
+      
+      .promotion div {
+        display: inline-block;
+        height: 54px;
+        line-height: 54px;
+      }
+      
+      .promotion .title {
+        text-transform: uppercase;
+        white-space: nowrap;
+        font-weight: bold;
+      }
+      
+      .promotion .invite-more {
+        white-space: nowrap;
+        font-weight: bold;
+      }
+      
+      .promotion .discount {
+        font-size: 16px;
+        display: inline-block;
+        height: 54px;
+        line-height: 54px;
+      }
+      
+      info-message {
+        display: none;
+      }
+
+      @media all and (max-width: 850px) {
+        .promotion {
+          padding-right: 6px;
+          padding-top: 2px;
+          padding-bottom: 2px; 
+        }
+        
+        .promotion .title {
+          display: none;
+        }
+        
+        .promotion .discount {
+          display: block;
+          height: 20px;
+          line-height: 20px;
+          padding-top: 6px;
+        }
+        
+        .promotion .discount.message {
+          font-size: 12px;
+          padding-top: 0;
+        }
+      }
+      
+      @media all and (max-width: 660px) {
+        .promotion div {
+          height: 20px;
+          line-height: 20px;
+          padding-top: 2px;
+          padding-bottom: 2px;
+          display: block;
+        }
+      }
+
+      @media all and (max-width: 530px) {
+        .promotion div {
+          display: inline;
+        }
+      }
+      
+      @media all and (max-width: 430px) {
+        .promotion .info,
+        .promotion .invite-more {
+          font-size: 14px;
+        } 
+      }
+        
+      @media all and (max-width: 360px) {
+        .promotion .discount {
+          width: 194px;
+          padding-top: 3px;
+        }
+        
+        .promotion .discount.message {
+          display: none;
+        }
+        
+        info-message {
+          display: block;
+          position: absolute;
+          top: 46px;
+          left: 0;
+          color: currentColor;
+        }
+        
+        :host {
+          padding-bottom: 8px;
+        }
+      }
+    </style>
+  </template>
+</dom-module><dom-module id="group-promotion" assetpath="../components/group-promotion/">
+  <template>
+    <style is="custom-style" include="group-promotion-style"></style>
+    
+      <div class="promotion">
+        
+        <svg-icon icon="discount"></svg-icon>
+
+        <div hidden$="[[ selectedProduct_CurrentPromotion.reached ]]">
+          <div class="title">[[ i18n(&apos;GROUP_PROMOTION&apos;) ]] </div>
+          <div class="info">[[ selectedProduct_CurrentPromotion.message ]]</div>
+          <div class="invite-more">([[ selectedProduct_CurrentPromotion.inviteMore ]])</div>
+        </div>
+
+        <div hidden$="[[ !selectedProduct_CurrentPromotion.reached ]]">
+          <div class="info">[[ selectedProduct_CurrentPromotion.message ]]</div>
+          <div class="discount message">[[ i18n(&apos;DISCOUNT_APPLIED_WHEN&apos;) ]]</div>
+          <info-message>[[ i18n(&apos;DISCOUNT_APPLIED_WHEN&apos;) ]]</info-message>
+        </div>
+      </div>
+    
+  </template>
+</dom-module>
+<dom-module id="member-initial-style" assetpath="../components/member-initial/">
+  <template>
+    <style>
+      :host {
+        display: inline-block;
+      }
+      
+      :host * {
+        box-sizing: border-box;
+      }
+      
+      .member-initial {
+        width: var(--member-initial-size, 54px);
+        height: var(--member-initial-size, 54px);
+        line-height: var(--member-initial-size, 54px);
+        text-align: center;
+        background-color: #542e07;
+        color: #fff;
+        border-radius: var(--member-initial-border-radius, 0);
+        @apply(--member-initial-theme);
+      }
+      
+      .member-initial.group-leader {
+        background-color: #89c9c9;
+        @apply(--member-initial-leader-theme);
+      }
+      
+      .member-initial.disabled{
+        background-color: #d4d2d0;
+        color: #fff;
+        border: none;
+      }
+      
+      
+    </style>
+  </template>
+</dom-module><dom-module id="member-initial" assetpath="../components/member-initial/">
+  <template>
+    <style is="custom-style" include="member-initial-style"></style>
+
+    <div class$="member-initial [[ useStyle(isGroupLeader, &apos;group-leader&apos;) ]] [[ useStyle(disabled, &apos;disabled&apos;) ]]">[[ acroName(value) ]]</div>
+    
+  </template>
+</dom-module>
+<dom-module id="existing-members-style" assetpath="../components/existing-members/">
+  <template>
+    <style>
+      :host {
+        display: block;
+      }
+      
+      :host * {
+        box-sizing: border-box;
+      }
+      
+      .member {
+        box-sizing: content-box;
+        height: 54px;
+        /*width: 100%;*/
+        display: -webkit-box;
+        display: -ms-flexbox;
+        display: flex;
+        -ms-flex-flow: row nowrap;
+            flex-flow: row nowrap;
+        padding: 8px;
+      }
+      
+      .member-name {
+        color: #888;
+        -webkit-box-flex: 1;
+            -ms-flex: 1;
+                flex: 1;
+        height: 54px;
+        line-height: 54px;
+        margin: 0 26px;
+        overflow: hidden;
+        text-overflow: ellipsis;
+        position: relative;
+      }
+      
+      .member-name span {
+        display: none;
+      }
+      
+      @media all and (max-width: 500px) {
+        .member {
+          padding: 8px 0;
+          padding-right: 8px;
+        }
+        
+        .member-name {
+          margin: 0 10px 0 14px;
+        }
+      }
+    </style>
+  </template>
+</dom-module><dom-module id="existing-members" assetpath="../components/existing-members/">
+  <template>
+    <style is="custom-style" include="existing-members-style"></style>
+    
+    <template is="dom-repeat" items="[[ members_List ]]" as="member">
+      <template is="dom-if" if="[[ !isGroupLeader(member) ]]">
+        <div class="member" style$="background-color: [[ setBackground(index) ]]">
+          <member-initial value="[[ showMember(member, user.data) ]]" disabled></member-initial>
+          <div class="member-name">[[ showMember(member, user.data) ]]</div>
+        </div>
+      </template>
+    </template>
+    
+  </template>
+</dom-module>
+<dom-module id="invitee-list-style" assetpath="../components/invitee-list/">
+  <template>
+    <style>
+      :host {
+        display: block;
+      }
+      
+      .member {
+        height: 54px;
+        /*width: 100%;*/
+        display: -webkit-box;
+        display: -ms-flexbox;
+        display: flex;
+        -ms-flex-flow: row nowrap;
+            flex-flow: row nowrap;
+        padding: 8px;
+      }
+      
+      .member-name {
+        -webkit-box-flex: 1;
+            -ms-flex: 1;
+                flex: 1;
+        height: 54px;
+        line-height: 54px;
+        margin: 0 26px;
+        overflow: hidden;
+        text-overflow: ellipsis;
+        position: relative;
+      }
+      
+      button {
+        background: none;
+        padding: 0;
+        border: 0;
+        outline: 0;
+        margin: 0;
+        cursor: pointer;
+      }
+      
+      .remove {
+        color: #333;
+        text-align: center;
+        text-transform: none;
+        border-radius: 0;
+        padding: 6px 12px 6px 0;
+        margin: 0;
+        line-height: 54px;
+        height: 54px;
+        width: 38px;
+        min-width: 0;
+      }
+      
+      .remove svg-icon {
+        --svg-icon-height: 26px;
+        --svg-icon-width: 24px;
+      }
+
+      @media all and (max-width: 500px) {
+        .member {
+          padding: 8px 0;
+        }
+        
+        .member-name {
+          margin: 0 10px 0 14px;
+        }
+      }
+    </style>
+  </template>
+</dom-module><!-- Polymer -->
+
+
+<!-- Components -->
+<dom-module id="invitee-list" assetpath="../components/invitee-list/">
+  <template>
+    <style is="custom-style" include="invitee-list-style"></style>
+
+    <template is="dom-repeat" items="[[ invite.list ]]" as="member">
+
+      <div class="member" style$="background-color: [[ setBackground(index) ]]">
+        <member-initial value="[[ member.value ]]"></member-initial>
+        <div class="member-name">[[ member.value ]]</div>
+        <button class="remove" on-click="autoDispatch" data-type="REMOVE_INVITE" data-index$="[[ index ]]">
+          <svg-icon icon="cross-circle"></svg-icon>  
+        </button>
+      </div>
+
+    </template>
+
+  </template>
+</dom-module>
+<dom-module id="invite-buttons-style" assetpath="../components/invite-buttons/">
+  <template>
+    <style>
+      :host {
+        display: block;
+        --iron-icon-width: 16px;
+      }
+      
+      :host * {
+        box-sizing: border-box;
+      }
+      
+      .input-container {
+        height: 54px;
+        margin-bottom: 6px;
+      }
+      
+      .invite-btns-container {
+        max-width: 260px;
+        height: 54px;
+      }
+      
+      
+      /*----- Input -----*/
+
+      #emailInputWrapper, #phoneInput {
+        --input-invalid-underline-color: var(--input-focus-underline-color, #222) !important;
+        --input-height: 54px;
+      }
+      
+      #emailInputWrapper([invalid]) .underline{
+        background-color: var(--input-focus-underline-color, red);
+        -webkit-transform: scale(1);
+                transform: scale(1);
+        -webkit-transition: all 0.25s ease 0s;
+        transition: all 0.25s ease 0s;
+      }
+      
+      #emailInputWrapper([invalid]) .input-background {
+        background-color: var(--input-focus-background-color, --input-background-color);
+        border: var(--input-focus-border, --input-border);
+        box-shadow: var(--input-focus-box-shadow);
+      }
+      
+      #emailInputWrapper([invalid][focused]) .input-background {
+        background-color: var(--input-focus-background-color, --input-focus-background-color);
+        border: var(--input-focus-border, --input-focus-border);
+        box-shadow: var(--input-focus-box-shadow, --input-focus-box-shadow);
+      }
+      
+      
+      /*----- Add Button -----*/
+      
+      button {
+        text-align: center;
+        border-radius: 0;
+        padding: 0;
+        margin: 0;
+        line-height: 54px;
+        height: 54px;
+        cursor: pointer;
+      }
+      
+      button.add-user {
+        min-width: 90px;
+        padding: 0;
+        margin-left: 6px;
+        color: #fff;
+        font-size: 16px;
+        text-transform: uppercase;
+        border: none;
+        background-color:var(--success-color, #2DCC70);
+      }
+      
+      button.add-user[disabled] {
+        background-color: var(--disabled-button-color, #c8c4c0);
+      }
+      
+      button.add-user span {
+        pointer-events: none;
+        display: inline-block;
+        -webkit-transform: translateY(1px);
+                transform: translateY(1px);
+      }
+      
+      .add-user svg-icon {
+        --svg-icon-height: 14px;
+        --svg-icon-width: 32px;
+        --svg-icon-parent-height: 54px;
+        --svg-icon-parent-width: 32px;
+      }
+
+      /*----- Invite By Buttons -----*/
+      
+      .invite-btns-container {
+        display: -webkit-box;
+        display: -ms-flexbox;
+        display: flex;
+        -ms-flex-flow: row nowrap;
+            flex-flow: row nowrap;
+        -webkit-box-pack: justify;
+            -ms-flex-pack: justify;
+                justify-content: space-between;
+      }
+      
+      .email-invite-btn,
+      .mobile-invite-btn {
+        -webkit-box-flex: 1;
+            -ms-flex: 1;
+                flex: 1;
+        height: 54px;
+        border: none;
+        cursor: pointer;
+        overflow: hidden;
+        text-transform: uppercase;
+      }
+      
+      .email-invite-btn.selected,
+      .mobile-invite-btn.selected {
+        background-color: var(--secondary-button-color, #89c9c9);
+        color: #fff;
+        border: 1px solid var(--secondary-button-color, #89c9c9);
+      }
+      
+      .email-invite-btn.unselected,
+      .mobile-invite-btn.unselected {
+        background-color: #fff;
+        color: var(--button-disabled-color, #C8C4C0);
+        border: 1px solid var(--button-disabled-color, #C8C4C0);
+      }
+      
+      .email-invite-btn.unselected {
+        border-right: none;
+      }
+      
+      .mobile-invite-btn.unselected {
+        border-left: none;
+      }
+      
+      .email-invite-btn svg-icon {
+        --svg-icon-height: 18px;
+        --svg-icon-width: 32px;
+        --svg-icon-parent-height: 54px;
+        --svg-icon-parent-width: 32px;
+      }
+
+      .mobile-invite-btn svg-icon {
+        --svg-icon-height: 50px;
+        --svg-icon-width: 32px;
+        --svg-icon-parent-height: 54px;
+        --svg-icon-parent-width: 32px;
+      }
+      
+      .email-invite-btn div,
+      .mobile-invite-btn div {
+        pointer-events: none;
+        display: inline-block;
+        height: 32px;
+        vertical-align: middle;
+        -webkit-transform: translateY(1px);
+                transform: translateY(1px);
+        color: inherit;
+      }
+      
+     .invite-by {
+        pointer-events: none;
+        display: block;
+        font-size: 12px;
+        line-height: 14px;
+      }
+      
+      .email, .sms {
+        pointer-events: none;
+        display: block;
+        font-size: 16px;
+        line-height: 18px;
+        font-weight: bold;
+      }
+      
+      #email-container.hide,
+      #phone-container.hide {
+        display: none;
+      }
+      
+      #email-container.display,
+      #phone-container.display {
+        display: -webkit-box !important;
+        display: -ms-flexbox !important;
+        display: flex !important;
+      }
+     
+      @media all and (max-width: 520px) {
+        
+        button.add-user {
+          min-width: 54px;
+        }
+        
+        button.add-user span {
+          display: none;
+        }
+        
+        .invite-btns-container {
+          max-width: 100%
+        }
+      }
+      
+    </style>
+  </template>
+</dom-module><!--
+@license
+Copyright (c) 2015 The Polymer Project Authors. All rights reserved.
+This code may only be used under the BSD style license found at http://polymer.github.io/LICENSE.txt
+The complete set of authors may be found at http://polymer.github.io/AUTHORS.txt
+The complete set of contributors may be found at http://polymer.github.io/CONTRIBUTORS.txt
+Code distributed by Google as part of the polymer project is also
+subject to an additional IP rights grant found at http://polymer.github.io/PATENTS.txt
+--><!--
+iron-request can be used to perform XMLHttpRequests.
+
+    <iron-request id="xhr"></iron-request>
+    ...
+    this.$.xhr.send({url: url, params: params});
+-->
+
+<!--
+@license
+Copyright (c) 2015 The Polymer Project Authors. All rights reserved.
+This code may only be used under the BSD style license found at http://polymer.github.io/LICENSE.txt
+The complete set of authors may be found at http://polymer.github.io/AUTHORS.txt
+The complete set of contributors may be found at http://polymer.github.io/CONTRIBUTORS.txt
+Code distributed by Google as part of the polymer project is also
+subject to an additional IP rights grant found at http://polymer.github.io/PATENTS.txt
+--><!--
+The `iron-ajax` element exposes network request functionality.
+
+    <iron-ajax
+        auto
+        url="https://www.googleapis.com/youtube/v3/search"
+        params='{"part":"snippet", "q":"polymer", "key": "YOUTUBE_API_KEY", "type": "video"}'
+        handle-as="json"
+        on-response="handleResponse"
+        debounce-duration="300"></iron-ajax>
+
+With `auto` set to `true`, the element performs a request whenever
+its `url`, `params` or `body` properties are changed. Automatically generated
+requests will be debounced in the case that multiple attributes are changed
+sequentially.
+
+Note: The `params` attribute must be double quoted JSON.
+
+You can trigger a request explicitly by calling `generateRequest` on the
+element.
+
+@demo demo/index.html
+@hero hero.svg
+-->
+
+
+<!--
+@license
+Copyright (c) 2015 The Polymer Project Authors. All rights reserved.
+This code may only be used under the BSD style license found at http://polymer.github.io/LICENSE.txt
+The complete set of authors may be found at http://polymer.github.io/AUTHORS.txt
+The complete set of contributors may be found at http://polymer.github.io/CONTRIBUTORS.txt
+Code distributed by Google as part of the polymer project is also
+subject to an additional IP rights grant found at http://polymer.github.io/PATENTS.txt
+-->
+<dom-module id="phone-input-style" assetpath="../components/phone-input/">
+  <template>
+    <style>
+      :host {
+        display: inline-block;
+        width: 100%;
+        font-size: var(--input-font-size, 1rem);
+        z-index: 5;
+      }
+      
+      /*---------- Positioning ----------*/
+      
+      label {
+        display: inline-block;
+        color: var(--input-label-color, #000);
+        font-size: var(--input-label-font-size, 0.75em);
+        line-height: 1.75;
+        padding: 0;
+        padding-left: var(--input-label-padding-left, 1.333em);
+        @apply(--input-label-theme);
+      }
+      
+      .container {
+        position: relative;
+        padding: 0 var(--input-padding-left-right, 0.875em);
+        font-size: inherit;
+        /*width: 100%;*/
+        color: var(--input-text-color, #000);
+        height: var(--input-height, 3.375em);
+        line-height: var(--input-height, 3.375em);
+      }
+
+      .select-container {
+        position: absolute;
+        bottom: 0;
+        left: var(--input-padding-left-right, 1.333em);
+        width: 65px;
+        height: 100%;
+      }
+      
+      .input-container {
+        margin-left: 65px;
+        height: 100%;
+      }
+      
+      /*---------- Label Display ----------*/
+      
+      :host([no-label]) label {
+        display: none;
+      }
+      
+      /*---------- Input Reset ----------*/
+      
+      input,
+      select,
+      textarea {
+        margin:0;
+        border:0;
+        padding:0;
+        display:inline-block;
+        vertical-align:middle;
+        white-space:normal;
+        background:none;
+        line-height:1;
+        font-size: inherit;
+        font-family: inherit;
+
+        border-radius: 0;
+        -webkit-appearance: none;
+        -moz-appearance: none;
+        
+        outline: 0;
+        box-shadow: none;
+        resize: none;
+      }
+      
+      select::-ms-expand {
+        display: none; 
+      }
+      
+      /*---------- Input Style ----------*/
+
+      select, input {
+        color: var(--input-text-color, #000);
+        box-sizing: border-box;
+        position: relative;
+        z-index: 6;
+        width: 100%;
+        text-align: var(--input-text-align, left);
+      }
+      
+      select {
+        height: 100%;
+        line-height: 100%;
+      }
+      
+      input {
+        height: calc(100% - 8px);
+        line-height: 1;
+      }
+      
+      ::-webkit-input-placeholder {
+        color: var(--input-placeholder-color);
+      }
+
+      :-moz-placeholder {
+        color: var(--input-placeholder-color);
+      }
+
+      ::-moz-placeholder {
+        color: var(--input-placeholder-color);
+      }
+
+      :-ms-input-placeholder {
+        color: var(--input-placeholder-color);
+      }
+      
+      .underline,
+      .underline-unfocused {
+        position: absolute;
+        bottom: calc(var(--input-height, 3.375em) * 0.18);
+        left: var(--input-padding-left-right, 0.875em);
+        right: var(--input-padding-left-right, 0.875em);
+      }
+      
+      
+      .underline-unfocused {
+        background-color: var(--input-underline-color, #B3E1F5);
+        height: 1px;
+        z-index: 5;
+        display: var(--input-underline-display, block);
+      }
+      
+      .input-background {
+        position: absolute;
+        z-index: 0 !important;
+        top: 0;
+        bottom: 0;
+        left: 0;
+        right: 0;
+        border-radius: var(--input-border-radius, none);
+        background-color: var(--input-background-color, #fff);
+        border: var(--input-border, 2px solid #B3E1F5);
+      }
+      
+      /*---------- Input Focus ----------*/
+      
+      .underline {
+        background-color: var(--input-focus-underline-color, #222);
+        height: 2px;
+        z-index: 6;
+        -webkit-transform: scale(0, 1);
+                transform: scale(0, 1);
+        -webkit-transition: all 0s;
+        transition: all 0s;
+        display: var(--input-underline-display, block);
+      }
+      
+      :host([focused]) .underline {
+        -webkit-transform: scale(1);
+                transform: scale(1);
+        -webkit-transition: all 0.25s ease 0s;
+        transition: all 0.25s ease 0s;
+      }
+      
+      :host([focused]) .input-background {
+        background-color: var(--input-focus-background-color, --input-background-color);
+        border: var(--input-focus-border, --input-border);
+        box-shadow: var(--input-focus-box-shadow);
+      }
+      
+      /*---------- Input Disabled ----------*/
+      
+      :host([disabled]) * {
+        opacity: var(--input-disabled-opacity, 0.8);
+      }
+      
+      :host([disabled]) select, :host([disabled]) input {
+        color: red;
+        border-bottom: none;
+      }
+      
+      :host([disabled]) .input-background {
+        background-color: var(--input-disabled-background-color);
+        border: var(--input-disabled-border);
+      }
+      
+      /*---------- Input Invalid ----------*/
+      
+      :host([invalid]) .underline{
+        background-color: var(--input-invalid-underline-color, red);
+        -webkit-transform: scale(1);
+                transform: scale(1);
+        -webkit-transition: all 0.25s ease 0s;
+        transition: all 0.25s ease 0s;
+      }
+      
+      :host([invalid]) .input-background {
+        background-color: var(--input-invalid-background-color, --input-background-color);
+        border: var(--input-invalid-border, --input-border);
+        box-shadow: var(--input-invalid-box-shadow);
+      }
+      
+      :host([invalid][focused]) .input-background {
+        background-color: var(--input-invalid-background-color, --input-focus-background-color);
+        border: var(--input-invalid-border, --input-focus-border);
+        box-shadow: var(--input-invalid-box-shadow, --input-focus-box-shadow);
+      }
+      
+      /*---------- Select Styles ----------*/
+      
+      .select-container:after {
+        content: '';  
+        width: 0; 
+        height: 0; 
+        position: absolute;
+        top: 46%;
+        right: 8px;
+        border-left: 5px solid transparent;
+        border-right: 5px solid transparent;
+        border-top: 6px solid #a9a9a9;
+        pointer-events: none;
+        z-index: 8;
+      }
+      
+      select {
+        overflow-y: auto;
+        z-index: 6;
+        cursor: pointer;
+      }
+      
+      select::-ms-expand {
+        display: none; 
+      }
+
+      select:focus{
+        padding-left: 0;
+        box-shadow: 0 2px 2px 0 rgba(0, 0, 0, 0.14), 0 1px 5px 0 rgba(0, 0, 0, 0.12), 0 3px 1px -2px rgba(0, 0, 0, 0.2);
+        min-height:50px;
+        height: auto;
+        z-index: 9;
+        background-color: white;
+      }
+      
+      select option {
+        height: 1.25em;
+        padding: 1.25em 0.5em;
+        display: block;
+        width: 200%;
+      }
+      
+      select option[disabled] {
+        color: var(--input-placeholder-color);
+      }
+    </style>
+  </template>
+</dom-module><!--
+@license
+Copyright (c) 2015 The Polymer Project Authors. All rights reserved.
+This code may only be used under the BSD style license found at http://polymer.github.io/LICENSE.txt
+The complete set of authors may be found at http://polymer.github.io/AUTHORS.txt
+The complete set of contributors may be found at http://polymer.github.io/CONTRIBUTORS.txt
+Code distributed by Google as part of the polymer project is also
+subject to an additional IP rights grant found at http://polymer.github.io/PATENTS.txt
+--><!-- Polymer -->
+<!-- Styles --><dom-module id="phone-input" assetpath="../components/phone-input/">
+  <template>
+    <style is="custom-style" include="phone-input-style"></style>
+    
+    [[ _renderOptions(config_CountryCodes) ]]
+    
+    <label>[[ label ]]</label>
+    
+    <div class="container">
+      <div class="select-container">
+        <select id="countryCode" value="{{ countryCode::change }}"></select>
+      </div>
+      <div class="input-container">
+        <input id="phoneNumber" value="{{ phoneNumber::input }}" title="This field should be a phone number between 9 and 11 digits long." minlength="9" maxlength="11" type="tel" allowed-pattern="[0-9]" pattern="[0-9]{9,11}" label$="[[ label ]]" placeholder$="[[ placeholder ]]" disabled$="[[ disabled ]]" required$="[[ required ]]">
+      </div>
+      <span class="underline"></span>
+      <span class="underline-unfocused"></span>
+      <div class="input-background"></div>
+    </div>
+    
+    
+  </template>
+</dom-module>
+<dom-module id="wrapper-style" assetpath="../components/input-wrapper/">
+  <template>
+    <style>
+      :host {
+        display: inline-block;
+        width: 100%;
+        font-size: var(--input-font-size, 1rem);
+        z-index: 5;
+      }
+      
+      /*---------- Positioning ----------*/
+      
+      label {
+        display: inline-block;
+        color: var(--input-label-color, black);
+        font-size: var(--input-label-font-size, 0.75em);
+        line-height: 1.75;
+        padding: 0;
+        padding-left: var(--input-label-padding-left, 1.333em);
+        @apply(--input-label-theme);
+      }
+      
+      .container {
+        position: relative;
+        font-size: inherit;
+        color: var(--input-text-color, black);
+        height: var(--input-height, 3.375em);
+        line-height: var(--input-height, 3.375em);
+        padding: 0 var(--input-padding-left-right, 0.875em);
+        /*width: 100%;*/
+      }
+      
+      .container > *,
+      .container ::content > * {
+        vertical-align: middle;
+      }
+      
+      .container ::content > * {
+        display: inline-block !important;
+        position: relative;
+        z-index: 2;
+      }
+      
+      .container ::content > *:not(input):not(select):not(textarea) {
+        text-align: center;
+      }
+      
+      /*---------- Label Display ----------*/
+      
+      :host([no-label]) label,
+      label:empty {
+        display: none;
+      }
+      
+      /*---------- Input Reset ----------*/
+      
+      .container ::content > input,
+      .container ::content > select,
+      .container ::content > textarea {
+        margin:0;
+        border:0;
+        padding:0;
+        display:inline-block;
+        vertical-align:middle;
+        white-space:normal;
+        background:none;
+        line-height:1;
+        font-size: inherit;
+        font-family: inherit;
+
+        border-radius: 0;
+        -webkit-appearance: none;
+        -moz-appearance: none;
+        
+        outline: 0;
+        box-shadow: none;
+        resize: none;
+        box-sizing: border-box;
+        
+        /*---------- Shared Styles ----------*/
+        
+        position: relative;
+        z-index: 6;
+        width: 100%;
+        color: var(--input-text-color, black);
+        text-align: var(--input-text-align, left) !important;
+      }
+      
+      .container ::content > select::-ms-expand {
+        display: none; 
+      }
+      
+      .container ::content > ::-webkit-input-placeholder {
+        color: var(--input-placeholder-color);
+      }
+
+      .container ::content > :-moz-placeholder {
+        color: var(--input-placeholder-color);
+      }
+
+      .container ::content > ::-moz-placeholder {
+        color: var(--input-placeholder-color);
+      }
+
+      .container ::content > :-ms-input-placeholder {
+        color: var(--input-placeholder-color);
+      }
+      
+      /*---------- Unfocused Style ----------*/
+      
+      .underline,
+      .underline-unfocused {
+        position: absolute;
+        left: var(--input-padding-left-right, 0.875em);
+        right: var(--input-padding-left-right, 0.875em);
+      }
+      
+      .underline-unfocused {
+        bottom: calc(var(--input-height, 3.375em) * 0.18);
+        background-color: var(--input-underline-color, #B3E1F5);
+        height: 1px;
+        z-index: 5;
+        display: var(--input-underline-display, block);
+      }
+      
+      .input-background {
+        position: absolute;
+        z-index: 0 !important;
+        top: 0;
+        bottom: 0;
+        left: 0;
+        right: 0;
+        border-radius: var(--input-border-radius, none);
+        background-color: var(--input-background-color, white);
+        border: var(--input-border, 2px solid #B3E1F5);
+      }
+      
+      /*---------- Focus Style ----------*/
+      
+      .underline {
+        bottom: calc(var(--input-height, 3.375em) * 0.18 - 1px);
+        background-color: var(--input-focus-underline-color, #222);
+        height: 2px;
+        z-index: 6;
+        -webkit-transform: scale(0, 1);
+                transform: scale(0, 1);
+        -webkit-transition: all 0s;
+        transition: all 0s;
+        display: var(--input-underline-display, block);
+      }
+      
+      :host([focused]) .underline {
+        -webkit-transform: scale(1);
+                transform: scale(1);
+        -webkit-transition: all 0.25s ease 0s;
+        transition: all 0.25s ease 0s;
+      }
+      
+      :host([focused]) .input-background {
+        background-color: var(--input-focus-background-color, --input-background-color);
+        border: var(--input-focus-border, --input-border);
+        box-shadow: var(--input-focus-box-shadow);
+      }
+      
+      /*---------- Disabled Style ----------*/
+      
+      :host([disabled]) ::content > input,
+      :host([readonly]) ::content > input,
+      :host([disabled]) ::content > select,
+      :host([readonly]) ::content > select,
+      :host([disabled]) ::content > textarea,
+      :host([readonly]) ::content > textarea {
+        opacity: var(--input-disabled-opacity, 0.8);
+      }
+      
+      :host([disabled]) .input-background,
+      :host([readonly]) .input-background {
+        background-color: var(--input-disabled-background-color, #ebeff2);
+        border: var(--input-disabled-border, none);
+      }
+      
+      :host([disabled]) .underline-unfocused,
+      :host([readonly]) .underline-unfocused,
+      :host([disabled]) .underline,
+      :host([readonly]) .underline {
+        display: none !important;
+      }
+      
+      /*---------- Invalid Style ----------*/
+      
+      :host([invalid]) .underline{
+        background-color: var(--input-invalid-underline-color, red);
+        -webkit-transform: scale(1);
+                transform: scale(1);
+        -webkit-transition: all 0.25s ease 0s;
+        transition: all 0.25s ease 0s;
+      }
+      
+      :host([invalid]) .input-background {
+        background-color: var(--input-invalid-background-color, --input-background-color);
+        border: var(--input-invalid-border, --input-border);
+        box-shadow: var(--input-invalid-box-shadow);
+      }
+      
+      :host([invalid][focused]) .input-background {
+        background-color: var(--input-invalid-background-color, --input-focus-background-color);
+        border: var(--input-invalid-border, --input-focus-border);
+        box-shadow: var(--input-invalid-box-shadow, --input-focus-box-shadow);
+      }
+      
+      /*---------- Suffix Style ----------*/
+      
+      .container ::content > [suffix] {
+        position: absolute;
+        right: var(--input-padding-left-right, 0.875em);;
+        bottom: 50%;
+        -webkit-transform: translateY(50%);
+                transform: translateY(50%);
+        z-index: 6;
+        width: 28px;
+        text-align: center;
+      }
+
+    </style>
+  </template>
+</dom-module><dom-module id="input-style" assetpath="../components/input-wrapper/">
+  <template>
+    <style>
+      /*---------- Input Style ----------*/
+
+      .container ::content > input {
+        height: calc(100% - 8px);
+        line-height: 1;
+      }
+      
+    </style>
+  </template>
+</dom-module><dom-module id="input-wrapper" assetpath="../components/input-wrapper/">
+  <template>
+    <style is="custom-style" include="wrapper-style input-style"></style>
+    
+    <label>[[ label ]]</label>
+    
+    <div class="container">
+      <content></content>
+      <span class="underline"></span>
+      <span class="underline-unfocused"></span>
+      <div class="input-background"></div>
+    </div>
+    
+  </template>
+</dom-module>
+<!-- Polymer -->
+<!-- Components -->
+<!-- Styles --><dom-module id="invite-buttons" assetpath="../components/invite-buttons/">
+  <template>
+    <style is="custom-style" include="invite-buttons-style"></style>
+
+    <form is="iron-form" data-action="addEmailInvite" data-callback="_emailClick" id="email-container" class$="input-container [[ useStyle(isEmail, &apos;display&apos;, &apos;hide&apos;) ]]">
+      <input-wrapper id="emailInputWrapper" invalid="{{ invalid }}" no-label="">
+        <input id="emailInput" type="email" name="email" value="{{ inviteeEmail }}" placeholder="[[ i18n(&apos;ADD_EMAIL&apos;) ]]" required>
+      </input-wrapper>
+      <button class="add-user" disabled$="{{ invalid }}">
+        <svg-icon icon="add-user"></svg-icon>
+        <span>Add</span>
+      </button>
+    </form>
+
+    <form is="iron-form" data-action="addMobileInvite" data-callback="_mobileClick" id="phone-container" class$="input-container [[ useStyle(isEmail, &apos;hide&apos;, &apos;display&apos;) ]]">
+      <phone-input id="phoneInput" name="phoneNumber" value="{{ inviteePhone }}" label="[[ i18n(&apos;ADD_MOBILE&apos;) ]]" placeholder="[[ i18n(&apos;ADD_MOBILE&apos;) ]]" invalid="{{ invalid }}" no-label="" required>
+      </phone-input>
+      <button class="add-user" disabled$="{{ invalid }}">
+        <svg-icon icon="add-user"></svg-icon>
+        <span>Add</span>
+      </button>
+    </form>
+
+    <div class="invite-btns-container">
+
+      <button class$="email-invite-btn [[ emailSelected(isEmail) ]]" on-click="_emailClick">
+        <svg-icon icon="email" class$="[[ emailSelected(isEmail) ]]"></svg-icon>
+        <div>
+          <span class="invite-by">[[ i18n(&apos;INVITE_BY&apos;) ]]</span>
+          <span class="email">EMAIL</span>
+        </div>
+      </button><!--
+   --><button class$="mobile-invite-btn [[ mobileSelected(isEmail) ]]" on-click="_mobileClick">
+        <svg-icon icon="mobile" class$="[[ mobileSelected(isEmail) ]]"></svg-icon>
+        <div>
+          <span class="invite-by">[[ i18n(&apos;INVITE_BY&apos;) ]]</span>
+          <span class="sms">SMS</span>
+        </div>
+      </button>
+
+    </div>
+
+  </template>
+</dom-module>
+<dom-module id="textarea-style" assetpath="../components/input-wrapper/">
+  <template>
+    <style>
+      .container {
+        height: auto !important;
+        line-height: 1 !important;
+      }
+      
+      /*---------- Textarea Style ----------*/
+      
+      .container ::content > textarea {
+        line-height: 1.5;
+        padding: calc((var(--input-height, 3.375em) - 1.5em) / 2) 0;
+      }
+      
+    </style>
+  </template>
+</dom-module><dom-module id="textarea-wrapper" assetpath="../components/input-wrapper/">
+  <template>
+    <style is="custom-style" include="wrapper-style textarea-style"></style>
+    
+    <label>[[ label ]]</label>
+    
+    <div class="container">
+      <content select="textarea"></content>
+      <span class="underline"></span>
+      <span class="underline-unfocused"></span>
+      <div class="input-background"></div>
+    </div>
+    
+  </template>
+</dom-module>
+<dom-module id="page-section-style" assetpath="../templates/page-section/">
+  <template>
+    <style>
+      :host {
+        width: 100%;
+        display: block;
+        margin-bottom: 2rem;
+        padding: 12px;
+        box-sizing: border-box;
+        background-color: var(--page-section-background-color, none);
+        border: var(--page-section-border, none)
+      }
+      
+      /*---------- Header - CENTER (Default) ----------*/
+      
+      .page-header {
+        display: -webkit-box;
+        display: -ms-flexbox;
+        display: flex;
+        -webkit-box-pack: center;
+            -ms-flex-pack: center;
+                justify-content: center;
+      }
+      
+      .header-container {
+        margin-bottom: 2rem;
+        display: -webkit-box;
+        display: -ms-flexbox;
+        display: flex;
+        -webkit-box-orient: vertical;
+        -webkit-box-direction: normal;
+            -ms-flex-direction: column;
+                flex-direction: column;
+        -webkit-box-align: center;
+            -ms-flex-align: center;
+                align-items: center;
+        width: 100%;
+      }
+      
+      .header-container:empty {
+        margin-bottom: 0;
+      }
+      
+      .header-container > ::content > * {
+        margin: 0;
+        max-width: 100%;
+      }
+      
+      :host.center .page-content > ::content > * {
+        margin: 0 auto;
+        margin-bottom: 1rem;
+      }
+      
+      :host.center .page-header {
+        -webkit-box-pack: center;
+            -ms-flex-pack: center;
+                justify-content: center;
+      }
+      
+      :host.center .header-container > ::content > * {
+        text-align: center;
+      }
+      
+      /*---------- Header - LEFT ----------*/
+      
+      :host.left .page-header {
+        -webkit-box-pack: start;
+            -ms-flex-pack: start;
+                justify-content: flex-start;
+      }
+      
+      :host.left .header-container {
+        -webkit-box-align: start;
+            -ms-flex-align: start;
+                    -ms-grid-row-align: flex-start;
+                align-items: flex-start;
+      }
+      
+      :host.left .header-container > ::content > * {
+        text-align: left;
+      }
+      
+      /*---------- Header - RIGHT ----------*/
+      
+      :host.right .page-header {
+        -webkit-box-pack: end;
+            -ms-flex-pack: end;
+                justify-content: flex-end;
+      }
+      
+      :host.right .header-container {
+        -webkit-box-align: end;
+            -ms-flex-align: end;
+                    -ms-grid-row-align: flex-end;
+                align-items: flex-end;
+      }
+      
+      :host.right .header-container > ::content > * {
+        text-align: right;
+      }
+      
+      /*---------- Content ----------*/
+      
+      .page-content {
+        display: block;
+      }
+      
+      .page-content > ::content > * {
+        margin-bottom: 1rem;
+      }
+      
+      
+      
+      @media all and (max-width: 520px) {
+        .page-header {
+          -webkit-box-pack: center !important;
+              -ms-flex-pack: center !important;
+                  justify-content: center !important;
+        }
+      }
+      
+    </style>
+  </template>
+</dom-module><dom-module id="page-section" assetpath="../templates/page-section/">
+  <template>
+    <style is="custom-style" include="page-section-style"></style>
+    
+      <header class="page-header">
+        <div class="header-container"><!--
+          --><content select=".header"></content><!--
+        --></div>
+      </header>
+      
+      <section class="page-content">
+        <content select=".content"></content>
+      </section>
+    
+  </template>
+</dom-module>
+<dom-module id="page-action-style" assetpath="../templates/page-action/">
+  <template>
+    <style>
+      :host {
+        width: 100%;
+        margin-bottom: 40px;
+        display: -webkit-box;
+        display: -ms-flexbox;
+        display: flex;
+        -webkit-box-pack: center;
+            -ms-flex-pack: center;
+                justify-content: center;
+      }
+      
+      :host ::content > * {
+        /*display: block;
+        margin: 0 auto !important;*/
+      }
+      
+      :host.left {
+        -webkit-box-pack: start;
+            -ms-flex-pack: start;
+                justify-content: flex-start;
+      }
+      
+      :host.right {
+        -webkit-box-pack: end;
+            -ms-flex-pack: end;
+                justify-content: flex-end;
+      }
+      
+      @media all and (max-width: 520px) {
+        :host {
+          -webkit-box-pack: center !important;
+              -ms-flex-pack: center !important;
+                  justify-content: center !important;
+        }
+      }
+      
+    </style>
+  </template>
+</dom-module><dom-module id="page-action" assetpath="../templates/page-action/">
+  <template>
+    <style is="custom-style" include="page-action-style"></style>
+    
+    <content></content>
+    
+  </template>
+</dom-module>
+<dom-module id="shared-button-style" assetpath="../styles/">
+  <template>
+    <style>      
+      
+      /* ---------- Button Styles ---------- */
+      
+      .button-primary {
+        outline: 0;
+        display: block;
+        cursor: pointer;
+        box-sizing: border-box;
+        width: var(--primary-button-width, auto);
+        min-width: var(--primary-button-min-width, 16.25rem);
+        font-weight: var(--primary-button-font-weight, 500);
+        padding: var(--primary-button-padding, 0 20px);
+        font-family: var(--primary-button-font-family, 'Oswald');
+        font-size: var(--primary-button-font-size, 1.25rem);
+        text-transform: var(--primary-button-text-transform, uppercase);
+        border: var(--primary-button-border, 2px solid #46474B);
+        border-radius: var(--primary-button-border-radius, 0);
+        -webkit-transition: var(--primary-button-transition, all 0.3s);
+        transition: var(--primary-button-transition, all 0.3s);
+        color: var(--primary-button-text-color, #46474B);
+        background-color: var(--primary-button-color, #fff);
+        vertical-align: middle;
+      }
+      
+      .button-primary * {
+        pointer-events: none;
+      }
+      
+      .button-primary:hover {
+        background-color: var(--primary-button-hover-color, #46474B);
+        border-color: var(--primary-button-border-color, #46474B);
+      }
+      
+      .button-primary[disabled] {
+        color: var(--primary-button-disabled-text-color, #fff);
+        background-color: var(--primary-button-disabled-color, #c8c4c0);
+      }
+      
+      .button-primary svg-icon {
+        --svg-icon-parent-height: 101%;
+        --svg-icon-parent-width: var(--primary-button-font-size, 1.25rem);;
+        --svg-icon-height: 100%;
+        --svg-icon-width: var(--primary-button-font-size, 1.25rem);;
+        vertical-align: middle;
+      }
+      
+      .button-primary.continue svg-icon {
+        margin-right: -16px;
+      }
+      
+      .button-primary.join,
+      .button-primary.leave {
+        display: inline-block;
+        margin: 0 4px 16px 4px;
+      }
+      
+      .button-primary.join {
+        background-color: #2DCC70;
+      }
+      
+      .button-primary.leave {
+        background-color: #c9c9c9;
+      }
+      
+      .button-primary:focus {
+        font-weight: normal;
+      }
+      
+      .button-secondary {
+        color: var(--secondary-button-text-color, #fff);
+        background-color: var(--secondary-button-color, #89c9c9);
+        text-align: center;
+        text-transform: none;
+        border-radius: var(--secondary-button-border-radius, 0);
+        padding: 0;
+        margin: 0;
+        line-height: 54px;
+        height: 54px;
+        width: 160px;
+      }
+      
+      .button-secondary.remove {
+        min-width: 0;
+        width: 38px;
+        padding: 6px 12px 6px 0;
+        margin-left: 0 !important;
+      }
+      
+      .button-secondary.remove svg-icon {
+        height: 100%;
+        --svg-icon-height: 26px;
+        --svg-icon-width: 24px;
+      }
+      
+      .button-secondary[disabled] {
+        color: var(--secondary-button-disabled-text-color, #fff);
+        background-color: var(--secondary-button-disabled-color, #c8c4c0);
+      }
+      
+      @media all and (max-width: 720px) {
+        
+        /*.button-secondary {
+          width: 100%;
+        }*/
+        
+        .button-secondary span{
+          display: none;
+        }
+      }
+
+    </style>
+  </template>
+</dom-module><!-- Polymer -->
+
+<!-- Components -->
+<!-- Templates -->
+<!-- Styles -->
+<dom-module id="invite-page" assetpath="../pages/invite-page/">
+  <template>
+    <style is="custom-style" include="invite-page-style shared-button-style custom-button-style"></style>
+
+    <div class="page-section">
+      <plain-header class="page-header" title$="[[ i18n(&apos;ADD_FRIENDS&apos;) ]]"></plain-header>
+      <!--<group-promotion class="page-content"></group-promotion>-->
+      <!--<existing-members class="page-content"></existing-members>-->
+      <member-list class="page-content"></member-list>
+      <invitee-list class="page-content"></invitee-list>
+      <invite-buttons class="page-content"></invite-buttons>
+    </div>
+
+    <div class="page-section">
+      <plain-header class="page-header" title$="[[ i18n(&apos;SEND_A_MESSAGE&apos;) ]]"></plain-header>
+      <textarea-wrapper class="page-content" label="Invite message" no-label="">
+        <textarea name="invite_message" rows="3" value="{{ userSelection_InviteMessage }}" on-blur="actionDispatch" data-action="updateInviteMessage" data-type="UPDATE_INVITE_MESSAGE">        </textarea>
+      </textarea-wrapper>
+    </div>
+      
+    <continue-button btn-text="[[ i18n(&apos;CONTINUE&apos;) ]]" btn-icn="chevron"></continue-button>
+
+  </template>
+</dom-module>
+<dom-module id="auth-page-style" assetpath="../pages/auth-page/">
+  <template>
+<style>
+  :host {
+    display: block;
+    width: 100%;
+  }
+  
+  .header {
+    margin-bottom: 1rem;
+  }
+</style>
+</template>
+</dom-module><dom-module id="auth-frame-style" assetpath="../components/auth-frame/">
+  <template>
+    <style>
+      
+      :host {
+        width: 100%;
+        height: 100%;
+        display: block;
+        box-sizing: border-box;
+      }
+      
+      #authframe {
+        width: 100%;
+        height: 740px;
+      }
+      
+    </style>
+  </template>
+</dom-module><dom-module id="auth-frame" assetpath="../components/auth-frame/">
+  <template>
+    <style is="custom-style" include="auth-frame-style"></style>
+    <iframe id="authframe" src="[[ auth_FrameUrl ]]" name="auto-frame" frameborder="0"></iframe>
+  </template>
+</dom-module>
+<!-- Components -->
+<dom-module id="auth-page" assetpath="../pages/auth-page/">
+  <template>
+    <style is="custom-style" include="auth-page-style"></style>
+    
+    <plain-header title="[[ i18n(&apos;REGISTER_OR_LOGIN&apos;) ]]" class="header"></plain-header>  
+    <auth-frame></auth-frame>
+    
+  </template>
+</dom-module>
+<dom-module id="activities-page-style" assetpath="../pages/activities-page/">
+<template>
+<style>
+  :host {
+    
+  }
+</style>
+</template>
+</dom-module><dom-module id="activity-list-style" assetpath="../components/activity-list/">
+  <template>
+    <style>
+      :host {
+        
+      }
+      
+      a {
+        display: block;
+        cursor: pointer;
+      }
+      
+      .activity {
+        height: 170px;
+        /*width: 100%;*/
+        background-color: var(--activity-list-background-color, #ddd);
+        box-sizing: border-box;
+        padding: 15px;
+        position: relative;
+      }
+      
+      .activity * {
+        pointer-events: none;
+      }
+      
+      .image {
+        height: 140px;
+        width: 240px;
+        margin-right: 30px;
+        float: left;
+        overflow: hidden;
+        background-size: cover;
+        background-position: center;
+      }
+      
+      .title {
+        font-size: 24px;
+        line-height: 28px;
+        text-transform: uppercase;
+        margin: 15px 0;
+        margin-right: 55px;
+      }
+      
+      .datum {
+        height: 14px;
+        line-height: 14px;
+        margin-right: 55px;
+      }
+      
+      .datum span {
+        font-size: 12px;
+        margin-right: 12px;
+        margin-bottom: 4px;
+      }
+      
+      .datum svg-icon {
+        height: 16px;
+        margin-right: 2px;
+        -webkit-transform: translateY(-2.5px);
+                transform: translateY(-2.5px);
+      }
+      
+      .chevron {
+        --svg-icon-width: 18px;
+        --svg-icon-height: 170px;
+        width: 40px;
+        height: 170px;
+        position: absolute;
+        top: 0;
+        right: 5px;
+      }
+      
+      @media all and (max-width: 850px) {
+        .title {
+          margin-top: 5px;
+          margin-right: 32px;
+          font-size: 20px;
+          line-height: 22.5px;
+        }
+        
+        .datum {
+          margin-right: 0;
+        }
+        
+        .datum span {
+          display: block;
+          margin-right: 0;
+        }
+      }
+      
+      @media all and (max-width: 700px) {
+        .image {
+          width: 35%;
+        }
+        
+        .title {
+          margin-top: 0;
+        }
+      }
+      
+      @media all and (max-width: 620px) {
+        .title {
+          font-size: 18px;
+          line-height: 20.5px;
+          margin-bottom: 8px
+        }  
+      }
+      
+      @media all and (max-width: 520px) {
+        .activity {
+          height: 164px;
+          padding: 12px 0;
+        }
+        
+        .image {
+          margin-right: 15px;
+        }
+        
+        .datum span {
+          font-size: 11px;
+        }
+        
+        .datum svg-icon {
+          height: 14px;
+        }
+        
+        .chevron {
+          right: 0;
+          height: 164px;
+          width: 32px;
+        }
+      }
+    </style>
+  </template>
+</dom-module><!--
+@license
+Copyright (c) 2015 The Polymer Project Authors. All rights reserved.
+This code may only be used under the BSD style license found at http://polymer.github.io/LICENSE.txt
+The complete set of authors may be found at http://polymer.github.io/AUTHORS.txt
+The complete set of contributors may be found at http://polymer.github.io/CONTRIBUTORS.txt
+Code distributed by Google as part of the polymer project is also
+subject to an additional IP rights grant found at http://polymer.github.io/PATENTS.txt
+--><!--
+@license
+Copyright (c) 2016 The Polymer Project Authors. All rights reserved.
+This code may only be used under the BSD style license found at http://polymer.github.io/LICENSE.txt
+The complete set of authors may be found at http://polymer.github.io/AUTHORS.txt
+The complete set of contributors may be found at http://polymer.github.io/CONTRIBUTORS.txt
+Code distributed by Google as part of the polymer project is also
+subject to an additional IP rights grant found at http://polymer.github.io/PATENTS.txt
+--><!--
+@license
+Copyright (c) 2015 The Polymer Project Authors. All rights reserved.
+This code may only be used under the BSD style license found at http://polymer.github.io/LICENSE.txt
+The complete set of authors may be found at http://polymer.github.io/AUTHORS.txt
+The complete set of contributors may be found at http://polymer.github.io/CONTRIBUTORS.txt
+Code distributed by Google as part of the polymer project is also
+subject to an additional IP rights grant found at http://polymer.github.io/PATENTS.txt
+--><!--
+
+`iron-list` displays a virtual, 'infinite' list. The template inside
+the iron-list element represents the DOM to create for each list item.
+The `items` property specifies an array of list item data.
+
+For performance reasons, not every item in the list is rendered at once;
+instead a small subset of actual template elements *(enough to fill the viewport)*
+are rendered and reused as the user scrolls. As such, it is important that all
+state of the list template be bound to the model driving it, since the view may
+be reused with a new model at any time. Particularly, any state that may change
+as the result of a user interaction with the list item must be bound to the model
+to avoid view state inconsistency.
+
+__Important:__ `iron-list` must either be explicitly sized, or delegate scrolling to an
+explicitly sized parent. By "explicitly sized", we mean it either has an explicit
+CSS `height` property set via a class or inline style, or else is sized by other
+layout means (e.g. the `flex` or `fit` classes).
+
+### Template model
+
+List item templates should bind to template models of the following structure:
+
+```js
+{
+  index: 0,        // index in the item array
+  selected: false, // true if the current item is selected
+  tabIndex: -1,    // a dynamically generated tabIndex for focus management
+  item: {}         // user data corresponding to items[index]
+}
+```
+
+Alternatively, you can change the property name used as data index by changing the
+`indexAs` property. The `as` property defines the name of the variable to add to the binding
+scope for the array.
+
+For example, given the following `data` array:
+
+##### data.json
+
+```js
+[
+  {"name": "Bob"},
+  {"name": "Tim"},
+  {"name": "Mike"}
+]
+```
+
+The following code would render the list (note the name and checked properties are
+bound from the model object provided to the template scope):
+
+```html
+<template is="dom-bind">
+  <iron-ajax url="data.json" last-response="{{data}}" auto></iron-ajax>
+  <iron-list items="[[data]]" as="item">
+    <template>
+      <div>
+        Name: [[item.name]]
+      </div>
+    </template>
+  </iron-list>
+</template>
+```
+
+### Grid layout
+
+`iron-list` supports a grid layout in addition to linear layout by setting
+the `grid` attribute.  In this case, the list template item must have both fixed
+width and height (e.g. via CSS). Based on this, the number of items
+per row are determined automatically based on the size of the list viewport.
+
+### Accessibility
+
+`iron-list` automatically manages the focus state for the items. It also provides
+a `tabIndex` property within the template scope that can be used for keyboard navigation.
+For example, users can press the up and down keys to move to previous and next
+items in the list:
+
+```html
+<iron-list items="[[data]]" as="item">
+  <template>
+    <div tabindex$="[[tabIndex]]">
+      Name: [[item.name]]
+    </div>
+  </template>
+</iron-list>
+```
+
+### Styling
+
+You can use the `--iron-list-items-container` mixin to style the container of items:
+
+```css
+iron-list {
+ --iron-list-items-container: {
+    margin: auto;
+  };
+}
+```
+
+### Resizing
+
+`iron-list` lays out the items when it receives a notification via the `iron-resize` event.
+This event is fired by any element that implements `IronResizableBehavior`.
+
+By default, elements such as `iron-pages`, `paper-tabs` or `paper-dialog` will trigger
+this event automatically. If you hide the list manually (e.g. you use `display: none`)
+you might want to implement `IronResizableBehavior` or fire this event manually right
+after the list became visible again. For example:
+
+```js
+document.querySelector('iron-list').fire('iron-resize');
+```
+
+### When should `<iron-list>` be used?
+
+`iron-list` should be used when a page has significantly more DOM nodes than the ones
+visible on the screen. e.g. the page has 500 nodes, but only 20 are visible at the time.
+This is why we refer to it as a `virtual` list. In this case, a `dom-repeat` will still
+create 500 nodes which could slow down the web app, but `iron-list` will only create 20.
+
+However, having an `iron-list` does not mean that you can load all the data at once.
+Say, you have a million records in the database, you want to split the data into pages
+so you can bring a page at the time. The page could contain 500 items, and iron-list
+will only render 20.
+
+@group Iron Element
+@element iron-list
+@demo demo/index.html
+
+-->
+
+<dom-module id="iron-list" assetpath="../../bower_components/iron-list/">
+  <template>
+    <style>
+      :host {
+        display: block;
+        position: relative;
+      }
+
+      @media only screen and (-webkit-max-device-pixel-ratio: 1) {
+        :host {
+          will-change: transform;
+        }
+      }
+
+      #items {
+        @apply(--iron-list-items-container);
+        position: relative;
+      }
+
+      :host(:not([grid])) #items > ::content > * {
+        width: 100%;
+      };
+
+      #items > ::content > * {
+        box-sizing: border-box;
+        margin: 0;
+        position: absolute;
+        top: 0;
+        will-change: transform;
+      }
+    </style>
+
+    <array-selector id="selector" items="{{items}}" selected="{{selectedItems}}" selected-item="{{selectedItem}}">
+    </array-selector>
+
+    <div id="items">
+      <content></content>
+    </div>
+
+  </template>
+</dom-module>
+
+<dom-module id="activity-list" assetpath="../components/activity-list/">
+  <template>
+    <style is="custom-style" include="activity-list-style"></style>
+
+    <template is="dom-repeat" class="activities" items="[[ activities_List ]]" as="activity" filter="ovalActivities">
+ 
+        <a on-click="actionDispatch" data-action="openActivity" data-id$="[[ activity.id ]]" data-name$="[[ activity.name ]]" "="" data-index$="[[ index ]]" class="activity" style$="background-color: [[ setBackground(index) ]]">
+            
+            <div class="image" style$="background-image: url([[ activity.image ]]);"></div>
+            
+            <div class="description">
+              <div class="title">
+                [[ activity.name ]]
+              </div>
+            </div>
+            <svg-icon class="chevron" icon="chevron-right-color"></svg-icon>
+        </a>
+    </template>
+  </template>
+</dom-module>
+<dom-module id="activities-page" assetpath="../pages/activities-page/">
+  <template>
+    <style is="custom-style" include="activities-page-style"></style>
+    <block-subtitle class="page-header">[[ i18n(&apos;MY_MATCHES_MESSAGE&apos;) ]]</block-subtitle>
+    <activity-list class="page-content"></activity-list>
+  </template>
+</dom-module>
+<dom-module id="profile-page-style" assetpath="../pages/profile-page/">
+  <template>
+    <style>
+      :host {}
+    </style>
+  </template>
+</dom-module><dom-module id="user-detail-inputs-style" assetpath="../forms/user-detail-inputs/">
+  <template>
+    <style>
+      :host {
+        height: 100%;
+        width: 100%;
+        display: block;
+      }
+    </style>
+  </template>
+</dom-module><dom-module id="username-input-style" assetpath="../components/username-input/">
+  <template>
+    <style>
+      :host {
+        display: inline-block;
+        width: 100%;
+      }
+      
+      .input-container {
+        width: 100%;
+        height: 100%;
+        position: relative;
+      }
+      
+      input-wrapper {
+        display: block;
+        width: auto;
+        margin-left: calc(var(--input-height, 3.375em) + 2.9%);
+      }
+      
+      #username {
+        width: 100%;
+      }
+      
+      member-initial {
+        --member-initial-size: var(--input-height, 3.375em);
+        position: absolute;
+        bottom: 0;
+        left: 0;
+      }
+      
+      
+      
+      
+    </style>
+  </template>
+</dom-module><!-- Polymer -->
+
+<!-- Components -->
+<!-- Styles --><dom-module id="username-input" assetpath="../components/username-input/">
+  <template>
+    <style is="custom-style" include="username-input-style"></style>
+    
+    <div class="input-container">
+      <member-initial value="[[ value ]]"></member-initial><!--
+      --><input-wrapper label$="[[ label ]]" no-label$="[[noLabel]]" disabled$="[[ disabled ]]" readonly$="[[ readonly ]]" invalid="{{ invalid }}">
+        <input type="email" id="testing" name="username" placeholder$="[[ placeholder ]]" value="{{ value }}" autofocus$="[[ autofocus ]]" disabled$="[[ disabled ]]" required$="[[ required ]]">
+        </input-wrapper>
+      </div>
+    
+    
+  </template>
+</dom-module>
+<dom-module id="input-join-wrapper" assetpath="../components/input-wrapper/">
+  <template>
+    <style is="custom-style" include="wrapper-style input-style"></style>
+    
+    <label>[[ label ]]</label>
+    
+    <div class="container">
+      <content></content>
+      <span class="underline"></span>
+      <span class="underline-unfocused"></span>
+      <div class="input-background"></div>
+    </div>
+    
+  </template>
+</dom-module>
+<dom-module id="select-style" assetpath="../components/input-wrapper/">
+  <template>
+    <style>
+      /*---------- Select Styles ----------*/
+
+      .container:after {
+        content: '';  
+        width: 0; 
+        height: 0;
+        position: absolute;
+        top: 46%;
+        right: var(--input-padding-left-right, 0.875em);
+        border-left: 5px solid transparent;
+        border-right: 5px solid transparent;
+        border-top: 6px solid #a9a9a9;
+        pointer-events: none;
+        z-index: 6;
+      }
+      
+      .container ::content > select {
+        height: 100%;
+        line-height: 22px;
+        
+        overflow-y: auto;
+        cursor: pointer;
+      }
+
+      .container ::content > select option {
+        height: 1.25em;
+        padding: 1.25em;
+        display: block;
+      }
+
+      /*---------- Select Focus ----------*/
+      
+      .container ::content > select:focus{
+        padding-left: 0;
+        box-shadow: 0 2px 2px 0 rgba(0, 0, 0, 0.14), 0 1px 5px 0 rgba(0, 0, 0, 0.12), 0 3px 1px -2px rgba(0, 0, 0, 0.2);
+        min-height:50px;
+        height: auto;
+        z-index: 9;
+        background-color: white;
+      }
+      
+      :host([focused]) .container ::content > * {
+        vertical-align: top;
+      }
+      
+      :host([focused]) .container ::content > select:not(:focus) {
+        -webkit-transform: translateY(0.1em);
+                transform: translateY(0.1em);
+      }
+      
+      /*---------- Select Disabled ----------*/
+      
+      .container ::content > select option[disabled] {
+        color: var(--input-placeholder-color);
+      }
+      
+      :host([disabled]) .container ::content > select {
+        cursor: auto;
+      }
+      
+    </style>
+  </template>
+</dom-module><dom-module id="select-wrapper" assetpath="../components/input-wrapper/">
+  <template>
+    <style is="custom-style" include="wrapper-style select-style"></style>
+    
+    <label>[[ label ]]</label>
+    
+    <div class="container">
+      <content></content>
+      <span class="underline"></span>
+      <span class="underline-unfocused"></span>
+      <div class="input-background"></div>
+    </div>
+    
+  </template>
+</dom-module>
+<dom-module id="nationality-dropdown-style" assetpath="../components/nationality-dropdown/">
+  <template>
+    <style>
+      :host {
+        display: inline-block;
+        width: 100%;
+        height: calc(var(--input-height, 3.375em) + 1.917 * var(--input-label-font-size, 0.75em));
+      }
+      
+      :host([no-label]) {
+         height: var(--input-height, 3.375em);
+      }
+    </style>
+  </template>
+</dom-module><!-- Components -->
+<!-- Styles -->
+<dom-module id="nationality-dropdown" assetpath="../components/nationality-dropdown/">
+  <template>
+    <style is="custom-style" include="custom-input-style nationality-dropdown-style"></style>
+   
+    <select-wrapper label="[[ label ]]" no-label="[[ noLabel ]]" size="[[ size ]]" invalid="{{ invalid }}" disabled="[[ disabled ]]" placeholder="[[ placeholder ]]" selected="{{ selected }}" attr-for-selected="[[ attrForSelected ]]" options="[[ config_Countries ]]" option-invert="">
+      <select name$="[[ name ]]"></select>
+    </select-wrapper>
+    
+  </template>
+</dom-module>
+<!-- Polymer -->
+
+
+<!-- Components -->
+<!-- Styles --><dom-module id="user-detail-inputs" assetpath="../forms/user-detail-inputs/">
+  <template>
+    <style is="custom-style" include="user-detail-inputs-style"></style>
+    
+    <input type="hidden" value="[[ config_AppId ]]" name="app_id">
+    <input type="hidden" value="[[ user.data.id ]]" name="user_id">
+    
+    <username-input full-width="" label="[[ i18n(&apos;EMAIL_ADDRESS&apos;) ]]" name="email" value="{{ user.data.username }}" placeholder="[[ user.data.username ]]" no-label-float="" readonly></username-input>
+    
+    <input-wrapper label="[[ i18n(&apos;NAME&apos;) ]]">
+      <input type="text" name="first_name" autocomplete="given-name" value="{{ user.data.first_name }}" placeholder="[[ user.data.first_name ]]" required>
+    </input-wrapper>
+    
+    <input-wrapper label="[[ i18n(&apos;SURNAME&apos;) ]]">
+      <input type="text" name="last_name" autocomplete="family-name" value="{{ user.data.last_name }}" placeholder="[[ user.data.last_name ]]" required>
+    </input-wrapper>
+    
+    <input-join-wrapper label="[[ i18n(&apos;DOB&apos;) ]]" name="bday" value="{{ user.data.birthday }}" reverse-values="true" join-with="-">
+      <input type="tel" placeholder="DD" allowed-pattern="[0-9]" pattern="^(0[1-9]|[12]\d|3[01])$" maxlength="2" autocomplete="bday-day" required><!--
+      --><span>/</span><!--
+      --><input type="tel" placeholder="MM" allowed-pattern="[0-9]" pattern="^(0[1-9]|1[012])$" maxlength="2" autocomplete="bday-month" required><!--
+      --><span>/</span><!--
+      --><input type="tel" placeholder="YYYY" allowed-pattern="[0-9]" pattern="[0-9]{4}" maxlength="4" autocomplete="bday-year" required>
+    </input-join-wrapper>
+    
+    <nationality-dropdown label="[[ i18n(&apos;COUNTRY_RESIDENCE&apos;) ]]" name="country" selected="{{ user.data.country }}" attr-for-selected="value">
+    </nationality-dropdown>
+    
+  </template>
+</dom-module>
+<dom-module id="form-template-style" assetpath="../templates/form-template/">
+  <template>
+    <style>
+      :host {
+        display: block;
+      }
+      
+      .form-submit {
+        margin-top: 24px;
+        margin-bottom: 32px;
+        display: -webkit-box;
+        display: -ms-flexbox;
+        display: flex;
+        -webkit-box-pack: center;
+            -ms-flex-pack: center;
+                justify-content: center;
+      }
+      
+      :host.left .form-submit {
+        -webkit-box-pack: start;
+            -ms-flex-pack: start;
+                justify-content: flex-start;
+      }
+      
+      :host.right .form-submit {
+        -webkit-box-pack: end;
+            -ms-flex-pack: end;
+                justify-content: flex-end;
+      }
+      
+      @media all and (max-width: 520px) {
+        .form-submit {
+          -webkit-box-pack: center !important;
+              -ms-flex-pack: center !important;
+                  justify-content: center !important;
+        }
+      }
+      
+    </style>
+  </template>
+</dom-module><dom-module id="form-template" assetpath="../templates/form-template/">
+  <template>
+    <style is="custom-style" include="form-template-style"></style>
+    
+    <form is="iron-form" id="form" data-action="stepFlowFromForm">
+      
+      <content select=".form"></content>
+      
+      <div class="form-submit">
+        <content select=".submit"></content>
+      </div>
+      
+    </form>
+    
+  </template>
+</dom-module>
+<dom-module id="form-section-style" assetpath="../templates/form-section/">
+  <template>
+    <style>
+      :host {
+        max-width: 100%;
+        display: block;
+        margin-bottom: calc(var(--form-section-vertical-spacing, 1rem));
+      }
+      
+      /*---------- Header ----------*/
+      
+      .form-header {
+        display: -webkit-box;
+        display: -ms-flexbox;
+        display: flex;
+        -webkit-box-pack: start;
+            -ms-flex-pack: start;
+                justify-content: flex-start;
+      }
+      
+      .header-container {
+        margin-bottom: calc(1.25 * var(--form-section-vertical-spacing, 1rem));
+      }
+      
+      .header-container:empty {
+        margin: 0;
+      }
+      
+      .header-container > ::content > * {
+        margin: 0;
+      }
+      
+      :host.center .form-header {
+        -webkit-box-pack: center;
+            -ms-flex-pack: center;
+                justify-content: center;
+      }
+      
+      :host.center .header-container > ::content > * {
+        text-align: center;
+      }
+      
+      :host.left .form-header {
+        -webkit-box-pack: start;
+            -ms-flex-pack: start;
+                justify-content: flex-start;
+      }
+      
+      :host.left .header-container > ::content > * {
+        text-align: left;
+      }
+      
+      :host.right .form-header {
+        -webkit-box-pack: end;
+            -ms-flex-pack: end;
+                justify-content: flex-end;
+      }
+      
+      :host.right .header-container > ::content > * {
+        text-align: right;
+      }
+      
+      
+      /*---------- Inputs ----------*/
+      
+      .form-inputs > ::content > * {
+        display: block;
+        margin: 0 -1.25%;
+        width: 102.5%;
+      }
+      
+      .form-inputs > ::content > * > * {
+        display: inline-block;
+        vertical-align: bottom;
+        box-sizing: border-box;
+        padding: 0 1.25%;
+        margin-bottom: var(--form-section-vertical-spacing, 1rem);
+        width: 100%;
+      }
+      
+      :host[columns="two"] .form-inputs > ::content > * > * {
+        width: 49.66%;
+      }
+      
+      :host[columns="three"] .form-inputs > ::content > * > * {
+        width: 32.88%;
+      }
+      
+      .form-inputs > ::content > * > [full-width] {
+        width: 100% !important;
+      }
+      
+      @media all and (max-width: 680px) {
+        :host {
+          margin-bottom: calc(2.4 * var(--form-section-vertical-spacing-mobile, 0.625rem));
+        }
+        
+        .form-header {
+          padding: 0 12px;
+          margin-bottom: calc(1.2 * var(--form-section-vertical-spacing-mobile, 0.625rem));
+        }
+        
+        .form-inputs > ::content > * > * {
+          display: block;
+          width: 100% !important;
+          margin-bottom: var(--form-section-vertical-spacing-mobile, 0.625rem);
+        }
+        
+        .form-inputs > ::content > *:last-child > *:last-child {
+          margin-bottom: 0;
+        }
+      }
+      
+    </style>
+  </template>
+</dom-module><dom-module id="form-section" assetpath="../templates/form-section/">
+  <template>
+    <style is="custom-style" include="form-section-style"></style>
+    
+      <header class="form-header">
+        <div class="header-container"><content select=".header"></content></div>
+      </header>
+      
+      <section class="form-inputs">
+        <content select=".inputs"></content>
+      </section>
+    
+  </template>
+</dom-module>
+<dom-module id="profile-page" assetpath="../pages/profile-page/">
+  <template>
+    <style is="custom-style" include="profile-page-style shared-button-style"></style>
+    <form-template>
+      <form-section class="form page-section" columns="two">
+        <user-detail-inputs class="inputs"></user-detail-inputs>
+      </form-section>
+      <button class="submit button-primary">
+        [[ i18n(&apos;SAVE_CHANGES&apos;) ]]
+      </button>
+    </form-template>
+  </template>
+</dom-module>
+<dom-module id="prepay-page-style" assetpath="../pages/prepay-page/">
+  <template>
+    <style>
+      :host {}
+      
+      [hidden] {
+        display: none !important;
+      }
+    </style>
+  </template>
+</dom-module><dom-module id="block-subtitle-style" assetpath="../components/block-subtitle/">
+  <template>
+    <style>
+      :host {
+        display: block;
+        font-size: 0.875rem;
+        line-height: 1.4em;
+        padding: 0 8px;
+        margin: 0 auto;
+        max-width: 665px;
+        text-align: left;
+        color: var(--primary-text-color, #414141);
+      }
+    </style>
+  </template>
+</dom-module><dom-module id="block-subtitle" assetpath="../components/block-subtitle/">
+  <template>
+    <style is="custom-style" include="block-subtitle-style"></style>
+    
+    <content></content>
+    
+  </template>
+</dom-module>
+<dom-module id="reservation-summary-style" assetpath="../components/reservation-summary/">
+  <template>
+    <style>
+      :host {
+        display: block;
+      }
+      
+      info-message {
+        --info-message-padding: 0;
+      }
+      
+      .container {
+        padding: 16px;
+        line-height: 22px;
+      }
+      
+      .reservation.container {
+        background-color: #eee;
+      }
+      
+      .container hr {
+        border: none;
+        height: 0.5px;
+        color: #333;
+        background-color: #333;
+        margin-bottom: 16px;
+      }
+      
+      .reservation.container hr {
+        height: 1px;
+      }
+      
+      .container .title {
+        font-size: 16px;
+        margin-bottom: 8px;
+      }
+      
+      .container .activity-name {
+        font-size: 14px;
+      }
+      
+      .container .total {
+        font-size: 16px;
+      }
+      
+      .container .list-item {
+        font-size: 14px;
+        position: relative;
+        left: 0;
+        right: 0;
+      }
+      
+      .bold {
+        font-weight: bold;
+      }
+      
+      .container .left {
+        display: inline-block;
+        padding-right: 125px;
+      }
+      
+      .reservation.container .left {
+        padding-right: 140px;
+      }
+      
+      .container .right {
+        position: absolute;
+        right: 0;
+        bottom: 0;
+      }
+      
+    </style>
+  </template>
+</dom-module><dom-module id="reservation-summary" assetpath="../components/reservation-summary/">
+  <template>
+    <style is="custom-style" include="reservation-summary-style"></style>
+
+    <div class="reservation container">
+      <div class="title">[[ i18n(&apos;RESERVATION_SUMMARY&apos;) ]]</div>
+      <div class="activity-name">[[ i18n(&apos;RESERVATION_MESSAGE_PT_1&apos;)]] <span class="bold">[[ i18n(&apos;NUM_SEATS&apos;, &apos;NUM&apos;, seatSelection_SelectedCount) ]]</span> [[ i18n(&apos;RESERVATION_MESSAGE_PT_2&apos;)]]</div>
+      <template is="dom-repeat" items="[[ seatSelection_SelectionsMapped ]]" as="area">
+        <div class="list-item">[[ areaToString(area) ]]</div>
+        <template is="dom-repeat" items="[[ area.value ]]" as="row">
+          <div class="list-item">
+            <span>[[ rowToString(row) ]]</span>
+          </div>
+        </template>
+      </template>
+      <hr>
+      <info-message>
+        [[ i18n(&apos;PRE_PAY_INFO_MESSAGE&apos;) ]]
+      </info-message>
+    </div>
+    
+  </template>
+</dom-module>
+<dom-module id="prepay-form-style" assetpath="../components/prepay-form/">
+  <template>
+    <style>
+      :host {}
+      
+      /*.price {
+        position: absolute;
+        right: 16px;
+        top: 50%;
+        transform: translateY(-50%);
+      }*/
+    </style>
+  </template>
+</dom-module><dom-module id="prepay-summary-style" assetpath="../components/prepay-summary/">
+  <template>
+    <style>
+      :host {
+        display: block;
+      }
+      
+       .container {
+        padding: 1rem;
+        line-height: 22px;
+      }
+      
+      .summary.container {
+        background-color: #ddd;
+      }
+      
+      .container hr {
+        border: none;
+        height: 0.5px;
+        color: #333;
+        background-color: #333;
+        margin-bottom: 1rem;
+      }
+      
+      .container .title {
+        font-size: 1rem;
+        margin-bottom: 0.5rem;
+      }
+      
+      .container .activity-name {
+        font-size: 0.875rem;
+      }
+      
+      .activity-name .date {
+        white-space: nowrap;
+      }
+      
+      .container .total {
+        font-size: 1rem;
+      }
+      
+      .container .list-item {
+        font-size: 0.875rem;
+        position: relative;
+        left: 0;
+        right: 0;
+      }
+      
+      .bold {
+        font-weight: bold;
+      }
+      
+      .container .left {
+        display: inline-block;
+        padding-right: 125px;
+      }
+      
+      .container .right {
+        position: absolute;
+        right: 0;
+        bottom: 0;
+      }
+      
+      .summary.container .right {
+        word-spacing: 0.5rem;
+      }
+      
+      .summary.container .normal {
+        font-weight: normal;
+        white-space: nowrap;
+        word-spacing: 0;
+      }
+    </style>
+  </template>
+</dom-module><dom-module id="prepay-summary" assetpath="../components/prepay-summary/">
+  <template>
+    <style is="custom-style" include="prepay-summary-style"></style>
+    
+    <div class="summary container">
+      <div class="title">[[ i18n(&apos;PREPAY_SUMMARY&apos;) ]]</div>
+      <div class="activity-name">[[ selectedProduct.data.name ]] - <span class="date">[[ selectedProduct.data.stringDate ]]</span></div>
+      <div class="activity-name">[[ config_AppName ]]</div>
+      <div class="list-item bold">
+        <span class="left">[[ seatSelection_CurrentMap ]]</span><span class="right"><span class="normal">1 x </span> [[ selectedProduct.rate ]]  &#xA3;[[ selectedProduct_Price ]]</span>
+      </div>
+      <hr>
+      <div class="list-item bold">
+        <span class="left total">[[ i18n(&apos;TOTAL&apos;) ]]</span><span class="right total">&#xA3;[[ selectedProduct.price ]]</span>
+      </div>
+    </div>    
+    
+  </template>
+</dom-module>
+<dom-module id="terms-checkbox-style" assetpath="../components/terms-checkbox/">
+  <template>
+    <style>
+      :host {
+        display: block;
+        box-sizing: border-box;
+        max-width: 290px;
+        margin: 0 auto;
+        width: 290px;
+        padding: 8px 12px;
+        padding-left: 42px;
+        padding-right: 0;
+        margin-top: 22px;
+        position: relative;
+      }
+      
+      #terms {
+        position: absolute;
+        top: 10px;
+        left: 11px;
+      }
+      
+      label {
+        cursor: pointer;
+        position: absolute;
+        width: 18px;
+        height: 18px;
+        top: 10px;
+        left: 12px;
+        background-color: #fff;
+        box-sizing: border-box;
+        border: 2px solid var(--checkbox-unchecked-border-color, #333);
+        border-radius: 2px;
+      }
+      
+      label:after {
+        opacity: 0;
+        filter: alpha(opacity=0);
+        content: '';
+        position: absolute;
+        width: 9.25px;
+        height: 5px;
+        background: transparent;
+        top: 1px;
+        left: 2px;
+        border: 2px solid var(--checkbox-checkmark-color, #fff);
+        border-top: none;
+        border-right: none;
+        -webkit-transform: rotate(-45deg);
+                transform: rotate(-45deg);
+      }
+      
+      input[type=checkbox]:checked + label {
+        background-color: var(--checkbox-checked-color, #87c7c7);
+        border-color: var(--checkbox-checked-color, #87c7c7);
+      }
+      
+      input[type=checkbox]:checked + label:after {
+        opacity: 1;
+        filter: alpha(opacity=100);
+      }
+      
+      
+    </style>
+  </template>
+</dom-module><!-- Styles -->
+<dom-module id="terms-checkbox" assetpath="../components/terms-checkbox/">
+  <template>
+    <style is="custom-style" include="terms-checkbox-style"></style>
+    
+    <input class="toggle" id="terms" name="terms" type="checkbox" on-change="_termsChecked" checked$="[[ paymentProcess_TermsAccepted ]]">
+    <label for="terms"></label>
+    <span> [[ i18n(&apos;I_ACCEPT_THE&apos;) ]] <a href="[[ selectedProduct.data.provider.terms ]]" target="_blank">[[ i18n(&apos;TERMS&apos;) ]]</a></span>
+
+  </template>
+</dom-module>
+<dom-module id="card-detail-inputs-style" assetpath="../templates/card-detail-inputs/">
+  <template>
+    <style>
+      :host {
+        height: 100%;
+        width: 100%;
+        display: block;
+      }
+    </style>
+  </template>
+</dom-module><!-- Polymer -->
+
+
+<!-- Components -->
+<!-- Styles --><dom-module id="card-detail-inputs" assetpath="../templates/card-detail-inputs/">
+  <template>
+    <style is="custom-style" include="card-detail-inputs-style"></style>
+  
+    <select-wrapper label="[[ i18n(&apos;CARD_TYPE&apos;) ]]" size="4" options="[[ config_CardTypes ]]">
+      <select name="card_type" autocomplete="cc-type"></select>
+    </select-wrapper>
+    
+    <input-wrapper label="Card number">
+      <input type="tel" name="card_number" autocomplete="cc-number" allowed-pattern="[0-9]" pattern="^(?:(4[0-9]{12}(?:[0-9]{3})?)|(5[1-5][0-9]{14})|&#x21B5;
+                (6(?:011|5[0-9]{2})[0-9]{12})|(3[47][0-9]{13})|&#x21B5;
+                (3(?:0[0-5]|[68][0-9])[0-9]{11})|((?:2131|1800|35[0-9]{3})[0-9]{11}))$" maxlength="16" required>
+    </input-wrapper>
+    
+    <input-wrapper label="[[ i18n(&apos;EXPIRY_DATE&apos;) ]]">
+      <input type="tel" name="exp_month" autocomplete="cc-exp-month" placeholder="MM" allowed-pattern="[0-9]" pattern="^(0[1-9]|1[012])$" maxlength="2" required><!--
+      --><span>/</span><!--
+      --><input type="tel" name="exp_year" autocomplete="cc-exp-year" placeholder="YY" allowed-pattern="[0-9]" pattern="[0-9]{2}" maxlength="2" required>
+    </input-wrapper>
+    
+    <input-wrapper label="3-digit security number on the back of your card" divider-width="7">
+      <input type="tel" name="cvc" autocomplete="cc-csc" placeholder="CVC" allowed-pattern="[0-9]" pattern="[0-9]{3}" maxlength="3" required>
+      <img src="../assets/cvc_hint.b9b7bdad765443fe5fe932ba2f03cf13.png" class="cc-img" suffix="">
+    </input-wrapper>
+  
+  </template>
+</dom-module>
+<!-- https://www.safaribooksonline.com/library/view/regular-expressions-cookbook/9781449327453/ch04s20.html --><dom-module id="contact-detail-inputs-style" assetpath="../templates/contact-detail-inputs/">
+  <template>
+    <style>
+      :host {
+        height: 100%;
+        width: 100%;
+        display: block;
+      }
+    </style>
+  </template>
+</dom-module><!-- Polymer -->
+
+
+<!-- Components -->
+<!-- Styles --><dom-module id="contact-detail-inputs" assetpath="../templates/contact-detail-inputs/">
+  <template>
+    <style is="custom-style" include="contact-detail-inputs-style"></style>
+
+    <input-wrapper label="[[ i18n(&apos;ADDRESS_1&apos;) ]]">
+      <input type="text" name="address_1" autocomplete="address-line1" required>
+    </input-wrapper>
+    
+    <input-wrapper label="[[ i18n(&apos;ADDRESS_2&apos;) ]]">
+      <input type="text" name="address_2" autocomplete="address-line2">
+    </input-wrapper>
+    
+    <input-wrapper label="[[ i18n(&apos;POSTCODE&apos;) ]]">
+      <input type="text" name="postcode" autocomplete="postal-code" required>
+    </input-wrapper>
+    
+    <input-wrapper label="[[ i18n(&apos;CITY&apos;) ]]">
+      <input type="text" name="city" autocomplete="city" required>
+    </input-wrapper>
+    
+    <phone-input name="phone_number" autocomplete="tel" label="[[ i18n(&apos;PHONE&apos;) ]]" required>
+    </phone-input>
+    
+  </template>
+</dom-module>
+<!-- Polymer -->
+
+<!-- Components -->
+<!-- Styles -->
+<!-- Templates -->
+<dom-module id="prepay-form" assetpath="../components/prepay-form/">
+  <template>
+    <style is="custom-style" include="prepay-form-style shared-button-style"></style>
+    
+    <form-template action="../components/prepay-form/stepFlowFromForm">
+      <form-section class="form" columns="one">
+        <h3 class="header">[[ i18n(&apos;SELECT_TICKET_RATE&apos;) ]]</h3>
+        <div class="inputs">
+          <select-wrapper label="[[ i18n(&apos;TICKET_RATE&apos;) ]]" options$="[[ _ratesArray(selectedProduct.data.prices.rates_category) ]]" selected="{{ selectedProduct.rate }}" attr-for-selected="value" disabled no-label="">
+          </select-wrapper>
+          <input type="hidden" value="{{ selectedProduct.rate }}" name="seat_rate">
+        </div>
+      </form-section>
+      
+      <form-section class="form" columns="two">
+        <h3 class="header">[[ i18n(&apos;PAYEE_DETAILS&apos;) ]]</h3>
+        <user-detail-inputs class="inputs"></user-detail-inputs>
+        <div class="inputs">
+          <nationality-dropdown label="[[ i18n(&apos;NATIONALITY&apos;) ]]" name="nationality" selected="GB" attr-for-selected="value">
+          </nationality-dropdown>
+        </div>
+      </form-section>
+      
+      <form-section class="form" columns="two">
+        <h3 class="header">[[ i18n(&apos;CARD_DETAILS&apos;) ]]</h3>
+        <card-detail-inputs class="inputs"></card-detail-inputs>
+      </form-section>
+      
+      <form-section class="form" columns="two">
+        <h3 class="header">[[ i18n(&apos;EXTRA_DETAILS&apos;) ]]</h3>
+        <p class="header">[[ i18n(&apos;EXTRA_DETAILS_MESSAGE&apos;) ]]</p>
+        <contact-detail-inputs class="inputs"></contact-detail-inputs>
+      </form-section>
+      
+      <prepay-summary class="form"></prepay-summary>
+      
+      <terms-checkbox class="form"></terms-checkbox>
+      
+      <button class="submit button-primary">
+        <svg-icon icon="arrow-circle-down"></svg-icon> Submit
+      </button>
+      
+    </form-template>
+    
+  </template>
+</dom-module>
+<!-- Polymer -->
+
+<!-- Components -->
+<!-- Templates -->
+<!-- Styles --><dom-module id="prepay-page" assetpath="../pages/prepay-page/">
+  <template>
+    <style is="custom-style" include="prepay-page-style"></style>
+
+    <div class="page-section">
+      <plain-header class="page-header" title="[[ i18n(&apos;PAY_FOR_YOURSELF&apos;)]]" title2="[[ i18n(&apos;AND_RESERVE_ALL_SEATS&apos;) ]]">
+        <block-subtitle>[[ i18n(&apos;PRE_AUTH_MESSAGE_LONG_LEADER&apos;) ]]</block-subtitle>
+      </plain-header>
+      <reservation-summary class="page-content" hidden$="[[ !seatSelection_SelectedCount ]]">
+      </reservation-summary>
+      <prepay-form class="page-content"></prepay-form>
+      <block-subtitle class="page-content">[[ i18n(&apos;PRE_AUTH_MESSAGE_LONG_LEADER&apos;) ]]</block-subtitle>
+    </div>
+
+  </template>
+</dom-module>
+<dom-module id="activity-page-style" assetpath="../pages/activity-page/">
+  <template>
+    <style>
+      :host {}
+      
+      [hidden] {
+        display: none !important;
+      }
+      
+      .status-header {
+        max-width: 485px;
+      }
+      
+      .button-header {
+        max-width: 382px;
+      }
+      
+      .invitation-section {
+        padding-top: 16px;
+        background-color: #efefef;
+        width: 100%;
+        margin-top: 10px;
+      }
+      
+      .invitation-buttons {
+        width: 542px;
+        margin: 0 auto;
+      }
+      
+      .time-remaining {
+        max-width: 415px;
+        margin-left: auto;
+        margin-right: auto;
+      }
+      
+      @media all and (max-width: 660px) {
+        .invitation-buttons {
+          width: 268px;
+        }
+      }
+      
+      @media all and (max-width: 420px) {
+        .time-remaining br {
+          display: none;
+        }
+      }
+      
+    </style>
+  </template>
+</dom-module><dom-module id="circle-header-style" assetpath="../components/circle-header/">
+  <template>
+    <style>
+      :host {
+        display: block;
+        padding: 0 8px;
+        max-width: 100%;
+      }
+      
+      .container {
+        position: relative;
+        height: 65px;
+      }
+      
+      .circle {
+        position: absolute;
+        top: 0;
+        left: 0;
+        bottom: 0;
+        
+        display: block;
+        color: var(--hero-text-color, #fff);
+        background-color: var(--hero-background-color, #2d2d2d);
+        border-radius: 100px;
+        height: 57px;
+        width: 57px;
+        line-height: 57px;
+        text-align: center;
+        font-size: 26px;
+        margin: 4px;
+      }
+      
+      .circle span {
+        display: inline-block;
+        -webkit-transform: translateY(-3.5px);
+                transform: translateY(-3.5px);
+      }
+      
+      .circle svg-icon {
+        --svg-icon-height: 36px;
+        --svg-icon-width: 36px;
+        --svg-icon-parent-height: 36px;
+        --svg-icon-parent-width: 36px;
+        vertical-align: text-top;
+      }
+      
+      .info-container {
+        margin-left: 65px;
+        padding-left: 12px;
+        height: 100%;
+        display: -webkit-box;
+        display: -ms-flexbox;
+        display: flex;
+        -webkit-box-orient: vertical;
+        -webkit-box-direction: normal;
+            -ms-flex-direction: column;
+                flex-direction: column;
+        -webkit-box-pack: center;
+            -ms-flex-pack: center;
+                justify-content: center;
+      }
+      
+      .title {
+        height: auto;
+        font-size: 16px;
+        font-weight: bold;
+        text-transform: uppercase;
+      }
+      
+      .subtitle {
+        font-size: 12px;
+        line-height: 1.4em;
+        height: auto;
+        margin-top: 4px;
+      }
+      
+      .subtitle:empty {
+        display: none;
+      }
+      
+      sup {
+        display: inline-block;
+        -webkit-transform: translateY(6px);
+                transform: translateY(6px);
+        font-size: 10px;
+        padding: 0 2px;
+        line-height: 57px;
+      }
+      
+      /*@media all and (max-width: 330px) {
+        .container {
+          padding-left: 12px;
+        }
+      }*/
+      
+    </style>
+  </template>
+</dom-module><!-- Components -->
+<dom-module id="circle-header" assetpath="../components/circle-header/">
+  <template>
+    <style is="custom-style" include="circle-header-style"></style>
+      
+      <div class="container">
+        
+        <div class="circle">
+          <template is="dom-if" if="[[ number ]]">
+            <span>[[ number ]]<sup>of</sup>5</span>
+          </template>
+          
+          <template is="dom-if" if="[[ icon ]]">
+            <svg-icon icon="[[ icon ]]"></svg-icon>
+          </template>
+        </div>
+      
+        <div class="info-container">
+          <div class="title">[[ title ]]</div>
+          <div class="subtitle"><content></content></div>
+        </div>
+        
+      </div>
+    
+  </template>
+</dom-module>
+<dom-module id="member-list-style" assetpath="../components/member-list/">
+  <template>
+    <style>
+      :host {
+        display: block;
+      }
+      
+      :host * {
+        box-sizing: border-box;
+      }
+      
+      .member {
+        box-sizing: content-box;
+        height: 54px;
+        /*width: 100%;*/
+        display: -webkit-box;
+        display: -ms-flexbox;
+        display: flex;
+        -ms-flex-flow: row nowrap;
+            flex-flow: row nowrap;
+        padding: 8px;
+      }
+      
+      .member-name {
+        -webkit-box-flex: 1;
+            -ms-flex: 1;
+                flex: 1;
+        height: 54px;
+        line-height: 54px;
+        margin: 0 26px;
+        overflow: hidden;
+        text-overflow: ellipsis;
+        position: relative;
+      }
+      
+      .member-name span {
+        display: none;
+      }
+      
+      .member-name.group-leader span {
+        display: block;
+        position: absolute;
+        left: 0;
+        bottom: -20px;
+        font-weight: bolder;
+        font-size: 10px;
+        text-transform: uppercase;
+      }
+      
+      .member-status {
+        width: 114px;
+        height: 54px;
+        line-height: 54px;
+      }
+      
+      .member-status svg-icon {
+        height: inherit;
+        --svg-icon-height: 100%;
+        --svg-icon-width: 26px;
+        --svg-icon-parent-height: 100%;
+        --svg-icon-parent-width: 26px;
+        vertical-align: middle;
+        margin-top: -8px;
+      }
+      
+      .member-status span {
+        margin: 0 8px;
+      }
+      
+      @media all and (max-width: 500px) {
+        .member {
+          padding: 8px 0;
+          padding-right: 8px;
+        }
+        
+        .member-name {
+          margin: 0 10px 0 14px;
+        }
+        
+        .member-status {
+          width: 28px;
+        }
+        
+        .member-status span {
+          display: none;
+        }
+      }
+    </style>
+  </template>
+</dom-module><!-- Components -->
+<dom-module id="member-list" assetpath="../components/member-list/">
+  <template>
+    <style is="custom-style" include="member-list-style"></style>
+    
+    <template is="dom-repeat" items="[[ selectedActivity.members.list ]]" as="member">
+      <div class="member" style$="background-color: [[ setBackground(index) ]]">
+        <member-initial value="[[ showMember(member, user.data) ]]" is-group-leader="[[ isGroupLeader(member) ]]"></member-initial>
+        <div class$="member-name [[ groupLeader(member) ]]">[[ showMember(member, user.data) ]]<span>[[ i18n(&apos;GROUP_LEADER&apos;) ]]</span></div>
+        <div class="member-status">
+          <svg-icon icon="[[ memberIcon(selectedActivity.selections.list, member) ]]"></svg-icon>
+          <span>[[ memberStatus(selectedActivity.selections.list, member) ]]</span>
+        </div>
+      </div>
+    </template>
+    
+  </template>
+</dom-module>
+<dom-module id="seats-summary-style" assetpath="../components/seats-summary/">
+  <template>
+    <style>
+      :host {
+        display: block;
+      }
+      
+       .container {
+        padding: 16px;
+        line-height: 22px;
+      }
+      
+      .reservation.container {
+        background-color: #eee;
+      }
+      
+      .container hr {
+        border: none;
+        height: 0.5px;
+        color: #333;
+        background-color: #333;
+        margin-top: 12px;
+        margin-bottom: 0;
+      }
+      
+      .reservation.container hr {
+        height: 1px;
+      }
+      
+      .container .title {
+        font-size: 16px;
+        margin-bottom: 8px;
+      }
+      
+      .container .activity-name {
+        font-size: 14px;
+      }
+      
+      .container .total {
+        font-size: 16px;
+      }
+      
+      .container .list-item {
+        font-size: 14px;
+        position: relative;
+        left: 0;
+        right: 0;
+      }
+      
+      .bold {
+        font-weight: bold;
+      }
+      
+      .container .left {
+        display: inline-block;
+        padding-right: 125px;
+      }
+      
+      .reservation.container .left {
+        padding-right: 140px;
+      }
+      
+      .container .right {
+        position: absolute;
+        right: 0;
+        bottom: 0;
+      }
+      
+    </style>
+  </template>
+</dom-module><dom-module id="seats-summary" assetpath="../components/seats-summary/">
+  <template>
+    <style is="custom-style" include="seats-summary-style"></style>
+
+    <div class="reservation container">
+      <div class="title">[[ i18n(&apos;SEATS_SUMMARY&apos;) ]]</div>
+      <template is="dom-repeat" items="[[ seatSelection_SelectionsMapped ]]" as="area">
+        <div class="list-item">[[ areaToString(area) ]]</div>
+        <template is="dom-repeat" items="[[ area.value ]]" as="row">
+          <div class="list-item">
+            <span>[[ rowToString(row) ]]</span>
+          </div>
+        </template>
+      </template>
+      <hr>
+    </div>
+    
+    
+  </template>
+</dom-module>
+<dom-module id="add-user-button-style" assetpath="../components/add-user-button/">
+  <template>
+    <style>
+      :host {
+        display: block;
+        height: 54px;
+        width: 100%;
+        position: relative;
+      }
+      
+      #add-user-btn {
+        position: absolute;
+        right: 0;
+        line-height: 54px;
+        height: 54px;
+        padding: 0 18px;
+        border: 0;
+        border-radius: 0;
+        margin: 0;
+        outline: 0;
+        color: var(--secondary-button-text-color, #fff);
+        background-color: var(--secondary-button-color, #89c9c9);
+        text-transform: uppercase;
+        font-size: 1rem;
+      }
+      
+      #add-user-btn svg-icon {
+        /*--svg-icon-parent-height: 100%;
+        --svg-icon-parent-width: 24px;*/
+        --svg-icon-height: 100%;
+        --svg-icon-width: 24px;
+        vertical-align: middle;
+        margin-top: -6px;
+        margin-right: 6px;
+        height: 100%;
+      }
+      
+      @media all and (max-width: 520px) {
+        #add-user-btn {
+          width: 100%;
+        }
+      }
+    </style>
+  </template>
+</dom-module><!-- Components -->
+<dom-module id="add-user-button" assetpath="../components/add-user-button/">
+  <template>
+    <style is="custom-style" include="add-user-button-style"></style>
+    
+    <button id="add-user-btn">
+      <svg-icon icon="add-user"></svg-icon> [[ i18n(&apos;INVITE_MORE_FRIENDS&apos;) ]]
+    </button>
+    
+  </template>
+</dom-module>
+<!-- Components -->
+<!-- Templates -->
+<!-- Styles -->
+<dom-module id="activity-page" assetpath="../pages/activity-page/">
+  <template>
+    <style is="custom-style" include="activity-page-style shared-button-style"></style>
+
+    <template is="dom-if" if="[[ activityPage.showJoinLeave ]]">
+      <div class="invitation-buttons">
+        <button class="button-primary join" on-click="actionDispatch" data-action="joinGroup">
+          <svg-icon icon="check-square-o"></svg-icon> [[ i18n(&apos;JOIN_NOW&apos;) ]]
+        </button>
+      
+        <button class="button-primary leave" on-click="actionDispatch" data-action="leaveGroup">
+          <svg-icon icon="cross"></svg-icon> [[ i18n(&apos;LEAVE&apos;) ]]
+        </button>
+      </div>
+    </template>
+      
+    <member-list class="content"></member-list>
+    <seats-summary class="content" hidden$="[[ !activePage_Data.showSeatsSummary ]]"></seats-summary>
+    
+    <template is="dom-if" if="[[ activityPage.showInviteMore ]]">
+      <button class="button-primary" on-tap="autoDispatch" data-type="START_USER_FLOW" data-user-flow="InviteMoreToActivity">[[ i18n(&apos;INVITE_MORE_FRIENDS&apos;) ]]</button>
+    </template>
+<!--
+    <template is="dom-if" if="[[ activePage.showInviteMore ]]">
+      <button class="content shared-button-style" disabled>
+        <svg-icon icon="[[ activePage_Data.buttonIcon ]]"></svg-icon> [[ activePage_Data.buttonText ]]
+      </button>
+    </template>-->
+    
+  </template>
+</dom-module>
+<dom-module id="seat-selection-template-style" assetpath="../templates/seat-selection-templates/harlequins/">
+  <template>
+    <style>
+
+      :host {
+        height: 100%;
+        display: -webkit-box;
+        display: -ms-flexbox;
+        display: flex;
+        -webkit-box-orient: vertical;
+        -webkit-box-direction: normal;
+            -ms-flex-direction: column;
+                flex-direction: column;
+        box-sizing: border-box;
+        overflow: auto;
+        position: relative;
+        margin: 0 auto;
+        -webkit-box-pack: center;
+            -ms-flex-pack: center;
+                justify-content: center;
+      }
+
+      section {
+        display: -webkit-box;
+        display: -ms-flexbox;
+        display: flex;
+        -webkit-box-orient: horizontal;
+        -webkit-box-direction: normal;
+            -ms-flex-direction: row;
+                flex-direction: row;
+        -webkit-box-pack: center;
+            -ms-flex-pack: center;
+                justify-content: center;
+      }
+
+      header {
+        display: block;
+        width: 100%;
+        height: 40px;
+        text-align: center;
+        color: #616161;
+      }
+
+      .seat-selection-aside {
+        max-width: 280px;
+        margin: 25px 20px;
+      }
+
+      .seat-selector-panel {
+        background-color: green;
+      }
+
+      @media all and (max-width: 980px) {
+        section {
+          -webkit-box-orient: vertical;
+          -webkit-box-direction: reverse;
+              -ms-flex-direction: column-reverse;
+                  flex-direction: column-reverse;
+        }
+
+        .seat-selection-aside {
+          -webkit-box-flex: 2;
+              -ms-flex-positive: 2;
+                  flex-grow: 2;
+          -ms-flex-preferred-size: 40%;
+              flex-basis: 40%;
+          max-width: 99%;
+          margin-bottom: 15px;
+        }
+      }
+
+    </style>
+  </template>
+</dom-module><dom-module id="seat-selection-template" assetpath="../templates/seat-selection-templates/harlequins/">
+  <template>
+    <style is="custom-style" include="seat-selection-template-style"></style>
+
+      <header>
+        <content select=".header"></content>
+      </header>        
+
+      <section>
+        <aside class="seat-selection-aside">
+          <content select=".aside"></content>
+        </aside>
+        <div class="seat-selector-panel">
+          <content select=".panel"></content>
+        </div>
+      </section>
+
+  </template>
+</dom-module>
+<dom-module id="seat-selection-counter-style" assetpath="../components/seat-selection-counter/">
+  <template>
+    <style>
+      :host {
+        height: 44px;
+        width: 100%;
+        display: block;
+        background-color: #eaeaea;
+        color: #717171;
+        padding: 0 10px;
+        box-sizing: border-box;
+        line-height: 44px;
+        border-bottom: #c7c5c5;
+        
+        border-bottom: 1px solid #717171;
+        font-family: Arial, Helvetica, sans-serif;
+        font-size: 16px;
+      }
+    </style>
+  </template>
+</dom-module><dom-module id="seat-selection-counter" assetpath="../components/seat-selection-counter/">
+  <template>
+    <style is="custom-style" include="seat-selection-counter-style"></style>
+    [[ i18n(&apos;SEATS_TO_SELECT&apos;, &apos;NUM&apos;, seatSelection_SeatsRequiredDiff) ]]
+  </template>
+</dom-module>
+<dom-module id="seat-selection-info-style" assetpath="../components/seat-selection-info/">
+  <template>
+    <style>
+      :host {
+        width: 100%;
+        display: block;
+        font-family: Oswald;
+        text-transform: uppercase;
+        color: #696969;
+      }
+      
+      [hidden] {
+        display: none !important;
+      }
+      
+      .status-top,
+      .status-btm {
+        box-sizing: border-box;
+        padding: 0 8px;
+        display: block;
+        height: 32px;
+        line-height: 32px;
+        /*font-weight: bold;*/
+      }
+      
+      .status-top {
+        font-size: 16px;
+        background-color: #fff;
+        text-align: center;
+      }
+      
+      .all-selected {
+        color: var(--success-color, #2DCC70);
+      }
+      
+      .all-selected svg-icon {
+        --svg-icon-height: 18px;
+        --svg-icon-width: 18px;
+      }
+      
+      .too-many-selected {
+        color: var(--error-color, red);
+      }
+      
+      .status-btm {
+        font-size: 14px;
+        background-color: #eaeaea;
+        border-bottom: 1px solid #cecece;
+        text-align: center;
+      }
+      
+      .your-seats,
+      .num-selected {
+        display: inline-block;
+        width: 50%;
+      }
+      
+      .your-seats {
+        text-align: left;
+      }
+      
+      .num-selected {
+        text-align: right;
+      }
+      
+      .num-selected .seat-circle {
+        background-color: #007099;
+        display: inline-block;
+        height: 12px;
+        width: 12px;
+        border-radius: 100%;
+        margin-right: 8px;
+      }
+      
+      
+      
+      .table {
+        display: table;
+        width: 100.2%;
+        background-color: #eee;
+        font-size: 14px;
+      }
+      
+      .thead {
+        display: table-header-group;
+        width: 100%;
+      }
+      
+      .tbody {
+        display: table-row-group;
+      }
+      
+      .tr {
+        display: table-row;
+        width: 100%;
+      }
+      
+      .th,
+      .td {
+        display: table-cell;
+        width: 200px;
+        box-sizing: border-box;
+        padding: 8px;
+      }
+      
+      .th {
+        /*font-weight: bold;*/
+        border-bottom: 1px solid #cecece;
+      }
+      
+      .tbody .tr:nth-child(odd) {
+        background-color: #fff;
+      }
+      
+      .area {
+        width: 30%;
+      }
+      
+      .tr div:last-child {
+        text-align: right;
+      }
+      
+      .type {
+        width: 50%;
+      }
+      
+      .row,
+      .seat {
+        width: 10%;
+      }
+      
+      @media all and (min-width: 420px) and (max-width: 760px) {
+        .area {
+          width: 45%;
+        }
+        
+        .type {
+          width: 35%;
+        }
+      }
+
+      @media all and (max-width: 420px) { 
+        .area {
+          width: 32%;
+        }
+        
+        .type {
+          width: 48%;
+        }
+      }
+      
+      span.lower-tier {
+        display: none;
+      }
+      
+      @media all and (min-width: 421px) and (max-width: 759px) {
+        span.lower-tier {
+          display: inline;
+        }
+      }
+    </style>
+  </template>
+</dom-module><dom-module id="seat-selection-info" assetpath="../components/seat-selection-info/">
+  <template>
+    <style is="custom-style" include="seat-selection-info-style"></style>
+
+      <div class="status-btm">
+        <div class="your-seats">[[ i18n(&apos;SELECTED_SEATS&apos;) ]]<div class="seat-circle"></div></div><!--
+        --><div class="num-selected">[[ selectedSeats_SelectedCount ]] / [[ selectedSeats_SeatsRequired ]]</div>
+      </div>
+      <div class="table">
+        <div class="thead">
+          <div class="tr">
+            <div class="th area">[[ i18n(&apos;AREA&apos;) ]]</div>
+            <div class="th row">[[ i18n(&apos;ROW&apos;) ]]</div>
+            <div class="th seat">[[ i18n(&apos;SEAT&apos;) ]]</div>
+            <div class="th type">[[ i18n(&apos;TYPE_OF_TICKET&apos;) ]]</div>
+          </div>
+        </div>
+        <div class="tbody">
+          <template is="dom-repeat" items="[[ selectedSeats_PreSelectedArray ]]" as="seat">
+            <div class="tr">
+              <div class="td">[[ seat.area ]]</div>
+              <div class="td">[[ seat.row ]]</div>
+              <div class="td">[[ seat.number ]]</div>
+              <div class="td">&#xA3;[[ selectedProduct.price ]]</div>
+            </div> 
+          </template>
+          <template is="dom-repeat" items="[[ selectedSeats_SelectedArray ]]" as="seat">
+            <div class="tr">
+              <div class="td">[[ seat.area ]]</div>
+              <div class="td">[[ seat.row ]]</div>
+              <div class="td">[[ seat.number ]]</div>
+              <div class="td">&#xA3;[[ selectedProduct.price ]]</div>
+            </div> 
+          </template>
+        </div>
+      </div>
+      
+    
+  </template>
+</dom-module>
+<dom-module id="seat-selector-color-keys-style" assetpath="../components/seat-selector-color-keys/">
+  <template>
+    <style>
+      :host {}
+      
+      section {
+        width: 320px;
+      }
+      
+      .ground {
+        font-size: 16px;
+        text-align: center;
+        width: 304px;
+        color: #fff;
+        background-color: #bebebe;
+        box-sizing: border-box;
+        padding: 6px 10px;
+        margin: 0 auto;
+        margin-bottom: 3px;
+      }
+      
+      .guide {
+        font-size: 14px;
+      }
+      
+      .seat-circle {
+        display: inline-block;
+        height: 12px;
+        width: 12px;
+        border-radius: 100%;
+        margin-left: 13px;
+        margin-right: 2px;
+        -webkit-transform: translateY(1px);
+                transform: translateY(1px);
+      }
+      
+      .seat-circle.selected {
+        background-color: #007099;
+        margin-left: 22px;
+      }
+      
+      .seat-circle.available {
+        background-color: #3cf;
+      }
+      
+      .seat-circle.unavailable {
+        background-color: #bbb;
+      }
+      
+    </style>
+  </template>
+</dom-module><dom-module id="seat-selector-color-keys" assetpath="../components/seat-selector-color-keys/">
+  <template>
+    <style is="custom-style" include="seat-selector-color-keys-style"></style>
+    
+    <section>
+      <div class="ground">[[ i18n(&apos;GROUND&apos;) ]]</div>
+      <div class="guide"><div class="seat-circle selected"></div> [[ i18n(&apos;SELECTED_CAP&apos;) ]] <div class="seat-circle available"></div> [[ i18n(&apos;AVAILABLE&apos;) ]] <div class="seat-circle unavailable"></div> [[ i18n(&apos;UNAVAILABLE&apos;) ]]</div>
+    </section>
+    
+  </template>
+</dom-module>
+<dom-module id="seat-selector-style" assetpath="../components/seat-selector/">
+  <template>
+    <style>
+      
+      :host {
+        overflow: auto;
+        overflow: auto;
+        display: block;
+        background-color: #fff;
+        position: relative;
+        width: 100%;
+        height: 100%;
+        padding: 0;
+        box-sizing: border-box;
+      }
+      
+      .tooltip {
+        position: absolute;
+        text-align: center;
+        width: 60px;
+        height: 12px;
+        padding: 8px;
+        margin-top: -20px;
+        font: 10px sans-serif;
+        color: #fff;
+        background: #2F2F2F;
+        pointer-events: none;
+      }
+      
+      :host ::content circle.ava {
+        cursor: pointer;
+      }
+
+      @media all and (min-width: 760px) {
+        :host {
+        }
+      }
+
+    </style>
+  </template>
+</dom-module><dom-module id="seat-selector" assetpath="../components/seat-selector/">
+  <template>
+    <style is="custom-style" include="seat-selector-style"></style>
+  </template>
+</dom-module>
+<dom-module id="continue-button-style" assetpath="../components/continue-button/">
+  <template>
+    <style>
+      :host {
+        width: var(--continue-button-container-width, 100%);
+        height: var(--continue-button-container-height, 80px);
+        text-align: var(--continue-button-align, center);
+        position: relative;
+        display: block;
+        vertical-align: middle;
+      }
+
+      :host:before, button:before {    /* create a full-height inline block pseudo=element */
+        content: ' ';
+        display: inline-block;
+        vertical-align: middle;  /* vertical alignment of the inline element */
+        height: 100%;
+      }
+
+      button {
+        width: var(--continue-button-width, auto);
+        height: var(--continue-button-height, 50px);
+        font-weight: var(--continue-button-font-weight, 500);
+        padding: var(--continue-button-padding, 0 20px);
+        line-height: var(--continue-button-height, 50px);
+        font-family: var(--continue-button-font-family, 'Oswald');
+        font-size: var(--continue-button-font-size, 16px);
+        text-transform: var(--continue-button-text-transform, uppercase);
+        border: var(--continue-button-border, 2px solid #46474B);
+        -webkit-transition: var(--continue-button-transition, all 0.3s);
+        transition: var(--continue-button-transition, all 0.3s);
+        color: var(--continue-button-color, #46474B);
+        background-color: var(--continue-button-background-color, #fff);
+        display: inline-block;
+        vertical-align: middle;
+      }
+
+      button:hover {
+        color: var(--continue-button-hover-color, #fff);
+        background-color: var(--continue-button-background-hover-color, #46474B);
+      }
+    </style>
+  </template>
+</dom-module><dom-module id="continue-button" assetpath="../components/continue-button/">
+  <template>
+    <style is="custom-style" include="continue-button-style"></style>
+    <button on-click="autoDispatch" data-type="STEP_FLOW">[[ btnText ]]</button>
+  </template>
+</dom-module>
+<dom-module id="seat-selection-page-style" assetpath="../pages/seat-selection-page/">
+  <template>
+    <style>
+      
+      :host {
+        display: block;
+        width: 100%;
+      }
+      
+      seat-selector-component {
+        margin-bottom: 50px;
+      }
+
+      [hidden] {
+        display: none !important;
+      }
+
+      .all-selected {
+        color: var(--success-color, #54EA60);
+      }
+      
+      .all-selected svg-icon {
+        --svg-icon-height: 18px;
+        --svg-icon-width: 18px;
+      }
+      
+      .too-many-selected {
+        color: var(--error-color, #EA5454);
+      }
+
+      .seat-count {
+        display: block;
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 40px;
+        line-height: 40px;
+        font-family: 'Oswald', sans-serif;
+        font-size: 22px;
+        text-transform: uppercase;
+      }
+
+    </style>
+  </template>
+</dom-module><!-- Components -->
+<!-- Styles -->
+<dom-module id="seat-selection-page" assetpath="../pages/seat-selection-page/">
+  <template>
+    <style is="custom-style" include="seat-selection-page-style shared-button-style"></style>
+
+    <div class="shared-page-header-title">
+      <!--[[ i18n('SEAT_SELECTION_MESSAGE') ]]-->
+    </div>
+
+    <seat-selection-template>
+
+      <div class="header seat-count all-selected" hidden$="[[ !selectedSeats_HasRequiredSeats ]]">
+        [[ i18n(&apos;ALL_SEATS_SELECTED&apos;) ]] <svg-icon icon="check"></svg-icon>
+      </div>
+
+      <div class="header seat-count too-many-selected" hidden$="[[ !selectedSeats_DeselectCount ]]">
+        [[ i18n(&apos;DESELECT_NUM_SEATS&apos;, &apos;NUM&apos;, selectedSeats_DeselectCount) ]]
+      </div>
+
+      <seat-selection-info class="aside"></seat-selection-info>
+      <!--<seat-selector-color-keys class="panel"></seat-selector-color-keys>-->
+      <seat-selector seat-data="[[ selectedSeats_SeatMapData ]]" class="panel"></seat-selector>
+    </seat-selection-template>
+    
+    <div class="shared-continue-button">
+      <continue-button></continue-button>
+    </div>
+
+  </template>
+</dom-module>
+</div><script src="pages.1c0d26cfa782e48197bfeb386a122f65.js"></script></body></html>

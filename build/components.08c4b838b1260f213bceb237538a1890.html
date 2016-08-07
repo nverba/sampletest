@@ -1,0 +1,897 @@
+<!--
+  This file mocks the vulcanize compile target in dest
+  This file is needed for the vulcanization process to maintain relative paths to assets in production.
+--><html><head><meta charset="UTF-8"><link rel="import" href="../shared.6482c1012487ce0c53af70b32f2ac7be.html"></head><body><div hidden by-vulcanize=""><dom-module id="nav-bar-style" assetpath="../components/nav-bar/">
+  <template>
+    <style>
+      
+      :host {
+        height: 100%;
+        display: inline-block;
+        position: relative;
+        color: var(--nav-bar-color, #fff);
+        font-size: var(--nav-bar-font-size, 16px);
+      }
+
+      :host svg-icon {
+        color: var(--nav-bar-color, #fff);
+      }
+
+      .nav-bar-desktop {
+        font-family: var(--nav-bar-font-family, 'Open Sans');
+        display: inline-block;
+        height: 100%;
+      }
+
+      .nav-bar-desktop.align-middle:before {    /* create a full-height inline block pseudo=element */
+        content: ' ';
+        display: inline-block;
+        vertical-align: middle;  /* vertical alignment of the inline element */
+        height: 100%;
+      }
+
+      .nav-bar-mobile {
+        display: none;
+        position: relative;
+        right: 10px;
+      }
+      
+      svg {
+        fill: currentColor;
+      }
+      
+     .nav-bar-icons {
+        --svg-icon-parent-width: 20px;
+        --svg-icon-parent-height: 100%;
+        --svg-icon-height: 17px;
+        --svg-icon-width: 17px;
+        display: none;
+      }
+      
+      .nav-bar-icons.false {
+        display: inline-block;
+      }
+      
+      a {
+        text-decoration: none;
+        text-transform: uppercase;
+        display: inline-block;
+        padding: 10px 0.5em;
+        vertical-align: middle;     
+        background-color: var(--secondary-button-color, rgba(40, 40, 40, 0)); 
+        -webkit-transition: background-color 1.2s; 
+        transition: background-color 1.2s;
+      }
+    
+      a:visited {
+        color: currentColor;
+      }
+      
+      a:active {
+        -webkit-transition: background-color 0.1s;
+        transition: background-color 0.1s;
+        background-color: var(--secondary-button-color, rgba(40, 40, 40, 1));
+      }
+      
+      @media all and (max-width: 680px) {
+       
+        .nav-bar-mobile {
+          display: inline-block;
+          height: 100%;
+        }
+        
+        .nav-bar-desktop {
+          display: none;
+        }
+      }
+      
+      
+      /*---------- Dropdown Style ----------*/
+      
+      .dropdown-btn {
+        color: inherit;
+        background: none;
+        padding: 0 8px;
+        height: 100%;
+        font-size: 16px;
+        line-height: 1;
+        border: none;
+        outline: none;
+        cursor: pointer;
+      }
+      
+      .dropdown-btn svg-icon {
+        --svg-icon-parent-width: 20px;
+        --svg-icon-parent-height: 40px;
+        --svg-icon-height: 20px;
+        --svg-icon-width: 20px;
+      }
+      
+      .dropdown {
+        position: relative;
+        display: inline-block;
+        height: 100%;
+      }
+      
+      .dropdown-content {
+        /*display: none;*/
+        position: absolute;
+        z-index: 999999999;
+        top: 0;
+        right: 0;
+        color: #fff;
+        background-color: #fff;
+        min-width: 200px;
+        box-shadow: 0px 0px 16px rgba(0,0,0,0.4);
+        font-size: 1rem;
+        line-height: 1;
+        -webkit-transform: scale(0);
+                transform: scale(0);
+        -webkit-transform-origin: top center;
+                transform-origin: top center;
+        opacity: 0;
+        -webkit-transition: none;
+        transition: none;
+      }
+      
+      .dropdown-content a {
+        color: inherit;
+        padding: 1.25em;
+        margin: 0;
+        text-decoration: none;
+        text-transform: none;
+        display: block;
+      }
+      
+      .dropdown-content a.active-page {
+        font-weight: bold;
+      }
+      
+      .dropdown-content a:hover {
+        background-color: #efefef;
+      }
+      
+      .dropdown-content[display] {
+        /*display: block;*/
+        -webkit-transform: scale(1);
+                transform: scale(1);
+        opacity: 1;
+        color: #000;
+        -webkit-transform-origin: top center;
+                transform-origin: top center;
+        -webkit-transition: opacity .2s ease 0s,
+                    color .18s ease 0s,
+                    -webkit-transform .18s ease 0s,
+                    -webkit-transform-origin .18s ease-in 0s;
+        transition: opacity .2s ease 0s,
+                    color .18s ease 0s,
+                    -webkit-transform .18s ease 0s,
+                    -webkit-transform-origin .18s ease-in 0s;
+        transition: transform .18s ease 0s,
+                    transform-origin .18s ease-in 0s,
+                    opacity .2s ease 0s,
+                    color .18s ease 0s;
+        transition: transform .18s ease 0s,
+                    transform-origin .18s ease-in 0s,
+                    opacity .2s ease 0s,
+                    color .18s ease 0s,
+                    -webkit-transform .18s ease 0s,
+                    -webkit-transform-origin .18s ease-in 0s;
+      }
+      
+    </style>
+  </template>
+</dom-module><!-- Polymer -->
+<!-- Components -->
+<dom-module id="nav-bar" assetpath="../components/nav-bar/">
+  <template>
+    <style is="custom-style" include="nav-bar-style"></style>
+
+      <div class="nav-bar-desktop align-middle">
+        <template is="dom-if" if="[[ !user.loggedIn ]]">
+          <template is="dom-repeat" items="[[ navButtons(config_NavButtons, &apos;main&apos;, &apos;loggedOut&apos;) ]]">
+            <a href="" on-click="actionDispatch" data-action$="[[ item.action ]]" data-page$="[[ item.page ]]" noink="">
+              [[ i18n(item.text) ]]<svg-icon class$="nav-bar-icons [[ !item.icon ]]" icon="[[ item.icon ]]"></svg-icon>
+            </a>
+          </template>
+        </template>
+        <template is="dom-if" if="[[ user.loggedIn ]]">
+          <template is="dom-repeat" items="[[ navButtons(config_NavButtons, &apos;main&apos;, &apos;loggedIn&apos;) ]]">
+            <a href="" on-click="actionDispatch" data-action$="[[ item.action ]]" data-page$="[[ item.page ]]" noink="">
+              [[ i18n(item.text) ]]<svg-icon class$="nav-bar-icons [[ !item.icon ]]" icon="[[ item.icon ]]"></svg-icon>
+            </a>
+          </template>
+        </template>
+      </div>
+      
+      <div class="group align-middle nav-bar-mobile">
+        <div class="dropdown">
+          <button class="dropdown-btn align-middle" on-click="_toggleDropdown"><svg-icon icon="ellipsis-v"></svg-icon></button>
+          <div id="dropdown" class="dropdown-content">
+            <template is="dom-if" if="[[ !user.loggedIn ]]">
+              <template is="dom-repeat" items="[[  navButtons(config_NavButtons, &apos;main&apos;, &apos;loggedOut&apos;) ]]">
+                <a href="" on-click="actionDispatch" data-action$="[[ item.action ]]" data-page$="[[ item.page ]]" class$="[[ activePage(item.page, ui_ActivePage) ]]">
+                  [[ i18n(item.text) ]]<svg-icon class$="nav-bar-icons [[ !item.icon ]]" icon="[[ item.icon ]]"></svg-icon>
+                </a>
+              </template>
+            </template>
+            <template is="dom-if" if="[[ user.loggedIn ]]">
+              <template is="dom-repeat" items="[[ navButtons(config_NavButtons, &apos;main&apos;, &apos;loggedIn&apos;) ]]">
+                <a href="" on-click="actionDispatch" data-action$="[[ item.action ]]" data-page$="[[ item.page ]]" class$="[[ activePage(item.page, ui_ActivePage) ]]">
+                  [[ i18n(item.text) ]]<svg-icon class$="nav-bar-icons [[ !item.icon ]]" icon="[[ item.icon ]]"></svg-icon>
+                </a>
+              </template>
+            </template>
+          </div>
+        </div>
+      </div>
+
+  </template>
+</dom-module>
+<dom-module id="pages-wrapper-style" assetpath="../components/pages-wrapper/">
+  <template>
+    <style>
+      :host {
+        width: 100%;
+        height: 100%;
+        display: block;
+        z-index: 0;
+      }
+    </style>
+  </template>
+</dom-module><dom-module id="custom-pages-style" assetpath="../styles/">
+  <template>
+    <style>
+      :root {
+        --form-section-vertical-spacing: 16px;
+        --form-section-vertical-spacing-mobile: 10px;
+    
+        --body-background-color: #f8f8f8;
+        
+        --page-background-color: #fff;
+        
+        --plain-header-text-transform: none;
+
+        --primary-text-color: #414141;
+        --secondary-text-color: #009cde;
+        --body-text-color: #000;
+        
+        --header-background-color: #f8f8f8;
+    
+        --nav-background-color: #fff;
+        --nav-border-top: 1px solid #efefef;
+        --nav-border-bottom: none;
+        --nav-text-color: #009cde;
+        
+        --hero-background-color: #333;
+        --hero-shadow-color: #2d2d2d;
+        --hero-text-color: #fff;
+        
+        --powered-by-color: #009cde;
+      }
+    </style>
+  </template>
+</dom-module><dom-module id="custom-member-initial-style" assetpath="../styles/">
+  <template>
+    <style>
+      :root {
+        /*--member-initial-border-radius: 6px;*/
+        --member-initial-theme: {
+          background-color: #009cde;
+          color: #fff;
+        };
+        
+        --member-initial-leader-theme: {
+          background-color: #fff;
+          color: #009cde;
+          border: 1px solid #009cde;
+        };
+      }
+    </style>
+  </template>
+</dom-module><dom-module id="app-footer-style" assetpath="../components/app-footer/">
+  <template>
+    <style>
+      :host {
+        margin: 16px 0;
+        width: 100%;
+        display: block;
+        width: 100%;
+        text-align: center;
+        padding: 8px 0 10px;
+        font-size: 12px;
+      }
+      
+      a {
+        color: #333;
+        text-decoration: none;
+        padding: 0 8px;
+      }
+    </style>
+  </template>
+</dom-module><dom-module id="app-footer" assetpath="../components/app-footer/">
+  <template>
+    <style is="custom-style" include="app-footer-style"></style>
+    
+    <a href="https://makeitsocial.com/terms/" target="_blank">[[ i18n(&apos;TERMS&apos;) ]]</a>
+    <a href="https://makeitsocial.com/data-use.html" target="_blank">[[ i18n(&apos;DATA_USE&apos;) ]]</a>
+    
+  </template>
+</dom-module>
+<!--
+@license
+Copyright (c) 2015 The Polymer Project Authors. All rights reserved.
+This code may only be used under the BSD style license found at http://polymer.github.io/LICENSE.txt
+The complete set of authors may be found at http://polymer.github.io/AUTHORS.txt
+The complete set of contributors may be found at http://polymer.github.io/CONTRIBUTORS.txt
+Code distributed by Google as part of the polymer project is also
+subject to an additional IP rights grant found at http://polymer.github.io/PATENTS.txt
+--><!--
+@license
+Copyright (c) 2015 The Polymer Project Authors. All rights reserved.
+This code may only be used under the BSD style license found at http://polymer.github.io/LICENSE.txt
+The complete set of authors may be found at http://polymer.github.io/AUTHORS.txt
+The complete set of contributors may be found at http://polymer.github.io/CONTRIBUTORS.txt
+Code distributed by Google as part of the polymer project is also
+subject to an additional IP rights grant found at http://polymer.github.io/PATENTS.txt
+-->
+<!--
+@license
+Copyright (c) 2015 The Polymer Project Authors. All rights reserved.
+This code may only be used under the BSD style license found at http://polymer.github.io/LICENSE.txt
+The complete set of authors may be found at http://polymer.github.io/AUTHORS.txt
+The complete set of contributors may be found at http://polymer.github.io/CONTRIBUTORS.txt
+Code distributed by Google as part of the polymer project is also
+subject to an additional IP rights grant found at http://polymer.github.io/PATENTS.txt
+--><!--
+`iron-pages` is used to select one of its children to show. One use is to cycle through a list of
+children "pages".
+
+Example:
+
+    <iron-pages selected="0">
+      <div>One</div>
+      <div>Two</div>
+      <div>Three</div>
+    </iron-pages>
+
+    <script>
+      document.addEventListener('click', function(e) {
+        var pages = document.querySelector('iron-pages');
+        pages.selectNext();
+      });
+    </script>
+
+@group Iron Elements
+@hero hero.svg
+@demo demo/index.html
+-->
+
+<dom-module id="iron-pages" assetpath="../../bower_components/iron-pages/">
+
+  <template>
+    <style>
+      :host {
+        display: block;
+      }
+
+      :host > ::content > :not(.iron-selected) {
+        display: none !important;
+      }
+    </style>
+
+    <content></content>
+  </template>
+
+  </dom-module>
+<dom-module id="zone-selector-style" assetpath="../components/zone-selector/">
+  <template>
+    <style>
+      
+      :host {
+        overflow: auto;
+        overflow: auto;
+        display: block;
+        background-color: #fff;
+        position: relative;
+      }
+
+    </style>
+  </template>
+</dom-module><dom-module id="zone-selector" assetpath="../components/zone-selector/">
+  <template>
+    <style is="custom-style" include="zone-selector-style"></style>
+  </template>
+</dom-module>
+<dom-module id="zone-selection-page-style" assetpath="../pages/zone-selection-page/">
+  <template>
+    <style>
+      
+      :host {
+        display: block;
+        width: 100%;
+      }
+
+    </style>
+  </template>
+</dom-module><dom-module id="zone-selection-page" assetpath="../pages/zone-selection-page/">
+  <template>
+    <style is="custom-style" include="zone-selection-page-style"></style>
+    <zone-selector zone-data="[[ selectedSeats_ZoneData ]]"></zone-selector>
+  </template>
+</dom-module>
+<dom-module id="pages-wrapper" assetpath="../components/pages-wrapper/">
+  <template>
+    <style is="custom-style" include="custom-pages-style custom-button-style custom-input-style custom-member-initial-style pages-wrapper-style"></style>
+    <iron-pages selected="[[ ui.activePage ]]" attr-for-selected="name">
+      <match-list name="matches"></match-list>
+      <invite-page name="invite"></invite-page>
+      <zone-selection-page name="zones"></zone-selection-page>
+      <seat-selection-page name="seats"></seat-selection-page>
+      <prepay-page name="prepay"></prepay-page>
+      <activities-page name="activities"></activities-page>
+      <activity-page name="activity"></activity-page>
+      <profile-page name="profile"></profile-page>
+      <auth-page name="auth"></auth-page>
+    </iron-pages>
+  </template>
+</dom-module>
+<dom-module id="rubber-redux" assetpath="../components/rubber-redux/">
+  <template>
+    <content></content>
+  </template>
+</dom-module>
+
+<dom-module id="match-list-style" assetpath="../components/match-list/">
+  <template>
+    <style>
+      
+      :host {      
+        display: -webkit-box;      
+        display: -ms-flexbox;      
+        display: flex;
+        margin: 0 auto;
+        -webkit-box-orient: horizontal;
+        -webkit-box-direction: normal;
+            -ms-flex-direction: row;
+                flex-direction: row;
+        -ms-flex-wrap: wrap;
+            flex-wrap: wrap;
+        padding-bottom: 16px;
+        box-sizing: border-box;
+        -ms-flex-pack: distribute;
+            justify-content: space-around;
+        width: 100%;
+        max-width: 940px;        
+      }
+
+      .card {
+        width: 250px;
+        max-width: 250px;
+        overflow: hidden;
+        -webkit-box-flex: 1;
+            -ms-flex-positive: 1;
+                flex-grow: 1;
+        margin: 15px 5px;
+        box-shadow: 0 2px 2px 0 rgba(0, 0, 0, 0.14), 0 1px 5px 0 rgba(0, 0, 0, 0.12), 0 3px 1px -2px rgba(0, 0, 0, 0.2);
+      }
+      
+      .card-image {
+        width: 100%;
+        pointer-events: none;
+      }
+      
+      .card-content {
+        box-sizing: border-box;
+        text-align: center;
+        font-size: 18px;
+        line-height: 20px;
+        text-transform: uppercase;
+        height: 146px;
+        max-height: 146px;
+        padding-top: 12px;
+        color: var(--primary-text-color, #333);
+      }
+      
+      .card-actions {
+        padding: 0;
+      }
+      
+      .card-actions svg-icon {
+        --svg-icon-height: 100%;
+        --svg-icon-width: 22px;
+        --svg-icon-parent-height: 22px;
+        --svg-icon-parent-width: 22px;
+        -webkit-transform: translateY(-1px);
+                transform: translateY(-1px);
+        padding-left: 4px;
+        position: absolute;
+      }
+
+      button {
+        background-color: var(--secondary-button-color, #87c7c7);
+        color: var(--secondary-button-text-color, #fff);
+        border-radius: 0;
+        width: 100%;
+        height: 54px;
+        padding: 0;
+        margin: 0;
+        font-size: 16px;
+        text-transform: none;
+        border: none;
+        cursor: pointer;
+      }
+      
+      button[disabled] {
+        background-color: var(--secondary-button-disabled-color, #eaeaea);
+        color: var(--secondary-button-disabled-text-color, #9a9a9a);
+      }
+      
+      .item-description {
+        font-family: 'Oswald', sans-serif !important;
+        display: block;
+      }
+      
+      .item-description.tourn-name {
+        color: var(--secondary-text-color, #666);
+      }
+      
+      .item-description.match-name {
+        font-weight: bold;
+        margin-top: 4px;
+      }
+      
+      .datum {
+        font-size: 11.5px;
+        line-height: 1.66em;
+        text-transform: none;
+        text-align: left;
+        margin-top: 6px;
+        margin-left: 50%;
+        -webkit-transform: translateX(-50%);
+                transform: translateX(-50%);
+      }
+      
+      .datum span {
+        display: block;
+        white-space: nowrap;
+      }
+      
+      .datum svg-icon {
+        --svg-icon-height: 100%;
+        --svg-icon-width: 15px;
+        --svg-icon-parent-height: 15px;
+        --svg-icon-parent-width: 15px;
+        margin-right: 2px;
+      }
+
+      @media (max-width: 450px) {
+        .card {
+          width: 100%;
+          max-width: 100%;
+        }
+      }
+    </style>
+  </template>
+</dom-module><!-- Components -->
+<dom-module id="match-list" assetpath="../components/match-list/">
+  <template>
+    <style is="custom-style" include="match-list-style"></style>
+    
+    <template is="dom-repeat" items="[[ products.list ]]">
+      <div class="card">
+        <img class="card-image" src="[[ item.image ]]">
+        <div class="card-content">
+          <span class="item-description tourn-name">[[ tournamentName(item.name) ]]</span>
+          <span class="item-description match-name">[[ matchName(item.name) ]]</span>
+          <div class="datum">
+            <span>
+              <svg-icon icon="calendar"></svg-icon>
+              [[ item.stringDate ]]
+            </span>
+            <span>
+              <svg-icon icon="pointer"></svg-icon>
+              [[ i18n(&apos;KIA_OVAL&apos;) ]]
+            </span>
+            <span>
+              <svg-icon icon="ticket"></svg-icon>
+              [[ i18n(&apos;ADULTS_FROM&apos;) ]] &#xA3;[[ item.prices.base ]]
+            </span>
+          </div>
+        </div>
+        <div class="card-actions">
+          <button on-tap="actionDispatch" data-action="startNewGroupAndPrePay" data-index$="[[ index ]]" disabled$="[[ item.deadlineReached ]]">
+            [[ ternaryi18n(item.deadlineReached, &apos;GROUP_BOOKING_FINISHED&apos;, &apos;BOOK_WITH_FRIENDS&apos;) ]]
+            <svg-icon icon="[[ showChevron(item.deadlineReached) ]]"></svg-icon>
+          </button>
+        </div>
+      </div>
+    </template>
+  </template>
+</dom-module>
+<dom-module id="feedback-module-style" assetpath="../components/feedback-module/">
+<template>
+<style>
+  :host {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    text-align: center;
+    display: block;
+    z-index: 99999;
+    pointer-events: none;
+  }
+
+  #feedback-layer {
+    width: 100%;
+    height: 100%;
+    position: absolute;
+    top: 0;
+    left: 0;
+    background-color: #000;
+    opacity: 0;
+    -webkit-transition: all 0.3s;
+    transition: all 0.3s;
+    pointer-events: none;
+  }
+
+  #feedback-layer.true {
+    background-color: rgba(0, 0, 0, 0.3);
+    -webkit-transition: opacity 0.3s;
+    transition: opacity 0.3s;
+    opacity: 1;
+    pointer-events: initial;
+  }
+
+  #feedback-display {
+    position: absolute;
+    background-color: #000;
+    display: block;
+    width: 100%;
+    opacity: 0;
+    height: 120px;
+    box-shadow: 0 0 4px rgba(0, 0, 0, .14), 0 4px 8px rgba(0, 0, 0, .28);
+    top: 50%;
+    -webkit-transform: translateY(-50%);
+            transform: translateY(-50%);
+  }
+
+  #feedback-display.true {
+    opacity: 0.9;
+  }
+
+  .buttons {
+    position: absolute;
+    bottom: 10px;
+    display: -webkit-box;
+    display: -ms-flexbox;
+    display: flex;
+    width: 100%;
+    width: 240px;
+  }
+
+  #feedback-message {
+    opacity: 0;
+    font-size: 20px;
+    text-transform: uppercase;
+    font-family: 'Oswald', sans-serif;
+    -webkit-transition: opacity 0.3s;
+    transition: opacity 0.3s;
+    display: inline-block;
+    width: 100%;
+    text-align: center;
+    height: 66px;
+    line-height: 66px;
+    box-sizing: border-box;
+    color: #fff;
+  }
+
+  .buttons paper-button {
+    -webkit-box-flex: 1;
+        -ms-flex-positive: 1;
+            flex-grow: 1;
+  }
+  
+  .loader {
+    margin-top: 20px;
+    width: 100%;
+    height: 34px;
+    position: relative;
+    display: block;
+    text-align: center;
+  }
+  
+  .loader-inner {
+    height: 34px;
+    width: 34px;
+    display: block;
+    position: relative;
+    margin: 0 auto;
+  }
+
+  .ball-scale-ripple {
+    height: 34px;
+    width: 34px;
+  }
+
+  .ball-scale-ripple > div {
+    height: 30px;
+    width: 30px;
+    border-radius: 100%;
+    border: 2px solid #fff;
+    -webkit-animation: ball-scale-ripple 1s 0s infinite cubic-bezier(.21,.53,.56,.8);
+            animation: ball-scale-ripple 1s 0s infinite cubic-bezier(.21,.53,.56,.8);
+  }
+
+  .warning {
+    border-color: #EA8C55;
+  }
+
+  .error {
+    border-color: #AD2E24;
+  }
+
+  @-webkit-keyframes ball-scale-ripple {
+      0% {
+          -webkit-transform: scale(.1);
+                  transform: scale(.1);
+          opacity: 1
+      }
+
+      70% {
+          -webkit-transform: scale(1);
+                  transform: scale(1);
+          opacity: .7
+      }
+
+      100% {
+          opacity: 0
+      }
+  }
+
+  @keyframes ball-scale-ripple {
+      0% {
+          -webkit-transform: scale(.1);
+                  transform: scale(.1);
+          opacity: 1
+      }
+
+      70% {
+          -webkit-transform: scale(1);
+                  transform: scale(1);
+          opacity: .7
+      }
+
+      100% {
+          opacity: 0
+      }
+  }
+
+
+</style>
+</template>
+</dom-module><dom-module id="feedback-module" assetpath="../components/feedback-module/">
+<template>
+<style is="custom-style" include="feedback-module-style"></style>
+
+  <div id="feedback-layer" class$="[[ feedback.show ]]">
+    <div id="feedback-display" class$="[[ feedback.show ]]">
+      <div class="loader">
+        <div class$="loader-inner ball-scale-ripple [[ feedback.showRipple ]]">
+          <div></div>
+        </div>
+      </div>
+      <div id="feedback-message">
+        [[ feedbackMessage ]]
+      </div>
+    </div>
+  </div>
+
+</template>
+</dom-module>
+<dom-module id="notification-elements-style" assetpath="../components/notifications/">
+  <template>
+    <style>
+      :host {}
+    </style>
+  </template>
+</dom-module><dom-module id="alert-toast-style" assetpath="../components/alert-toast/">
+  <template>
+    <style>
+      :host {
+        position: fixed;
+        bottom: 0;
+        left: 0;
+        right: 0;
+        z-index: 9999;
+        pointer-events: none;
+      }
+      
+      .alert {
+        width: 100%;
+        height: 54px;
+        line-height: 54px;
+        text-align: center;
+        font-size: 16px;
+        color: #fff;
+        background-color: #333;
+        -webkit-transform: translateY(54px);
+                transform: translateY(54px);
+        opacity: 0;
+        -webkit-transition: all 0.08s;
+        transition: all 0.08s;
+      }
+      
+      .true {
+        -webkit-transform: translateY(0);
+                transform: translateY(0);
+        opacity: 1;
+        -webkit-transition: all 0.12s;
+        transition: all 0.12s;
+      }
+      
+      .success {
+        background-color: var(--success-color, #2DCC70);
+      }
+      
+      .error {
+        background-color: var(--error-color, red);
+      }
+    </style>
+  </template>
+</dom-module><dom-module id="alert-toast" assetpath="../components/alert-toast/">
+  <template>
+    <style is="custom-style" include="alert-toast-style"></style>
+    
+    <div class$="alert [[ alert_Data.alertType ]] [[ alert_Data.hasAlert ]]">[[ i18n(alert_Data.message) ]]</div>
+    
+  </template>
+</dom-module>
+<dom-module id="notification-elements" assetpath="../components/notifications/">
+  <template>
+    <style is="custom-style" include="notification-elements-style"></style>
+    <!--<feedback-module></feedback-module>
+    <alert-toast></alert-toast>-->
+  </template>
+</dom-module>
+<dom-module id="hero-module-style" assetpath="../components/hero-module/">
+  <template>
+    <style>
+      :host {
+        position: relative;
+        width: 100%;
+        height: 100%;
+        display: inline-block;
+        color: #fff;
+        text-align: center;
+        opacity: 0;
+        -webkit-transition: opacity 0.2s;
+        transition: opacity 0.2s;
+      }
+
+      :host:before {    /* create a full-height inline block pseudo=element */
+        content: ' ';
+        display: inline-block;
+        vertical-align: middle;  /* vertical alignment of the inline element */
+        height: 100%;
+      }
+
+      .page-title {
+        font-family: 'Oswald', sans-serif;
+        font-size: 43px;
+        display: inline-block;
+        vertical-align: middle;
+        text-transform: uppercase;
+      }
+
+    </style>
+  </template>
+</dom-module><dom-module id="hero-module" assetpath="../components/hero-module/">
+  <template>
+    <style is="custom-style" include="hero-module-style"></style>
+    <span class="page-title">[[ heroText ]]</span>
+  </template>
+</dom-module>
+</div><script src="components.852242b9c15cef489eb938d99536677e.js"></script></body></html>

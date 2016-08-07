@@ -1,0 +1,386 @@
+<!doctype html>
+<html>
+<head>
+
+<meta charset="utf-8">
+<meta name="viewport" content="initial-scale=1, maximum-scale=1">
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+
+<link href="https://fonts.googleapis.com/css?family=Open+Sans|Oswald" rel="stylesheet">
+<style is="custom-style">
+  /* Define a document-wide default—will not override a :host rule in icon-toggle-demo */
+  :root {
+
+    /* NAV BAR */
+
+    --nav-bar-color: #fff;
+    --nav-bar-font-family: 'Oswald', sans-serif;
+    --nav-bar-font-size: 16px;
+
+    /* PAGE SECTION */
+
+    /*--page-section-background-color: #f2f2f2;
+    --page-section-border: 1px solid #e0dede;*/
+
+  }
+  
+  :root .page-section {
+    background-color: #f2f2f2;
+    border-top: 3px solid #e5e5e5;
+    margin-bottom: 2rem;
+    padding: 1.5rem 1rem;
+  }
+  
+  :root .page-header {
+    display: block;
+    margin-top: 0;
+    margin-bottom: 1.5rem;
+  }
+  
+  :root .page-header ~ .page-header {
+    margin-top: 2rem;
+  }
+  
+  :root .page-content {
+    display: block;
+    margin-bottom: 1rem;
+  }
+  
+  :root .page-section .page-content:last-child {
+    margin-bottom: 0;
+  }
+  
+  @media all and (max-width: 600px) {
+    :root .page-section {
+      padding-left: 8px;
+      padding-right: 8px;
+    }
+  }
+
+</style>
+<style>
+  
+  html, body {
+    font-family: 'Open Sans', sans-serif;
+    height: 100%;
+    width: 100%;
+    margin: 0;
+    padding: 0;
+    background-color: #f7f7f9;
+    position: relative;
+  }
+
+  body {
+    overflow-y: scroll !important;
+  }
+
+  header.harl {
+    font-family: 'Open Sans', sans-serif;
+    height: 50px;
+    display: block;
+    background-color: #2c2f30;
+    color: #fff;
+  }
+
+  header.harl > div {
+    height: 100%;
+    max-width: 980px;
+    position: relative;
+    box-sizing: border-box;
+    padding: 0 10px;
+    margin: 0 auto;
+    text-align: right;
+    font-size: 14px;
+  }
+
+  header.harl > div > .text {
+    height: 100%;
+    position: absolute;
+    line-height: 50px;
+    top: 0;
+    left: 10px;
+  }
+
+  header.harl > div > .mis-branding {
+    top: 50%;
+    transform: translateY(-50%);
+    display: inline-block;
+    vertical-align: middle;
+    position: relative;
+  }
+
+  .harl .align-middle:before {    /* create a full-height inline block pseudo=element */
+    content: ' ';
+    display: inline-block;
+    vertical-align: middle;  /* vertical alignment of the inline element */
+    height: 100%;
+  }
+
+  header.harl > div a {
+    display: inline-block;
+    vertical-align: middle;
+    margin-left: 10px;
+  }
+
+  nav.harl {
+    background-color: #202225;
+    display: block;
+    height: 84px;
+  }
+
+  nav.harl > div {
+    position: relative;
+    max-width: 980px;
+    margin: 0 auto;
+    height: 100%;
+    color: #fff;
+  }
+
+  nav.harl > div > .home-link {
+    display: inline-block;
+    position: relative;
+    line-height: 84px;
+    height: 84px;
+    padding-left: 75px;
+    color: #fff;
+    font-family: 'Oswald', sans-serif;
+  }
+
+  nav.harl > div .home-svg {
+    margin-left: -10px;
+  }
+
+  nav.harl > div img {
+    height: 115px;
+    transform: translateY(-10px);
+    display: inline-block;
+    position: absolute;
+    left: 0;
+  }
+
+  section.harl.hero {
+    background-color: #282928;
+    display: block;
+    height: 165px;
+  }
+
+  div.harl.auth {
+    font-family: 'Oswald', sans-serif;
+    background-color: #fff;
+    display: block;
+    height: 78px;
+    line-height: 78px;
+  }
+
+  section.harl.pages {
+    background-color: #fff;
+    display: block;
+    max-width: 980px;
+    min-height: calc(100% - 381px);
+    margin: 0 auto;
+    padding: 2rem;
+    box-sizing: border-box;
+    box-shadow: 0 2px 2px 0 rgba(0, 0, 0, 0.14), 0 1px 5px 0 rgba(0, 0, 0, 0.12), 0 3px 1px -2px rgba(0, 0, 0, 0.2);
+  }
+
+  nav.harl .nav-bar-container {
+    position: absolute;
+    height: 84px;
+    right: 0;
+    top: 0;
+  }
+
+  @media all and (max-width: 1024px) {
+
+    header.harl > div {
+      padding: 0 30px;
+    }
+
+    header.harl > div > .text {
+      left: 30px;
+    }
+
+    nav.harl > div img {
+      height: 80px;
+      transform: translateY(2px);
+      margin-left: 8px;
+    }
+
+    nav.harl > div > .home-link {
+      margin-left: 20px;
+      padding-left: 68px;
+    }
+
+    nav.harl .nav-bar-container {
+      right: 20px;
+    }
+
+    section.harl.pages {
+      max-width: 980px;
+      margin: 0 auto;
+      padding: 2rem 0;
+      border-top: 1px solid #e0e0e0;
+      transition: opacity 0.3s;
+      opacity: 0;
+    }
+  }
+
+  @media all and (max-width: 600px) {
+
+    header.harl > div {
+      padding: 0;
+    }
+
+    header.harl > div > .text {
+      height: 50px;
+      position: absolute;
+      line-height: 50px;
+      width: 100%;
+      text-align: center;
+    }
+
+    header.harl > div > .text {
+      top: 0;
+      left: 0;
+      height: 40px;
+      line-height: 40px;
+    }
+
+    header.harl > div > .mis-branding > span {
+      display: block;
+      width: 100%;
+      font-size: 10px;
+      text-align: center;
+      margin-bottom: 8px;
+    }
+
+    header.harl > div a {
+      margin-left: 0px;
+    }
+
+    header.harl > div > .mis-branding {
+      top: 38px;
+      transform: translateY(0%);
+      width: 100%;
+      text-align: center;
+    }
+
+    header.harl {
+      height: 100px;
+      padding-top: 2px;
+      box-sizing: border-box;
+    }
+
+    nav.harl > div > .home-link {
+      font-size: 14px;
+      margin-left: -14px;
+    }
+
+    section.harl.hero {
+      height: 145px;
+    }
+  }
+
+</style>
+
+<style>
+  div.tooltip {
+    position: absolute;
+    text-align: left;
+    line-height: 18px;
+    width: 130px;
+    height: 82px;
+    text-align: left;
+    font-weight: bold;
+    font-family: 'Oswald', sans-serif;
+    padding: 5px 9px;
+    box-sizing: border-box;
+    background: #333;
+    color: #eee;
+    border: 0px;
+    font-size: 12px;
+    border-radius: 3px;
+    pointer-events: none;
+    box-shadow: 3px 3px 9px rgb(25, 25, 25);
+  }
+
+  div.tooltip span {
+    position: absolute;
+    right: 9px;
+  }
+
+  div.tooltip:after {
+    content: '';
+    width: 0;
+    height: 0;
+    border-style: solid;
+    border-width: 7px 9px 0 9px;
+    border-color: rgba(51, 51, 51, 0.91) transparent transparent transparent;
+    position: absolute;
+    top: 82px;
+    left: 61px;
+  }
+</style>
+
+</head>
+<body>
+  <rubber-redux id="RubberReduxApp"></rubber-redux>
+
+  <header class="harl">
+    <div>
+      <div class="text">EASY & SECURE GROUP BOOKING</div>
+      <div class="mis-branding">
+        <span>POWERED BY </span><a href="https://makeitsocial.com/" target="_blank" class="align-middle"><img class="flat-img" src="./assets/logo-cb.8d0531cf26754e16cdf57686f38c5464.png" alt="Make it Social logo"></a>
+      </div>
+    </div>
+  </header>
+
+  <nav class="harl">
+    <div>
+      <a class="home-link" href="http://www.quins.co.uk/" target="_blank"><img src="./assets/harl-ico.33e9200d89e9a49980a4a36ec6a9836c.png" alt="Harlequins home link"><svg-icon class="home-svg" icon="go-back"></svg-icon> BACK TO QUINS.CO.UK</a>
+      <div class="nav-bar-container">
+        <nav-bar nav-name="main"></nav-bar>
+      </div>
+    </div>
+  </nav>
+
+  <section class="harl hero">
+    <hero-module></hero-module>
+  </section>
+
+  <!--<div class="harl auth">
+    <nav-bar></nav-bar>
+  </div>-->
+
+  <section id="index-pages" class="harl pages">
+    <pages-wrapper>
+      <div id="index-spinner">
+        <div class="rect1"></div>
+        <div class="rect2"></div>
+        <div class="rect3"></div>
+        <div class="rect4"></div>
+        <div class="rect5"></div>
+      </div>
+    </pages-wrapper>
+  </section>
+  <!--<notification-elements></notification-elements>-->
+  <feedback-module></feedback-module>
+  <alert-toast></alert-toast>
+  <app-footer></app-footer>
+
+  <script src="./build/webcomponents-lite.32e427377d1a7525b54bf582f3112400.js"></script>
+  <script src="./build/build.730af496f388b980f41dd6d72233b3fe.js"></script>
+
+  <script>
+    window.RubberRedux.cacheBusted = {
+      StadiumMap: './assets/Harlequins.acea0062a0dc94332cbacf50c919407e.svg',
+      SeatMapData: {
+        harlequin_bath_1611: './assets/harlequin_bath_1611.2a8bec417058da56cedbd36f5abe81a6.json',
+      }
+    }
+  </script>
+
+  <link rel="import" href="./build/components.08c4b838b1260f213bceb237538a1890.html">
+  <link rel="import" href="./build/pages.e6a0ccf5e94c181caf459a165728583d.html">
+</body>
+</html>
