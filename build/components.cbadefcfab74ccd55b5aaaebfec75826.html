@@ -1,7 +1,7 @@
 <!--
   This file mocks the vulcanize compile target in dest
   This file is needed for the vulcanization process to maintain relative paths to assets in production.
---><html><head><meta charset="UTF-8"><link rel="import" href="../shared.6482c1012487ce0c53af70b32f2ac7be.html"></head><body><div hidden by-vulcanize=""><dom-module id="nav-bar-style" assetpath="../components/nav-bar/">
+--><html><head><meta charset="UTF-8"><link rel="import" href="../shared.7837656d8036ed91d615b91f843aa10b.html"></head><body><div hidden by-vulcanize=""><dom-module id="nav-bar-style" assetpath="../components/nav-bar/">
   <template>
     <style>
       
@@ -73,7 +73,7 @@
         background-color: var(--secondary-button-color, rgba(40, 40, 40, 1));
       }
       
-      @media all and (max-width: 680px) {
+      @media all and (max-width: 700px) {
        
         .nav-bar-mobile {
           display: inline-block;
@@ -253,7 +253,7 @@
         --plain-header-text-transform: none;
 
         --primary-text-color: #414141;
-        --secondary-text-color: #009cde;
+        --secondary-text-color: #E53E74;
         --body-text-color: #000;
         
         --header-background-color: #f8f8f8;
@@ -277,14 +277,14 @@
       :root {
         /*--member-initial-border-radius: 6px;*/
         --member-initial-theme: {
-          background-color: #009cde;
+          background-color: #4A9CD2;
           color: #fff;
         };
         
         --member-initial-leader-theme: {
           background-color: #fff;
-          color: #009cde;
-          border: 1px solid #009cde;
+          color: #4A9CD2;
+          border: 1px solid #4A9CD2;
         };
       }
     </style>
@@ -403,6 +403,72 @@ Example:
     <style is="custom-style" include="zone-selector-style"></style>
   </template>
 </dom-module>
+<dom-module id="zone-selector-color-keys-style" assetpath="../components/zone-selector-color-keys/">
+  <template>
+    <style>
+      :host {
+        position: relative;
+        width: 100%;
+        display: block;
+        text-align: center;
+        height: 20px;
+        line-height: 20px;
+        margin-bottom: 10px;
+        overflow: visible;
+      }
+
+      .ground {
+        font-size: 16px;
+        text-align: center;
+        width: 304px;
+        color: #fff;
+        background-color: #bebebe;
+        box-sizing: border-box;
+        padding: 6px 10px;
+        margin: 0 auto;
+        margin-bottom: 3px;
+      }
+      
+      .guide {
+        color: #4e4e4e;
+        font-size: 14px;
+      }
+      
+      .seat-circle {
+        display: inline-block;
+        height: 12px;
+        width: 12px;
+        margin-left: 13px;
+        margin-right: 2px;
+        -webkit-transform: translateY(1px);
+                transform: translateY(1px);
+      }
+      
+      .seat-circle.selected {
+        background-color: #007099;
+        margin-left: 22px;
+      }
+      
+      .seat-circle.available {
+        background-color: #8fc4eb;
+      }
+      
+      .seat-circle.unavailable {
+        background-color: #324d5c;
+      }
+      
+    </style>
+  </template>
+</dom-module><dom-module id="zone-selector-color-keys" assetpath="../components/zone-selector-color-keys/">
+  <template>
+    <style is="custom-style" include="zone-selector-color-keys-style"></style>
+    
+    <section>
+     <div class="guide"><div class="seat-circle available"></div> [[ i18n(&apos;GROUPS_AVAILABLE&apos;) ]]  <!-- <div class="seat-circle unavailable"></div> [[ i18n('UNAVAILABLE') ]]  --></div>
+    </section>
+    
+  </template>
+</dom-module>
 <dom-module id="zone-selection-page-style" assetpath="../pages/zone-selection-page/">
   <template>
     <style>
@@ -417,7 +483,8 @@ Example:
 </dom-module><dom-module id="zone-selection-page" assetpath="../pages/zone-selection-page/">
   <template>
     <style is="custom-style" include="zone-selection-page-style"></style>
-    <zone-selector zone-data="[[ selectedSeats_ZoneData ]]"></zone-selector>
+    <zone-selector-color-keys></zone-selector-color-keys>
+    <zone-selector zone-data="[[ selectedSeats.zoneData ]]"></zone-selector>
   </template>
 </dom-module>
 <dom-module id="pages-wrapper" assetpath="../components/pages-wrapper/">
@@ -486,7 +553,7 @@ Example:
         text-align: center;
         font-size: 18px;
         line-height: 20px;
-        text-transform: uppercase;
+        /*text-transform: uppercase;*/
         height: 146px;
         max-height: 146px;
         padding-top: 12px;
@@ -509,8 +576,8 @@ Example:
       }
 
       button {
-        background-color: var(--secondary-button-color, #87c7c7);
-        color: var(--secondary-button-text-color, #fff);
+        background-color: var(--match-list-button-color, #87c7c7);
+        color: var(--match-list-button-text-color, #fff);
         border-radius: 0;
         width: 100%;
         height: 54px;
@@ -582,8 +649,8 @@ Example:
       <div class="card">
         <img class="card-image" src="[[ item.image ]]">
         <div class="card-content">
-          <span class="item-description tourn-name">[[ tournamentName(item.name) ]]</span>
-          <span class="item-description match-name">[[ matchName(item.name) ]]</span>
+          <span class="item-description tourn-name">[[ item.name ]]</span>
+          <!--<span class="item-description match-name">[[ matchName(item.name) ]]</span>-->
           <div class="datum">
             <span>
               <svg-icon icon="calendar"></svg-icon>
@@ -613,7 +680,7 @@ Example:
 <template>
 <style>
   :host {
-    position: absolute;
+    position: fixed;
     top: 0;
     left: 0;
     width: 100%;
@@ -870,14 +937,12 @@ Example:
         -webkit-transition: opacity 0.2s;
         transition: opacity 0.2s;
       }
-
       :host:before {    /* create a full-height inline block pseudo=element */
         content: ' ';
         display: inline-block;
         vertical-align: middle;  /* vertical alignment of the inline element */
         height: 100%;
       }
-
       .page-title {
         font-family: 'Oswald', sans-serif;
         font-size: 43px;
@@ -885,13 +950,104 @@ Example:
         vertical-align: middle;
         text-transform: uppercase;
       }
+      
+      [hidden] {
+        display: none !important;
+      }
 
     </style>
   </template>
-</dom-module><dom-module id="hero-module" assetpath="../components/hero-module/">
+</dom-module><dom-module id="match-detail-style" assetpath="../components/match-detail/">
   <template>
-    <style is="custom-style" include="hero-module-style"></style>
-    <span class="page-title">[[ heroText ]]</span>
+    <style>
+      :host {
+        display: block;
+        background-color: transparent;
+      }
+      
+      .container {
+        text-align: center;
+      }
+      
+      .container > * {
+        display: inline-block;
+        vertical-align: middle;
+      }
+      
+      .badge {
+        height: 18vw;
+        max-height: 130px;
+      }
+      
+      .datum {
+        color: currentColor;
+        text-align: center;
+        padding: 0 6px;
+        display: -webkit-box;
+        display: -ms-flexbox;
+        display: flex;
+        -webkit-box-orient: vertical;
+        -webkit-box-direction: normal;
+            -ms-flex-direction: column;
+                flex-direction: column;
+        -webkit-box-pack: center;
+            -ms-flex-pack: center;
+                justify-content: center;
+      }
+      
+      .name {
+        font-family: 'Oswald';
+        font-size: 4vw;
+        line-height: 1.2;
+      }
+      
+      .date,
+      .time {
+        font-size: 2.2vw;
+        line-height: 1.4;
+        text-transform: uppercase;
+      }
+      
+      @media all and (min-width: 800px) {
+        .datum {
+          padding: 0 16px;
+        }
+        
+        .name {
+          font-size: 32px;
+        }
+        
+        .date, .time {
+          font-size: 18px;
+        }
+      }
+      
+      
+    </style>
+  </template>
+</dom-module><dom-module id="match-detail" assetpath="../components/match-detail/">
+  <template>
+    <style is="custom-style" include="match-detail-style"></style>
+    
+    <div class="container">
+      <img class="badge" src$="[[ _badgeUrl(selectedProduct.teams.one) ]]">
+      <div class="datum">
+        <div class="name">[[ selectedProduct.data.name ]]</div>
+        <div class="date">[[ selectedProduct.data.stringDate ]]</div>
+        <div class="time">KICK OFF TBC</div>
+      </div>
+      <img class="badge" src$="[[ _badgeUrl(selectedProduct.teams.two) ]]">
+    </div>
+    
   </template>
 </dom-module>
-</div><script src="components.852242b9c15cef489eb938d99536677e.js"></script></body></html>
+<dom-module id="hero-module" assetpath="../components/hero-module/">
+  <template>
+    <style is="custom-style" include="hero-module-style"></style>
+
+    <match-detail class="page-title" hidden$="[[ !selectedProduct.loaded ]]"></match-detail>
+    <span class="page-title" hidden$="[[ selectedProduct.loaded ]]">[[ heroText ]]</span>
+
+  </template>
+</dom-module>
+</div><script src="components.984c1c15f5cb3b3b032579e31a0ed43d.js"></script></body></html>

@@ -1,4 +1,4 @@
-<html><head><meta charset="UTF-8"><link rel="import" href="../shared.6482c1012487ce0c53af70b32f2ac7be.html"><!--<link rel="import" href="../pages/form-test-page/form-test-page.html">-->
+<html><head><meta charset="UTF-8"><link rel="import" href="../shared.7837656d8036ed91d615b91f843aa10b.html"><!--<link rel="import" href="../pages/form-test-page/form-test-page.html">-->
 </head><body><div hidden by-vulcanize=""><dom-module id="product-detail-style" assetpath="../components/product-detail/">
   <template>
     <style>
@@ -396,6 +396,8 @@
         text-align: center;
         text-transform: var(--plain-header-text-transform, uppercase);
         height: auto;
+        max-width: 412px;
+        margin: 0 auto;
       }
       
       :host[disabled] {
@@ -496,10 +498,10 @@
       svg-icon {
         --svg-icon-height: 12px;
         --svg-icon-width: 12px;
-        --svg-icon-parent-height: 12px;
+        --svg-icon-parent-height: 18px;
         --svg-icon-parent-width: 12px;
         vertical-align: middle;
-        margin-top: -5.5px;
+        margin-top: 3.5px;
         margin-right: 2px;
       }
       
@@ -1284,6 +1286,9 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
         border-radius: var(--input-border-radius, none);
         background-color: var(--input-background-color, #fff);
         border: var(--input-border, 2px solid #B3E1F5);
+        box-shadow: var(--input-box-shadow);
+        -webkit-transition: var(--input-transition);
+        transition: var(--input-transition);
       }
       
       /*---------- Input Focus ----------*/
@@ -1302,8 +1307,8 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
       :host([focused]) .underline {
         -webkit-transform: scale(1);
                 transform: scale(1);
-        -webkit-transition: all 0.25s ease 0s;
-        transition: all 0.25s ease 0s;
+        -webkit-transition: all 0.2s ease 0s;
+        transition: all 0.2s ease 0s;
       }
       
       :host([focused]) .input-background {
@@ -1564,6 +1569,9 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
         border-radius: var(--input-border-radius, none);
         background-color: var(--input-background-color, white);
         border: var(--input-border, 2px solid #B3E1F5);
+        box-shadow: var(--input-box-shadow);
+        -webkit-transition: var(--input-transition);
+        transition: var(--input-transition);
       }
       
       /*---------- Focus Style ----------*/
@@ -1583,8 +1591,8 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
       :host([focused]) .underline {
         -webkit-transform: scale(1);
                 transform: scale(1);
-        -webkit-transition: all 0.25s ease 0s;
-        transition: all 0.25s ease 0s;
+        -webkit-transition: all 0.2s ease 0s;
+        transition: all 0.2s ease 0s;
       }
       
       :host([focused]) .input-background {
@@ -1953,6 +1961,11 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
       
       /* ---------- Button Styles ---------- */
       
+      [disabled] {
+        pointer-events: none;
+        cursor: auto;
+      }
+      
       .button-primary {
         outline: 0;
         display: block;
@@ -1961,14 +1974,14 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
         width: var(--primary-button-width, auto);
         min-width: var(--primary-button-min-width, 16.25rem);
         font-weight: var(--primary-button-font-weight, 500);
-        padding: var(--primary-button-padding, 0 20px);
+        padding: var(--primary-button-padding, 8px 20px);
         font-family: var(--primary-button-font-family, 'Oswald');
         font-size: var(--primary-button-font-size, 1.25rem);
         text-transform: var(--primary-button-text-transform, uppercase);
         border: var(--primary-button-border, 2px solid #46474B);
         border-radius: var(--primary-button-border-radius, 0);
-        -webkit-transition: var(--primary-button-transition, all 0.3s);
-        transition: var(--primary-button-transition, all 0.3s);
+        -webkit-transition: var(--primary-button-transition);
+        transition: var(--primary-button-transition);
         color: var(--primary-button-text-color, #46474B);
         background-color: var(--primary-button-color, #fff);
         vertical-align: middle;
@@ -2019,7 +2032,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
       }
       
       .button-secondary {
-        color: var(--secondary-button-text-color, #fff);
+        /*color: var(--secondary-button-text-color, #fff);
         background-color: var(--secondary-button-color, #89c9c9);
         text-align: center;
         text-transform: none;
@@ -2029,6 +2042,25 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
         line-height: 54px;
         height: 54px;
         width: 160px;
+        */
+        outline: 0;
+        display: block;
+        cursor: pointer;
+        box-sizing: border-box;
+        width: var(--secondary-button-width, auto);
+        min-width: var(--secondary-button-min-width, 16.25rem);
+        font-weight: var(--secondary-button-font-weight, 500);
+        padding: var(--secondary-button-padding, 8px 20px);
+        font-family: var(--secondary-button-font-family, 'Oswald');
+        font-size: var(--secondary-button-font-size, 1.25rem);
+        text-transform: var(--secondary-button-text-transform, uppercase);
+        border: var(--secondary-button-border, 2px solid #46474B);
+        border-radius: var(--secondary-button-border-radius, 0);
+        -webkit-transition: var(--secondary-button-transition);
+        transition: var(--secondary-button-transition);
+        color: var(--secondary-button-text-color, #46474B);
+        background-color: var(--secondary-button-color, #fff);
+        vertical-align: middle;
       }
       
       .button-secondary.remove {
@@ -2083,11 +2115,11 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
     <div class="page-section">
       <plain-header class="page-header" title$="[[ i18n(&apos;SEND_A_MESSAGE&apos;) ]]"></plain-header>
       <textarea-wrapper class="page-content" label="Invite message" no-label="">
-        <textarea name="invite_message" rows="3" value="{{ userSelection_InviteMessage }}" on-blur="actionDispatch" data-action="updateInviteMessage" data-type="UPDATE_INVITE_MESSAGE">        </textarea>
+        <textarea name="invite_message" rows="3" value="{{ invite.message }}" placeholder="{{ invite.message }}" on-blur="actionDispatch" data-action="updateInviteMessage" data-type="UPDATE_INVITE_MESSAGE">        </textarea>
       </textarea-wrapper>
     </div>
       
-    <continue-button btn-text="[[ i18n(&apos;CONTINUE&apos;) ]]" btn-icn="chevron"></continue-button>
+    <continue-button class="page-content" btn-text="[[ i18n(&apos;CONTINUE&apos;) ]]" btn-icn="chevron"></continue-button>
 
   </template>
 </dom-module>
@@ -2117,12 +2149,12 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
       
       #authframe {
         width: 100%;
-        height: 740px;
+        height: 860px;
       }
       
     </style>
   </template>
-</dom-module><dom-module id="auth-frame" assetpath="../components/auth-frame/">
+</dom-module>s<dom-module id="auth-frame" assetpath="../components/auth-frame/">
   <template>
     <style is="custom-style" include="auth-frame-style"></style>
     <iframe id="authframe" src="[[ auth_FrameUrl ]]" name="auto-frame" frameborder="0"></iframe>
@@ -2484,16 +2516,15 @@ will only render 20.
 
     <template is="dom-repeat" class="activities" items="[[ activities_List ]]" as="activity" filter="ovalActivities">
  
-        <a on-click="actionDispatch" data-action="openActivity" data-id$="[[ activity.id ]]" data-name$="[[ activity.name ]]" "="" data-index$="[[ index ]]" class="activity" style$="background-color: [[ setBackground(index) ]]">
-            
-            <div class="image" style$="background-image: url([[ activity.image ]]);"></div>
-            
-            <div class="description">
-              <div class="title">
-                [[ activity.name ]]
-              </div>
+        <a on-click="autoDispatch" data-type="START_USER_FLOW" data-user-flow="OpenActivity" data-group$="[[ activity ]]" data-group-index$="[[ index ]]" class="activity" style$="background-color: [[ setBackground(index) ]]">
+
+          <div class="image" style$="background-image: url([[ activity.image ]]);"></div>  
+          <div class="description">
+            <div class="title">
+              [[ activity.name ]]
             </div>
-            <svg-icon class="chevron" icon="chevron-right-color"></svg-icon>
+          </div>
+          <svg-icon class="chevron" icon="chevron-right-color"></svg-icon>
         </a>
     </template>
   </template>
@@ -2509,6 +2540,12 @@ will only render 20.
   <template>
     <style>
       :host {}
+      
+      @media all and (min-width: 460px) {
+        .header-text br {
+          display: none;
+        }
+      }
     </style>
   </template>
 </dom-module><dom-module id="user-detail-inputs-style" assetpath="../forms/user-detail-inputs/">
@@ -2884,7 +2921,7 @@ will only render 20.
         
         .form-header {
           padding: 0 12px;
-          margin-bottom: calc(1.2 * var(--form-section-vertical-spacing-mobile, 0.625rem));
+          /*margin-bottom: calc(1.2 * var(--form-section-vertical-spacing-mobile, 0.625rem));*/
         }
         
         .form-inputs > ::content > * > * {
@@ -2919,6 +2956,7 @@ will only render 20.
     <style is="custom-style" include="profile-page-style shared-button-style"></style>
     <form-template>
       <form-section class="form page-section" columns="two">
+        <div class="header header-text">[[ i18n(&apos;MIS&apos;) ]] - <br>[[ i18n(&apos;PERSONAL_DATA&apos;) ]]</div>
         <user-detail-inputs class="inputs"></user-detail-inputs>
       </form-section>
       <button class="submit button-primary">
@@ -2960,98 +2998,59 @@ will only render 20.
     
   </template>
 </dom-module>
-<dom-module id="reservation-summary-style" assetpath="../components/reservation-summary/">
+<dom-module id="seats-summary-style" assetpath="../components/seats-summary/">
   <template>
     <style>
       :host {
         display: block;
       }
       
-      info-message {
-        --info-message-padding: 0;
+      [hidden] {
+        display: none !important;
+      }
+      
+      .info-message {
+        font-size: 12px;
+        line-height: 1.5;
+        margin-top: 16px;
       }
       
       .container {
         padding: 16px;
         line-height: 22px;
-      }
-      
-      .reservation.container {
         background-color: #eee;
       }
       
-      .container hr {
+      hr {
         border: none;
-        height: 0.5px;
         color: #333;
         background-color: #333;
-        margin-bottom: 16px;
-      }
-      
-      .reservation.container hr {
         height: 1px;
+        margin: 0;
       }
       
-      .container .title {
+      .title {
         font-size: 16px;
         margin-bottom: 8px;
       }
       
-      .container .activity-name {
-        font-size: 14px;
+      @media all and (max-width: 320px) {
+        seat-selection-info {
+          width: 101%;
+        }
       }
-      
-      .container .total {
-        font-size: 16px;
-      }
-      
-      .container .list-item {
-        font-size: 14px;
-        position: relative;
-        left: 0;
-        right: 0;
-      }
-      
-      .bold {
-        font-weight: bold;
-      }
-      
-      .container .left {
-        display: inline-block;
-        padding-right: 125px;
-      }
-      
-      .reservation.container .left {
-        padding-right: 140px;
-      }
-      
-      .container .right {
-        position: absolute;
-        right: 0;
-        bottom: 0;
-      }
-      
     </style>
   </template>
-</dom-module><dom-module id="reservation-summary" assetpath="../components/reservation-summary/">
+</dom-module><dom-module id="seats-summary" assetpath="../components/seats-summary/">
   <template>
-    <style is="custom-style" include="reservation-summary-style"></style>
+    <style is="custom-style" include="seats-summary-style"></style>
 
-    <div class="reservation container">
-      <div class="title">[[ i18n(&apos;RESERVATION_SUMMARY&apos;) ]]</div>
-      <div class="activity-name">[[ i18n(&apos;RESERVATION_MESSAGE_PT_1&apos;)]] <span class="bold">[[ i18n(&apos;NUM_SEATS&apos;, &apos;NUM&apos;, seatSelection_SelectedCount) ]]</span> [[ i18n(&apos;RESERVATION_MESSAGE_PT_2&apos;)]]</div>
-      <template is="dom-repeat" items="[[ seatSelection_SelectionsMapped ]]" as="area">
-        <div class="list-item">[[ areaToString(area) ]]</div>
-        <template is="dom-repeat" items="[[ area.value ]]" as="row">
-          <div class="list-item">
-            <span>[[ rowToString(row) ]]</span>
-          </div>
-        </template>
-      </template>
+    <div class="container">
+      <!--<div class="title">[[ title ]]</div>-->
+      <div class="title">[[ i18n(&apos;RESERVATION_MESSAGE_PT_1&apos;)]] <b>[[ i18n(&apos;NUM_SEATS&apos;, &apos;NUM&apos;, selectedSeats.selectedCount) ]]</b> [[ i18n(&apos;RESERVATION_MESSAGE_PT_2&apos;)]]</div>
+      <seat-selection-info></seat-selection-info>
       <hr>
-      <info-message>
-        [[ i18n(&apos;PRE_PAY_INFO_MESSAGE&apos;) ]]
-      </info-message>
+      <div class="info-message" hidden$="[[ !infoMessage ]]">[[ infoMessage ]]</div>
     </div>
     
   </template>
@@ -3087,56 +3086,60 @@ will only render 20.
       
       .container hr {
         border: none;
-        height: 0.5px;
+        height: 1px;
         color: #333;
         background-color: #333;
         margin-bottom: 1rem;
       }
       
-      .container .title {
+      .title {
         font-size: 1rem;
         margin-bottom: 0.5rem;
       }
       
-      .container .activity-name {
+      .activity-name {
         font-size: 0.875rem;
       }
       
-      .activity-name .date {
-        white-space: nowrap;
+      .activity-venue {
+        font-size: 0.875rem;
+        margin-bottom: 0.5rem;        
       }
       
-      .container .total {
+      
+      .total {
         font-size: 1rem;
       }
       
-      .container .list-item {
+      .row {
         font-size: 0.875rem;
+        min-height: 1.375rem;
         position: relative;
         left: 0;
         right: 0;
+      }
+      
+      .left {
+        display: inline-block;
+        padding-right: 125px;
+      }
+      
+      .right {
+        position: absolute;
+        right: 0;
+        bottom: 0;
+        word-spacing: 0.5rem;
       }
       
       .bold {
         font-weight: bold;
       }
       
-      .container .left {
-        display: inline-block;
-        padding-right: 125px;
+      .nowrap {
+        white-space: nowrap;
       }
       
-      .container .right {
-        position: absolute;
-        right: 0;
-        bottom: 0;
-      }
-      
-      .summary.container .right {
-        word-spacing: 0.5rem;
-      }
-      
-      .summary.container .normal {
+      .normal {
         font-weight: normal;
         white-space: nowrap;
         word-spacing: 0;
@@ -3149,14 +3152,19 @@ will only render 20.
     
     <div class="summary container">
       <div class="title">[[ i18n(&apos;PREPAY_SUMMARY&apos;) ]]</div>
-      <div class="activity-name">[[ selectedProduct.data.name ]] - <span class="date">[[ selectedProduct.data.stringDate ]]</span></div>
-      <div class="activity-name">[[ config_AppName ]]</div>
-      <div class="list-item bold">
-        <span class="left">[[ seatSelection_CurrentMap ]]</span><span class="right"><span class="normal">1 x </span> [[ selectedProduct.rate ]]  &#xA3;[[ selectedProduct_Price ]]</span>
+      <div class="activity-name bold">[[ selectedProduct.data.name ]] - <span class="nowrap">[[ selectedProduct.data.stringDate ]]</span></div>
+      <div class="activity-venue">[[ config_AppName ]] - [[ selectedSeats.currentMap ]]</div>
+      <div class="row">
+        <span class="left">1 x [[ selectedProduct.rateName ]]</span>
+        <span class="right bold">&#xA3;[[ _toFixedPrice(selectedProduct.price) ]]</span>
+      </div>
+      <div class="row" hidden$="[[ !selectedProduct.bookingFee ]]">
+        <span class="left">[[ i18n(&apos;BOOKING_FEES&apos;)]]</span>
+        <span class="right bold">&#xA3;[[ _toFixedPrice(selectedProduct.bookingFee) ]]</span>
       </div>
       <hr>
-      <div class="list-item bold">
-        <span class="left total">[[ i18n(&apos;TOTAL&apos;) ]]</span><span class="right total">&#xA3;[[ selectedProduct.price ]]</span>
+      <div class="row bold">
+        <span class="left total">[[ i18n(&apos;TOTAL&apos;) ]]</span><span class="right total">&#xA3;[[ _toFixedPrice(selectedProduct.totalPrice) ]]</span>
       </div>
     </div>    
     
@@ -3232,7 +3240,7 @@ will only render 20.
   <template>
     <style is="custom-style" include="terms-checkbox-style"></style>
     
-    <input class="toggle" id="terms" name="terms" type="checkbox" on-change="_termsChecked" checked$="[[ paymentProcess_TermsAccepted ]]">
+    <input class="toggle" id="terms" name="terms" type="checkbox" on-change="_termsChecked" checked$="[[ selectedProduct.termsAccepted ]]">
     <label for="terms"></label>
     <span> [[ i18n(&apos;I_ACCEPT_THE&apos;) ]] <a href="[[ selectedProduct.data.provider.terms ]]" target="_blank">[[ i18n(&apos;TERMS&apos;) ]]</a></span>
 
@@ -3331,9 +3339,11 @@ will only render 20.
       <form-section class="form" columns="one">
         <h3 class="header">[[ i18n(&apos;SELECT_TICKET_RATE&apos;) ]]</h3>
         <div class="inputs">
-          <select-wrapper label="[[ i18n(&apos;TICKET_RATE&apos;) ]]" options$="[[ _ratesArray(selectedProduct.data.prices.rates_category) ]]" selected="{{ selectedProduct.rate }}" attr-for-selected="value" disabled no-label="">
+          <select-wrapper label="[[ i18n(&apos;TICKET_RATE&apos;) ]]" options$="[[ _ratesArray(selectedProduct.data.prices.rates_category) ]]" selected="{{ selectedProduct.rate }}" attr-for-selected="value">
+            <select name="seat_rate" value="{{ selectedProduct.rate }}" on-change="actionDispatch" data-action="updateSelectedProductRate" data-type="UPDATE_SELECTED_PRODUCT_RATE">
+            </select>
           </select-wrapper>
-          <input type="hidden" value="{{ selectedProduct.rate }}" name="seat_rate">
+          <!--<input type="hidden" value="{{ selectedProduct.rate }}" name="seat_rate">-->
         </div>
       </form-section>
       
@@ -3352,8 +3362,8 @@ will only render 20.
       </form-section>
       
       <form-section class="form" columns="two">
-        <h3 class="header">[[ i18n(&apos;EXTRA_DETAILS&apos;) ]]</h3>
-        <p class="header">[[ i18n(&apos;EXTRA_DETAILS_MESSAGE&apos;) ]]</p>
+        <h3 class="header">[[ i18n(&apos;TICKET_DELIVERY&apos;) ]]</h3>
+        <p class="header">[[ i18n(&apos;TICKET_DELIVERY_MESSAGE&apos;, &apos;CLIENT&apos;, config_AppName) ]]</p>
         <contact-detail-inputs class="inputs"></contact-detail-inputs>
       </form-section>
       
@@ -3361,8 +3371,8 @@ will only render 20.
       
       <terms-checkbox class="form"></terms-checkbox>
       
-      <button class="submit button-primary">
-        <svg-icon icon="arrow-circle-down"></svg-icon> Submit
+      <button class="submit button-primary" disabled$="[[ !selectedProduct.termsAccepted ]]">
+        <svg-icon icon="arrow-circle-down"></svg-icon> [[ prepayPage.data.actionButtonText ]]
       </button>
       
     </form-template>
@@ -3378,13 +3388,12 @@ will only render 20.
     <style is="custom-style" include="prepay-page-style"></style>
 
     <div class="page-section">
-      <plain-header class="page-header" title="[[ i18n(&apos;PAY_FOR_YOURSELF&apos;)]]" title2="[[ i18n(&apos;AND_RESERVE_ALL_SEATS&apos;) ]]">
-        <block-subtitle>[[ i18n(&apos;PRE_AUTH_MESSAGE_LONG_LEADER&apos;) ]]</block-subtitle>
+      <plain-header class="page-header" title="[[ prepayPage.data.headerText ]]" style="max-width:230px">
+        <!--<block-subtitle>[[ prepayPage.data.blockText ]]</block-subtitle>-->
       </plain-header>
-      <reservation-summary class="page-content" hidden$="[[ !seatSelection_SelectedCount ]]">
-      </reservation-summary>
+      <seats-summary class="page-content" title="[[ i18n(&apos;RESERVATION_SUMMARY&apos;) ]]" info-message="[[ i18n(&apos;PRE_PAY_INFO_MESSAGE&apos;) ]]" hidden$="[[ !selectedSeats.selectedCount ]]"></seats-summary>
       <prepay-form class="page-content"></prepay-form>
-      <block-subtitle class="page-content">[[ i18n(&apos;PRE_AUTH_MESSAGE_LONG_LEADER&apos;) ]]</block-subtitle>
+      <block-subtitle class="page-content">[[ prepayPage.data.blockText ]]</block-subtitle>
     </div>
 
   </template>
@@ -3416,12 +3425,18 @@ will only render 20.
       .invitation-buttons {
         width: 542px;
         margin: 0 auto;
+        margin-bottom: 1rem;
       }
       
       .time-remaining {
         max-width: 415px;
         margin-left: auto;
         margin-right: auto;
+      }
+      
+      .invite-more {
+        margin-left: auto;
+        margin-bottom: 1rem;
       }
       
       @media all and (max-width: 660px) {
@@ -3668,96 +3683,6 @@ will only render 20.
     
   </template>
 </dom-module>
-<dom-module id="seats-summary-style" assetpath="../components/seats-summary/">
-  <template>
-    <style>
-      :host {
-        display: block;
-      }
-      
-       .container {
-        padding: 16px;
-        line-height: 22px;
-      }
-      
-      .reservation.container {
-        background-color: #eee;
-      }
-      
-      .container hr {
-        border: none;
-        height: 0.5px;
-        color: #333;
-        background-color: #333;
-        margin-top: 12px;
-        margin-bottom: 0;
-      }
-      
-      .reservation.container hr {
-        height: 1px;
-      }
-      
-      .container .title {
-        font-size: 16px;
-        margin-bottom: 8px;
-      }
-      
-      .container .activity-name {
-        font-size: 14px;
-      }
-      
-      .container .total {
-        font-size: 16px;
-      }
-      
-      .container .list-item {
-        font-size: 14px;
-        position: relative;
-        left: 0;
-        right: 0;
-      }
-      
-      .bold {
-        font-weight: bold;
-      }
-      
-      .container .left {
-        display: inline-block;
-        padding-right: 125px;
-      }
-      
-      .reservation.container .left {
-        padding-right: 140px;
-      }
-      
-      .container .right {
-        position: absolute;
-        right: 0;
-        bottom: 0;
-      }
-      
-    </style>
-  </template>
-</dom-module><dom-module id="seats-summary" assetpath="../components/seats-summary/">
-  <template>
-    <style is="custom-style" include="seats-summary-style"></style>
-
-    <div class="reservation container">
-      <div class="title">[[ i18n(&apos;SEATS_SUMMARY&apos;) ]]</div>
-      <template is="dom-repeat" items="[[ seatSelection_SelectionsMapped ]]" as="area">
-        <div class="list-item">[[ areaToString(area) ]]</div>
-        <template is="dom-repeat" items="[[ area.value ]]" as="row">
-          <div class="list-item">
-            <span>[[ rowToString(row) ]]</span>
-          </div>
-        </template>
-      </template>
-      <hr>
-    </div>
-    
-    
-  </template>
-</dom-module>
 <dom-module id="add-user-button-style" assetpath="../components/add-user-button/">
   <template>
     <style>
@@ -3813,37 +3738,124 @@ will only render 20.
     
   </template>
 </dom-module>
+<dom-module id="activity-timer-style" assetpath="../components/activity-timer/">
+  <template>
+    <style>
+      :host {
+        display: block;
+      }
+      
+      [hidden] {
+        display: none !important;
+      }
+      
+      .timer {
+        /*background-color: var(--page-section-background-color, #eee);
+        border: var(--page-section-border, none);*/
+        height: 72px;
+        width: 100%;
+        display: -webkit-box;
+        display: -ms-flexbox;
+        display: flex;
+        -webkit-box-pack: center;
+            -ms-flex-pack: center;
+                justify-content: center;
+        -webkit-box-align: center;
+            -ms-flex-align: center;
+                align-items: center;
+      }
+      
+      .time {
+        display: inline-block;
+        text-align: center;
+        padding: 0 8px;
+      }
+      
+      .remaining {
+        padding-right: 12px;
+      }
+      
+      .time .value {
+        font-size: 24px;
+        line-height: 24px;
+        padding-bottom: 5px;
+      }
+      
+      .time .unit {
+        font-size: 10px;
+        letter-spacing: 1px;
+        text-transform: uppercase;
+      }
+    </style>
+  </template>
+</dom-module><dom-module id="activity-timer" assetpath="../components/activity-timer/">
+  <template>
+    <style is="custom-style" include="activity-timer-style"></style>
+    
+    <div class="timer">
+      
+      <div class="time remaining">[[ i18n(&apos;RESERVATION_EXPIRES_IN&apos;) ]]</div>
+      
+      <div class="time" hidden$="[[ !selectedActivity.timer.days ]]">
+        <div class="value">[[ selectedActivity.timer.days ]]</div>
+        <div class="unit">[[ i18n(&apos;DAYS&apos;, &apos;NUM&apos;, selectedActivity.timer.days) ]]</div>
+      </div>
+      
+      <div class="time">
+        <div class="value">[[ selectedActivity.timer.hours ]]</div>
+        <div class="unit">[[ i18n(&apos;HOURS&apos;, &apos;NUM&apos;, selectedActivity.timer.hours) ]]</div>
+      </div>
+
+      <div class="time" hidden$="[[ _bool(selectedActivity.timer.days) ]]">
+        <div class="value">[[ selectedActivity.timer.minutes ]]</div>
+        <div class="unit">[[ i18n(&apos;MINUTES&apos;, &apos;NUM&apos;, selectedActivity.timer.minutes) ]]</div>
+      </div>
+      
+    </div>
+    
+  </template>
+</dom-module>
 <!-- Components -->
 <!-- Templates -->
 <!-- Styles -->
 <dom-module id="activity-page" assetpath="../pages/activity-page/">
   <template>
     <style is="custom-style" include="activity-page-style shared-button-style"></style>
+    
+    <plain-header class="page-header status-header" title="[[ activityPage.data.headerText ]]">
+      [[ activityPage.data.helpText ]]
+    </plain-header>
 
-    <template is="dom-if" if="[[ activityPage.showJoinLeave ]]">
+    <template is="dom-if" if="[[ activityPage.data.showJoinButton ]]">
       <div class="invitation-buttons">
-        <button class="button-primary join" on-click="actionDispatch" data-action="joinGroup">
-          <svg-icon icon="check-square-o"></svg-icon> [[ i18n(&apos;JOIN_NOW&apos;) ]]
+        <button class="button-primary join" on-click="autoDispatch" data-type$="[[ activityPage.data.joinButtonAuto ]]" data-user-flow="JoinGroup">
+          <svg-icon icon="check-square-o"></svg-icon> [[ activityPage.data.joinButtonText ]]
         </button>
       
-        <button class="button-primary leave" on-click="actionDispatch" data-action="leaveGroup">
-          <svg-icon icon="cross"></svg-icon> [[ i18n(&apos;LEAVE&apos;) ]]
-        </button>
+        <template is="dom-if" if="[[ user.loggedIn ]]">
+          <button class="button-primary leave" on-click="actionDispatch" data-action="leaveGroup">
+            <svg-icon icon="cross"></svg-icon> [[ i18n(&apos;LEAVE&apos;) ]]
+          </button>
+        </template>
       </div>
     </template>
-      
-    <member-list class="content"></member-list>
-    <seats-summary class="content" hidden$="[[ !activePage_Data.showSeatsSummary ]]"></seats-summary>
     
-    <template is="dom-if" if="[[ activityPage.showInviteMore ]]">
-      <button class="button-primary" on-tap="autoDispatch" data-type="START_USER_FLOW" data-user-flow="InviteMoreToActivity">[[ i18n(&apos;INVITE_MORE_FRIENDS&apos;) ]]</button>
-    </template>
-<!--
-    <template is="dom-if" if="[[ activePage.showInviteMore ]]">
-      <button class="content shared-button-style" disabled>
-        <svg-icon icon="[[ activePage_Data.buttonIcon ]]"></svg-icon> [[ activePage_Data.buttonText ]]
+    <activity-timer class="page-section no-padding" hidden$="[[ !activityPage.data.showTimer ]]"></activity-timer>
+     
+    <div class="page-section" hidden$="[[ !activityPage.data.showGroupView ]]">
+      <div class="header-text page-header">[[ i18n(&apos;YOUR_GROUP&apos;) ]]</div>
+      <member-list class="page-content"></member-list>
+      <template is="dom-if" if="[[ activityPage.data.showInviteMore ]]">
+        <button class="button-secondary invite-more" on-tap="autoDispatch" data-type="START_USER_FLOW" data-user-flow="InviteMoreToActivity">[[ i18n(&apos;INVITE_MORE_FRIENDS&apos;) ]]</button>
+      </template>
+      <seat-selection-info class="page-content" hidden$="[[ !activityPage.data.showSeatsSummary ]]"></seat-selection-info>
+    </div>
+
+    <template is="dom-if" if="[[ activityPage.data.showActionButton ]]">
+      <button class="page-content button-primary" on-click="autoDispatch" data-type="START_USER_FLOW" data-user-flow$="[[ activityPage.data.actionButtonFlow ]]">
+        [[ activityPage.data.actionButtonText ]]
       </button>
-    </template>-->
+    </template>
     
   </template>
 </dom-module>
@@ -3880,6 +3892,7 @@ will only render 20.
         -webkit-box-pack: center;
             -ms-flex-pack: center;
                 justify-content: center;
+        margin-top: 15px;
       }
 
       header {
@@ -3896,7 +3909,7 @@ will only render 20.
       }
 
       .seat-selector-panel {
-        background-color: green;
+        /*background-color: green;*/
       }
 
       @media all and (max-width: 980px) {
@@ -3934,6 +3947,7 @@ will only render 20.
         </aside>
         <div class="seat-selector-panel">
           <content select=".panel"></content>
+          <svg-icon></svg-icon><h1 class="pitch-direction">[[ i18n(&apos;PITCH_DIRECTION&apos;) ]]</h1><svg-icon></svg-icon>
         </div>
       </section>
 
@@ -3971,9 +3985,9 @@ will only render 20.
       :host {
         width: 100%;
         display: block;
-        font-family: Oswald;
-        text-transform: uppercase;
-        color: #696969;
+        font-family: var(--seat-selection-info-font-family, 'Oswald');
+        text-transform: var(--seat-selection-info-text-transform, uppercase);
+        color: var(--seat-selection-info-color, #666);
       }
       
       [hidden] {
@@ -4016,6 +4030,11 @@ will only render 20.
         text-align: center;
       }
       
+      .status-btm,
+      .th {
+        color: #333;
+      }
+      
       .your-seats,
       .num-selected {
         display: inline-block;
@@ -4051,6 +4070,7 @@ will only render 20.
       .thead {
         display: table-header-group;
         width: 100%;
+        font-weight: var(--seat-selection-info-thead-font-weight, normal);
       }
       
       .tbody {
@@ -4075,12 +4095,17 @@ will only render 20.
         border-bottom: 1px solid #cecece;
       }
       
-      .tbody .tr:nth-child(odd) {
-        background-color: #fff;
+      .td {
+        box-shadow: inset 0px -4px 10px -10px #000,
+                    inset 0px  5px 10px -10px #fff;
       }
       
+      /*.tbody .tr:nth-child(odd) {
+        background-color: #fff;
+      }*/
+      
       .area {
-        width: 30%;
+        width: 22%;
       }
       
       .tr div:last-child {
@@ -4088,42 +4113,12 @@ will only render 20.
       }
       
       .type {
-        width: 50%;
+        width: 58%;
       }
       
       .row,
       .seat {
         width: 10%;
-      }
-      
-      @media all and (min-width: 420px) and (max-width: 760px) {
-        .area {
-          width: 45%;
-        }
-        
-        .type {
-          width: 35%;
-        }
-      }
-
-      @media all and (max-width: 420px) { 
-        .area {
-          width: 32%;
-        }
-        
-        .type {
-          width: 48%;
-        }
-      }
-      
-      span.lower-tier {
-        display: none;
-      }
-      
-      @media all and (min-width: 421px) and (max-width: 759px) {
-        span.lower-tier {
-          display: inline;
-        }
       }
     </style>
   </template>
@@ -4131,10 +4126,12 @@ will only render 20.
   <template>
     <style is="custom-style" include="seat-selection-info-style"></style>
 
-      <div class="status-btm">
-        <div class="your-seats">[[ i18n(&apos;SELECTED_SEATS&apos;) ]]<div class="seat-circle"></div></div><!--
-        --><div class="num-selected">[[ selectedSeats_SelectedCount ]] / [[ selectedSeats_SeatsRequired ]]</div>
-      </div>
+      <template is="dom-if" if="[[ showCount ]]">
+        <div class="status-btm">
+          <div class="your-seats">[[ i18n(&apos;SELECTED_SEATS&apos;) ]]<div class="seat-circle"></div></div><!--
+       --><div class="num-selected">[[ selectedSeats.selectedCount ]] / [[ selectedSeats.seatsRequired ]]</div>
+        </div>
+      </template>
       <div class="table">
         <div class="thead">
           <div class="tr">
@@ -4145,7 +4142,7 @@ will only render 20.
           </div>
         </div>
         <div class="tbody">
-          <template is="dom-repeat" items="[[ selectedSeats_PreSelectedArray ]]" as="seat">
+          <template is="dom-repeat" items="[[ selectedSeats.preSelectedArray ]]" as="seat">
             <div class="tr">
               <div class="td">[[ seat.area ]]</div>
               <div class="td">[[ seat.row ]]</div>
@@ -4153,7 +4150,7 @@ will only render 20.
               <div class="td">&#xA3;[[ selectedProduct.price ]]</div>
             </div> 
           </template>
-          <template is="dom-repeat" items="[[ selectedSeats_SelectedArray ]]" as="seat">
+          <template is="dom-repeat" items="[[ selectedSeats.selectedArray ]]" as="seat">
             <div class="tr">
               <div class="td">[[ seat.area ]]</div>
               <div class="td">[[ seat.row ]]</div>
@@ -4170,10 +4167,15 @@ will only render 20.
 <dom-module id="seat-selector-color-keys-style" assetpath="../components/seat-selector-color-keys/">
   <template>
     <style>
-      :host {}
+      :host {
+        display: block;
+        width: 100%;
+        text-align: center;
+        margin-top: 43px;
+      }
       
       section {
-        width: 320px;
+        /*width: 320px;*/
       }
       
       .ground {
@@ -4223,7 +4225,6 @@ will only render 20.
     <style is="custom-style" include="seat-selector-color-keys-style"></style>
     
     <section>
-      <div class="ground">[[ i18n(&apos;GROUND&apos;) ]]</div>
       <div class="guide"><div class="seat-circle selected"></div> [[ i18n(&apos;SELECTED_CAP&apos;) ]] <div class="seat-circle available"></div> [[ i18n(&apos;AVAILABLE&apos;) ]] <div class="seat-circle unavailable"></div> [[ i18n(&apos;UNAVAILABLE&apos;) ]]</div>
     </section>
     
@@ -4237,7 +4238,7 @@ will only render 20.
         overflow: auto;
         overflow: auto;
         display: block;
-        background-color: #fff;
+        /*background-color: #fff;*/
         position: relative;
         width: 100%;
         height: 100%;
@@ -4278,49 +4279,19 @@ will only render 20.
   <template>
     <style>
       :host {
-        width: var(--continue-button-container-width, 100%);
-        height: var(--continue-button-container-height, 80px);
-        text-align: var(--continue-button-align, center);
-        position: relative;
         display: block;
-        vertical-align: middle;
       }
-
-      :host:before, button:before {    /* create a full-height inline block pseudo=element */
-        content: ' ';
-        display: inline-block;
-        vertical-align: middle;  /* vertical alignment of the inline element */
-        height: 100%;
-      }
-
+      
       button {
-        width: var(--continue-button-width, auto);
-        height: var(--continue-button-height, 50px);
-        font-weight: var(--continue-button-font-weight, 500);
-        padding: var(--continue-button-padding, 0 20px);
-        line-height: var(--continue-button-height, 50px);
-        font-family: var(--continue-button-font-family, 'Oswald');
-        font-size: var(--continue-button-font-size, 16px);
-        text-transform: var(--continue-button-text-transform, uppercase);
-        border: var(--continue-button-border, 2px solid #46474B);
-        -webkit-transition: var(--continue-button-transition, all 0.3s);
-        transition: var(--continue-button-transition, all 0.3s);
-        color: var(--continue-button-color, #46474B);
-        background-color: var(--continue-button-background-color, #fff);
-        display: inline-block;
-        vertical-align: middle;
-      }
-
-      button:hover {
-        color: var(--continue-button-hover-color, #fff);
-        background-color: var(--continue-button-background-hover-color, #46474B);
+        margin: 0 auto;
       }
     </style>
   </template>
-</dom-module><dom-module id="continue-button" assetpath="../components/continue-button/">
+</dom-module><!-- Styles -->
+<dom-module id="continue-button" assetpath="../components/continue-button/">
   <template>
-    <style is="custom-style" include="continue-button-style"></style>
-    <button on-click="autoDispatch" data-type="STEP_FLOW">[[ btnText ]]</button>
+    <style is="custom-style" include="continue-button-style shared-button-style"></style>
+    <button class="button-primary" on-click="autoDispatch" data-type="STEP_FLOW" disabled$="[[ disabled ]]">[[ btnText ]]</button>
   </template>
 </dom-module>
 <dom-module id="seat-selection-page-style" assetpath="../pages/seat-selection-page/">
@@ -4359,11 +4330,19 @@ will only render 20.
         top: 0;
         left: 0;
         width: 100%;
-        height: 40px;
-        line-height: 40px;
+        height: 32px;
+        line-height: 32px;
         font-family: 'Oswald', sans-serif;
         font-size: 22px;
         text-transform: uppercase;
+      }
+      
+      .circle {
+        display: inline-block;
+        width: 32px;
+        height: 32px;
+        border: 2px solid currentColor;
+        border-radius: 50%;
       }
 
     </style>
@@ -4380,23 +4359,29 @@ will only render 20.
 
     <seat-selection-template>
 
-      <div class="header seat-count all-selected" hidden$="[[ !selectedSeats_HasRequiredSeats ]]">
+      <div class="header seat-count all-selected" hidden$="[[ !selectedSeats.hasRequiredSeats ]]">
         [[ i18n(&apos;ALL_SEATS_SELECTED&apos;) ]] <svg-icon icon="check"></svg-icon>
       </div>
 
-      <div class="header seat-count too-many-selected" hidden$="[[ !selectedSeats_DeselectCount ]]">
-        [[ i18n(&apos;DESELECT_NUM_SEATS&apos;, &apos;NUM&apos;, selectedSeats_DeselectCount) ]]
+      <div class="header seat-count too-many-selected" hidden$="[[ !selectedSeats.deselectCount ]]">
+        [[ i18n(&apos;DESELECT&apos;) ]] <span class="circle">[[ selectedSeats.deselectCount ]]</span> [[ i18n(&apos;SEATS&apos;, &apos;NUM&apos;, selectedSeats.deselectCount) ]]
       </div>
 
-      <seat-selection-info class="aside"></seat-selection-info>
+      <div class="header seat-count" hidden$="[[ !selectedSeats.selectCount ]]">
+        [[ i18n(&apos;SELECT&apos;) ]] <span class="circle">[[ selectedSeats.selectCount ]]</span> [[ i18n(&apos;SEATS&apos;, &apos;NUM&apos;, selectedSeats.selectCount) ]]
+      </div>
+      
+      <seat-selector-color-keys class="header"></seat-selector-color-keys>
+
+      <seat-selection-info class="aside" show-count="true"></seat-selection-info>
       <!--<seat-selector-color-keys class="panel"></seat-selector-color-keys>-->
-      <seat-selector seat-data="[[ selectedSeats_SeatMapData ]]" class="panel"></seat-selector>
+      <seat-selector seat-data="[[ selectedSeats.seatMapData ]]" class="panel"></seat-selector>
     </seat-selection-template>
     
     <div class="shared-continue-button">
-      <continue-button></continue-button>
+      <continue-button disabled$="[[ !selectedSeats.hasRequiredSeats ]]"></continue-button>
     </div>
 
   </template>
 </dom-module>
-</div><script src="pages.1c0d26cfa782e48197bfeb386a122f65.js"></script></body></html>
+</div><script src="pages.3db09fc53d8d650434e9a3c23675bda0.js"></script></body></html>
